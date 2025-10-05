@@ -6,6 +6,7 @@ import { motion } from 'framer-motion';
 const Portfolio = () => {
   const [activeSection, setActiveSection] = useState('home');
   const [isScrolled, setIsScrolled] = useState(false);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -57,14 +58,58 @@ const Portfolio = () => {
           <button onClick={() => scrollToSection('home')} className="text-xl font-semibold text-gray-900 hover:text-orange-500 transition-colors">
             Yatheesh
           </button>
-          <div className="flex gap-8">
+          
+          {/* Desktop Navigation */}
+          <div className="hidden md:flex gap-8">
             {['Projects', 'Services', 'About', 'Experience', 'Contact'].map((item) => (
               <button key={item} onClick={() => scrollToSection(item.toLowerCase())} className={`text-gray-600 hover:text-orange-500 transition-colors ${activeSection === item.toLowerCase() ? 'text-orange-500' : ''}`}>
                 {item}
               </button>
             ))}
           </div>
+
+          {/* Mobile Menu Button */}
+          <button 
+            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+            className="md:hidden text-gray-900 p-2"
+            aria-label="Toggle menu"
+          >
+            <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              {isMobileMenuOpen ? (
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+              ) : (
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
+              )}
+            </svg>
+          </button>
         </div>
+
+        {/* Mobile Menu */}
+        {isMobileMenuOpen && (
+          <motion.div 
+            initial={{ opacity: 0, height: 0 }}
+            animate={{ opacity: 1, height: 'auto' }}
+            exit={{ opacity: 0, height: 0 }}
+            className="md:hidden bg-white border-t border-gray-200"
+          >
+            <div className="px-6 py-4 space-y-4">
+              {['Projects', 'Services', 'About', 'Experience', 'Contact'].map((item) => (
+                <button
+                  key={item}
+                  onClick={() => {
+                    scrollToSection(item.toLowerCase());
+                    setIsMobileMenuOpen(false);
+                  }}
+                  className={`block w-full text-left py-2 text-gray-600 hover:text-orange-500 transition-colors ${
+                    activeSection === item.toLowerCase() ? 'text-orange-500 font-semibold' : ''
+                  }`}
+                >
+                  {item}
+                </button>
+              ))}
+            </div>
+          </motion.div>
+        )}
       </motion.nav>
 
       {/* Hero Section */}
@@ -84,7 +129,7 @@ const Portfolio = () => {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.4 }}
-              className="text-4xl md:text-5xl lg:text-6xl font-normal text-gray-900 mb-8 leading-[1.15] max-w-5xl"
+              className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-normal text-gray-900 mb-6 md:mb-8 leading-[1.15] max-w-5xl"
             >
               I'm Yatheesh Nagella, a Software Engineer & Cloud Solutions Consultant specializing in building scalable cloud infrastructure and intelligent AI applications.
             </motion.h1>
@@ -93,7 +138,7 @@ const Portfolio = () => {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.6 }}
-              className="text-lg md:text-xl text-gray-600 max-w-4xl leading-relaxed"
+              className="text-base sm:text-lg md:text-xl text-gray-600 max-w-4xl leading-relaxed"
             >
               Leveraging expertise in multi-cloud architecture, DevOps automation, and modern web technologies, I help organizations build resilient systems that drive business value.
             </motion.p>
@@ -103,7 +148,7 @@ const Portfolio = () => {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 0.8 }}
-            className="flex gap-6 mb-14"
+            className="flex gap-6 mb-16"
           >
             <motion.a whileHover={{ scale: 1.1 }} whileTap={{ scale: 0.95 }} href="https://github.com/Yatheesh-Nagella" target="_blank" rel="noopener noreferrer" className="text-gray-600 hover:text-orange-500 transition-colors">
               GitHub

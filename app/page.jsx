@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
+import { trackProjectClick, trackSectionView, trackContactClick, trackSocialClick } from '../lib/analytics';
 
 const Portfolio = () => {
   const [activeSection, setActiveSection] = useState('home');
@@ -21,6 +22,7 @@ const Portfolio = () => {
     if (element) {
       element.scrollIntoView({ behavior: 'smooth' });
       setActiveSection(sectionId);
+      trackSectionView(sectionId);
     }
   };
 
@@ -150,13 +152,13 @@ const Portfolio = () => {
             transition={{ delay: 0.8 }}
             className="flex gap-6 mb-16"
           >
-            <motion.a whileHover={{ scale: 1.1 }} whileTap={{ scale: 0.95 }} href="https://github.com/Yatheesh-Nagella" target="_blank" rel="noopener noreferrer" className="text-gray-600 hover:text-orange-500 transition-colors">
+            <motion.a whileHover={{ scale: 1.1 }} whileTap={{ scale: 0.95 }} href="https://github.com/Yatheesh-Nagella" target="_blank" rel="noopener noreferrer" onClick={() => trackSocialClick('GitHub')} className="text-gray-600 hover:text-orange-500 transition-colors">
               GitHub
             </motion.a>
-            <motion.a whileHover={{ scale: 1.1 }} whileTap={{ scale: 0.95 }} href="https://linkedin.com/in/Yatheesh-Nagella" target="_blank" rel="noopener noreferrer" className="text-gray-600 hover:text-orange-500 transition-colors">
+            <motion.a whileHover={{ scale: 1.1 }} whileTap={{ scale: 0.95 }} href="https://linkedin.com/in/Yatheesh-Nagella" target="_blank" rel="noopener noreferrer" onClick={() => trackSocialClick('LinkedIn')} className="text-gray-600 hover:text-orange-500 transition-colors">
               LinkedIn
             </motion.a>
-            <motion.a whileHover={{ scale: 1.1 }} whileTap={{ scale: 0.95 }} href="mailto:yatheeshnagella17@gmail.com" className="text-gray-600 hover:text-orange-500 transition-colors">
+            <motion.a whileHover={{ scale: 1.1 }} whileTap={{ scale: 0.95 }} href="mailto:yatheeshnagella17@gmail.com" onClick={trackContactClick} className="text-gray-600 hover:text-orange-500 transition-colors">
               Email
             </motion.a>
           </motion.div>
@@ -229,10 +231,10 @@ const Portfolio = () => {
                 Building a production-ready AI chatbot with Next.js 14, TypeScript, and OpenAI GPT-3.5-turbo with real-time streaming responses and semantic search capabilities using DataStax Astra DB vector database.
               </p>
               <div className="flex gap-4">
-                <motion.a whileHover={{ x: 5 }} href="https://f1-gpt-eta.vercel.app/" target="_blank" rel="noopener noreferrer" className="text-orange-500 hover:text-orange-600 font-medium">
+                <motion.a whileHover={{ x: 5 }} href="https://f1-gpt-eta.vercel.app/" target="_blank" rel="noopener noreferrer" onClick={() => trackProjectClick('F1-GPT', 'https://f1-gpt-eta.vercel.app/')} className="text-orange-500 hover:text-orange-600 font-medium">
                   Live Demo →
                 </motion.a>
-                <motion.a whileHover={{ x: 5 }} href="https://github.com/Yatheesh-Nagella" target="_blank" rel="noopener noreferrer" className="text-gray-600 hover:text-orange-500 font-medium">
+                <motion.a whileHover={{ x: 5 }} href="https://github.com/Yatheesh-Nagella" target="_blank" rel="noopener noreferrer" onClick={() => trackProjectClick('F1-GPT', 'https://github.com/Yatheesh-Nagella')} className="text-gray-600 hover:text-orange-500 font-medium">
                   View Code →
                 </motion.a>
               </div>

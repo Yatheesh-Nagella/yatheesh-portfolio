@@ -51,7 +51,7 @@ const Portfolio = () => {
       <div className="fixed inset-0 -z-10 overflow-hidden pointer-events-none">
         {/* Base gradient layer */}
         <div className="absolute inset-0 bg-gradient-to-br from-white via-orange-50/30 to-white" />
-        
+
         {/* Animated gradient waves */}
         <motion.div
           animate={{
@@ -69,7 +69,7 @@ const Portfolio = () => {
           }}
           className="absolute inset-0"
         />
-        
+
         {/* Secondary wave layer */}
         <motion.div
           animate={{
@@ -88,7 +88,7 @@ const Portfolio = () => {
           }}
           className="absolute inset-0"
         />
-        
+
         {/* Floating gradient orbs for depth */}
         <motion.div
           animate={{
@@ -104,7 +104,7 @@ const Portfolio = () => {
           }}
           className="absolute top-20 left-10 w-96 h-96 bg-gradient-to-br from-orange-400/20 via-pink-400/20 to-transparent rounded-full blur-3xl"
         />
-        
+
         <motion.div
           animate={{
             scale: [1, 1.3, 1],
@@ -120,7 +120,7 @@ const Portfolio = () => {
           }}
           className="absolute top-1/3 right-10 w-[500px] h-[500px] bg-gradient-to-br from-cyan-400/20 via-blue-400/20 to-transparent rounded-full blur-3xl"
         />
-        
+
         <motion.div
           animate={{
             scale: [1, 1.1, 1],
@@ -136,7 +136,7 @@ const Portfolio = () => {
           }}
           className="absolute bottom-20 left-1/4 w-[450px] h-[450px] bg-gradient-to-br from-purple-400/20 via-indigo-400/20 to-transparent rounded-full blur-3xl"
         />
-        
+
         <motion.div
           animate={{
             scale: [1, 1.15, 1],
@@ -152,12 +152,12 @@ const Portfolio = () => {
           }}
           className="absolute bottom-1/4 right-1/3 w-[400px] h-[400px] bg-gradient-to-br from-emerald-400/15 via-teal-400/15 to-transparent rounded-full blur-3xl"
         />
-        
+
         {/* Subtle grain texture overlay */}
         <div className="absolute inset-0 opacity-[0.015] bg-[url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIzMDAiIGhlaWdodD0iMzAwIj48ZmlsdGVyIGlkPSJhIiB4PSIwIiB5PSIwIj48ZmVUdXJidWxlbmNlIGJhc2VGcmVxdWVuY3k9Ii43NSIgc3RpdGNoVGlsZXM9InN0aXRjaCIgdHlwZT0iZnJhY3RhbE5vaXNlIi8+PGZlQ29sb3JNYXRyaXggdHlwZT0ic2F0dXJhdGUiIHZhbHVlcz0iMCIvPjwvZmlsdGVyPjxwYXRoIGQ9Ik0wIDBoMzAwdjMwMEgweiIgZmlsdGVyPSJ1cmwoI2EpIiBvcGFjaXR5PSIuMDUiLz48L3N2Zz4=')]" />
       </div>
       {/* Navigation */}
-      <motion.nav 
+      <motion.nav
         initial={{ y: -100 }}
         animate={{ y: 0 }}
         transition={{ duration: 0.5 }}
@@ -167,18 +167,28 @@ const Portfolio = () => {
           <button onClick={() => scrollToSection('home')} className="text-xl font-semibold text-gray-900 hover:text-orange-500 transition-colors">
             Yatheesh Nagella
           </button>
-          
+
           {/* Desktop Navigation */}
           <div className="hidden md:flex gap-8">
-            {['Projects', 'Services', 'About', 'Experience', 'Contact'].map((item) => (
-              <button key={item} onClick={() => scrollToSection(item.toLowerCase())} className={`text-gray-600 hover:text-orange-500 transition-colors ${activeSection === item.toLowerCase() ? 'text-orange-500' : ''}`}>
+            {['Projects', 'Services', 'Blog', 'About', 'Experience', 'Contact'].map((item) => (
+              <button
+                key={item}
+                onClick={() => {
+                  if (item === 'Blog') {
+                    window.location.href = '/blogs';
+                  } else {
+                    scrollToSection(item.toLowerCase());
+                  }
+                }}
+                className={`text-gray-600 hover:text-orange-500 transition-colors`}
+              >
                 {item}
               </button>
             ))}
           </div>
 
           {/* Mobile Menu Button */}
-          <button 
+          <button
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
             className="md:hidden text-gray-900 p-2"
             aria-label="Toggle menu"
@@ -195,23 +205,24 @@ const Portfolio = () => {
 
         {/* Mobile Menu */}
         {isMobileMenuOpen && (
-          <motion.div 
+          <motion.div
             initial={{ opacity: 0, height: 0 }}
             animate={{ opacity: 1, height: 'auto' }}
             exit={{ opacity: 0, height: 0 }}
             className="md:hidden bg-white border-t border-gray-200"
           >
             <div className="px-6 py-4 space-y-4">
-              {['Projects', 'Services', 'About', 'Experience', 'Contact'].map((item) => (
+              {['Projects', 'Services', 'About', 'Blog', 'Experience', 'Contact'].map((item) => (
                 <button
                   key={item}
                   onClick={() => {
-                    scrollToSection(item.toLowerCase());
-                    setIsMobileMenuOpen(false);
+                    if (item === 'Blog') {
+                      window.location.href = '/blogs';
+                    } else {
+                      scrollToSection(item.toLowerCase());
+                    }
                   }}
-                  className={`block w-full text-left py-2 text-gray-600 hover:text-orange-500 transition-colors ${
-                    activeSection === item.toLowerCase() ? 'text-orange-500 font-semibold' : ''
-                  }`}
+                  className={`text-gray-600 hover:text-orange-500 transition-colors`}
                 >
                   {item}
                 </button>
@@ -233,24 +244,24 @@ const Portfolio = () => {
           >
             {/* Gradient overlay on card */}
             <div className="absolute inset-0 bg-gradient-to-br from-orange-500/5 via-transparent to-cyan-500/5 rounded-3xl pointer-events-none" />
-            
+
             {/* Content */}
             <div className="relative z-10">
               <div className="mb-8 md:mb-12">
-                <motion.div 
+                <motion.div
                   initial={{ scale: 0 }}
                   animate={{ scale: 1 }}
                   transition={{ type: "spring", stiffness: 200, delay: 0.2 }}
                   className="w-32 h-32 rounded-full bg-gradient-to-br from-orange-500/20 to-cyan-500/20 backdrop-blur-sm border-2 border-white/50 overflow-hidden mb-8 shadow-lg"
                 >
-                  <img 
-                    src="/profile.png" 
+                  <img
+                    src="/profile.png"
                     alt="Yatheesh Nagella"
                     className="w-full h-full object-cover"
                   />
                 </motion.div>
-                
-                <motion.h1 
+
+                <motion.h1
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.6, delay: 0.4 }}
@@ -258,8 +269,8 @@ const Portfolio = () => {
                 >
                   I'm Yatheesh Nagella, a Software Engineer & Cloud Solutions Consultant.
                 </motion.h1>
-                
-                <motion.p 
+
+                <motion.p
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.6, delay: 0.6 }}
@@ -269,7 +280,7 @@ const Portfolio = () => {
                 </motion.p>
               </div>
 
-              <motion.div 
+              <motion.div
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 transition={{ delay: 0.8 }}
@@ -286,19 +297,95 @@ const Portfolio = () => {
                 </motion.a>
               </motion.div>
 
-              <motion.div 
+              <motion.div
                 variants={staggerContainer}
                 initial="hidden"
                 animate="visible"
                 className="grid grid-cols-2 md:grid-cols-4 gap-4"
               >
-                {[1, 2, 3, 4].map((i) => (
-                  <motion.div key={i} variants={fadeInUp} whileHover={{ scale: 1.05, y: -5 }} transition={{ type: "spring", stiffness: 300 }} className="aspect-square bg-white/60 backdrop-blur-sm border border-white/60 rounded-lg overflow-hidden hover:shadow-lg transition-shadow cursor-pointer">
-                    <div className="w-full h-full flex items-center justify-center text-4xl">
-                      📱
-                    </div>
-                  </motion.div>
-                ))}
+                {/* F1-GPT Project */}
+                <motion.a
+                  href="https://f1-gpt-eta.vercel.app/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  variants={fadeInUp}
+                  whileHover={{ scale: 1.05, y: -5 }}
+                  transition={{ type: "spring", stiffness: 300 }}
+                  className="group aspect-square bg-gradient-to-br from-gray-900 via-red-900 to-gray-800 backdrop-blur-sm border border-white/60 rounded-lg overflow-hidden hover:shadow-xl hover:shadow-red-500/30 transition-all cursor-pointer relative"
+                >
+                  <div className="absolute inset-0 flex flex-col items-center justify-center p-4 text-center">
+                    <div className="text-4xl mb-2">🏎️</div>
+                    <div className="text-white font-bold text-sm mb-1">F1-GPT</div>
+                    <div className="text-white/70 text-xs">AI Chatbot</div>
+                  </div>
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end p-3">
+                    <span className="text-white text-xs">View Live Demo →</span>
+                  </div>
+                </motion.a>
+
+                {/* Jump MD Editor */}
+                <motion.a
+                  href="https://jump-md-editor-one.vercel.app/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  variants={fadeInUp}
+                  whileHover={{ scale: 1.05, y: -5 }}
+                  transition={{ type: "spring", stiffness: 300 }}
+                  className="group aspect-square bg-gradient-to-br from-blue-500 via-purple-500 to-indigo-600 backdrop-blur-sm border border-white/60 rounded-lg overflow-hidden hover:shadow-xl hover:shadow-purple-500/30 transition-all cursor-pointer relative"
+                >
+                  <div className="absolute inset-0 flex flex-col items-center justify-center p-4 text-center">
+                    <div className="text-4xl mb-2">📝</div>
+                    <div className="text-white font-bold text-sm mb-1">Jump MD</div>
+                    <div className="text-white/70 text-xs">Markdown Editor</div>
+                  </div>
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end p-3">
+                    <span className="text-white text-xs">Try the Editor →</span>
+                  </div>
+                </motion.a>
+
+                {/* Evolution of Trust - Blog Coming Soon */}
+                <motion.a
+                  href="/blogs/evolution-of-trust"
+                  variants={fadeInUp}
+                  whileHover={{ scale: 1.05, y: -5 }}
+                  transition={{ type: "spring", stiffness: 300 }}
+                  className="group aspect-square bg-gradient-to-br from-gray-50 via-gray-100 to-gray-200 backdrop-blur-sm border border-white/60 rounded-lg overflow-hidden hover:shadow-xl hover:shadow-gray-500/30 transition-all cursor-pointer relative"
+                >
+                  <div className="absolute inset-0 flex flex-col items-center justify-center p-4 text-center">
+                    <div className="text-4xl mb-2">🎮</div>
+                    <div className="text-gray-900 font-bold text-sm mb-1">Evolution of Trust</div>
+                    <div className="text-gray-600 text-xs">Blog Coming Soon</div>
+                  </div>
+                  <div className="absolute top-2 right-2">
+                    <span className="bg-orange-500 text-white text-[10px] px-2 py-1 rounded-full font-semibold">SOON</span>
+                  </div>
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end p-3">
+                    <span className="text-white text-xs">Read the Story →</span>
+                  </div>
+                </motion.a>
+
+                {/* Marathon - Health & Wellness */}
+                <motion.div
+                  variants={fadeInUp}
+                  whileHover={{ scale: 1.05, y: -5 }}
+                  transition={{ type: "spring", stiffness: 300 }}
+                  className="group aspect-square bg-gradient-to-br from-orange-400 via-amber-500 to-yellow-500 backdrop-blur-sm border border-white/60 rounded-lg overflow-hidden hover:shadow-xl hover:shadow-orange-500/30 transition-all cursor-pointer relative"
+                >
+                  <div className="absolute inset-0">
+                    <img
+                      src="/marathon.png"
+                      alt="Marathon Achievement"
+                      className="w-full h-full object-cover"
+                    />
+                  </div>
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent flex flex-col items-center justify-end p-4 text-center">
+                    <div className="text-white font-bold text-sm mb-1">Health & Fitness</div>
+                    <div className="text-white/70 text-xs">Marathon Runner</div>
+                  </div>
+                  <div className="absolute top-2 right-2">
+                    <span className="bg-emerald-500 text-white text-[10px] px-2 py-1 rounded-full font-semibold">🏃</span>
+                  </div>
+                </motion.div>
               </motion.div>
             </div>
           </motion.div>
@@ -308,7 +395,7 @@ const Portfolio = () => {
       {/* Projects Section */}
       <section id="projects" className="py-20 px-6 bg-gray-50">
         <div className="max-w-7xl mx-auto">
-          <motion.h2 
+          <motion.h2
             initial={{ opacity: 0, y: -20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
@@ -317,8 +404,8 @@ const Portfolio = () => {
           >
             Selected projects
           </motion.h2>
-          
-          <motion.p 
+
+          <motion.p
             initial={{ opacity: 0 }}
             whileInView={{ opacity: 1 }}
             viewport={{ once: true }}
@@ -328,7 +415,7 @@ const Portfolio = () => {
             Explore my selected projects, showcasing my expertise in cloud architecture, full-stack development, and AI integration.
           </motion.p>
 
-          <motion.div 
+          <motion.div
             variants={staggerContainer}
             initial="hidden"
             whileInView="visible"
@@ -337,7 +424,7 @@ const Portfolio = () => {
           >
             {/* Project 1: F1-GPT */}
             <motion.div variants={fadeInUp} className="group cursor-pointer">
-              <motion.div 
+              <motion.div
                 whileHover={{ y: -10, boxShadow: "0 20px 40px rgba(6, 182, 212, 0.3)" }}
                 transition={{ type: "spring", stiffness: 300 }}
                 className="aspect-[4/3] bg-gradient-to-br from-gray-900 via-cyan-900 to-gray-700 rounded-lg mb-6 overflow-hidden relative hover:shadow-2xl transition-shadow"
@@ -367,7 +454,7 @@ const Portfolio = () => {
 
             {/* Project 2: Jump Markdown Editor */}
             <motion.div variants={fadeInUp} className="group cursor-pointer">
-              <motion.div 
+              <motion.div
                 whileHover={{ y: -10, boxShadow: "0 20px 40px rgba(139, 92, 246, 0.3)" }}
                 transition={{ type: "spring", stiffness: 300 }}
                 className="aspect-[4/3] bg-gradient-to-br from-blue-500 via-purple-500 to-purple-600 rounded-lg mb-6 overflow-hidden relative hover:shadow-2xl transition-shadow"
@@ -397,7 +484,7 @@ const Portfolio = () => {
 
             {/* Project 3: Kubernetes Infrastructure */}
             <motion.div variants={fadeInUp} className="group cursor-pointer">
-              <motion.div 
+              <motion.div
                 whileHover={{ y: -10, boxShadow: "0 20px 40px rgba(16, 185, 129, 0.3)" }}
                 transition={{ type: "spring", stiffness: 300 }}
                 className="aspect-[4/3] bg-gradient-to-br from-green-600 via-emerald-500 to-teal-500 rounded-lg mb-6 overflow-hidden relative hover:shadow-2xl transition-shadow"
@@ -420,7 +507,7 @@ const Portfolio = () => {
 
             {/* Project 4: AWS Automation */}
             <motion.div variants={fadeInUp} className="group cursor-pointer">
-              <motion.div 
+              <motion.div
                 whileHover={{ y: -10 }}
                 transition={{ type: "spring", stiffness: 300 }}
                 className="aspect-[4/3] bg-gradient-to-br from-orange-500 to-red-500 rounded-lg mb-6 overflow-hidden relative hover:shadow-2xl transition-shadow"
@@ -447,7 +534,7 @@ const Portfolio = () => {
       {/* Services Section */}
       <section id="services" className="py-20 px-6 bg-white">
         <div className="max-w-7xl mx-auto">
-          <motion.h2 
+          <motion.h2
             initial={{ opacity: 0, y: -20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
@@ -455,8 +542,8 @@ const Portfolio = () => {
           >
             What I offer
           </motion.h2>
-          
-          <motion.div 
+
+          <motion.div
             variants={staggerContainer}
             initial="hidden"
             whileInView="visible"
@@ -484,7 +571,7 @@ const Portfolio = () => {
       {/* About Section */}
       <section id="about" className="py-20 px-6 bg-gray-50">
         <div className="max-w-7xl mx-auto">
-          <motion.h2 
+          <motion.h2
             initial={{ opacity: 0, y: -20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
@@ -492,9 +579,9 @@ const Portfolio = () => {
           >
             About me
           </motion.h2>
-          
+
           <div className="grid md:grid-cols-3 gap-12">
-            <motion.div 
+            <motion.div
               initial={{ opacity: 0, x: -50 }}
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true }}
@@ -512,7 +599,7 @@ const Portfolio = () => {
               </p>
             </motion.div>
 
-            <motion.div 
+            <motion.div
               variants={staggerContainer}
               initial="hidden"
               whileInView="visible"
@@ -531,7 +618,7 @@ const Portfolio = () => {
                   indigo: 'border-indigo-500',
                   emerald: 'border-emerald-500'
                 };
-                
+
                 return (
                   <motion.div key={index} variants={fadeInUp} className={`border-l-4 ${colorClasses[stat.color]} pl-6`}>
                     <div className="text-3xl font-bold text-gray-900">{stat.value}</div>
@@ -547,7 +634,7 @@ const Portfolio = () => {
       {/* Experience Section */}
       <section id="experience" className="py-20 px-6 bg-white">
         <div className="max-w-7xl mx-auto">
-          <motion.h2 
+          <motion.h2
             initial={{ opacity: 0, y: -20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
@@ -555,8 +642,8 @@ const Portfolio = () => {
           >
             Experience
           </motion.h2>
-          
-          <motion.div 
+
+          <motion.div
             variants={staggerContainer}
             initial="hidden"
             whileInView="visible"
@@ -594,35 +681,35 @@ const Portfolio = () => {
                   'Implemented CI/CD pipelines using Jenkins and GitHub Actions for automated deployment'
                 ]
               }
-                          ].map((job, index) => {
-                const colors = ['orange', 'cyan', 'indigo'];
-                const colorClasses = {
-                  orange: 'bg-orange-500',
-                  cyan: 'bg-cyan-500',
-                  indigo: 'bg-indigo-500'
-                };
-                
-                return (
-                  <motion.div key={index} variants={fadeInUp} className="border-l-2 border-gray-200 pl-8 relative">
-                    <div className={`absolute w-4 h-4 ${colorClasses[colors[index]]} rounded-full`} style={{left: '-9px', top: 0}}></div>
-                <div className="flex justify-between items-start mb-2">
-                  <div>
-                    <h3 className="text-2xl font-semibold text-gray-900">{job.title}</h3>
-                    <div className="text-orange-500 font-medium">{job.company}</div>
+            ].map((job, index) => {
+              const colors = ['orange', 'cyan', 'indigo'];
+              const colorClasses = {
+                orange: 'bg-orange-500',
+                cyan: 'bg-cyan-500',
+                indigo: 'bg-indigo-500'
+              };
+
+              return (
+                <motion.div key={index} variants={fadeInUp} className="border-l-2 border-gray-200 pl-8 relative">
+                  <div className={`absolute w-4 h-4 ${colorClasses[colors[index]]} rounded-full`} style={{ left: '-9px', top: 0 }}></div>
+                  <div className="flex justify-between items-start mb-2">
+                    <div>
+                      <h3 className="text-2xl font-semibold text-gray-900">{job.title}</h3>
+                      <div className="text-orange-500 font-medium">{job.company}</div>
+                    </div>
+                    <div className="text-gray-500">{job.period}</div>
                   </div>
-                  <div className="text-gray-500">{job.period}</div>
-                </div>
-                <ul className="mt-4 space-y-2 text-gray-600">
-                  {job.achievements.map((achievement, i) => (
-                    <li key={i}>• {achievement}</li>
-                  ))}
-                                  </ul>
+                  <ul className="mt-4 space-y-2 text-gray-600">
+                    {job.achievements.map((achievement, i) => (
+                      <li key={i}>• {achievement}</li>
+                    ))}
+                  </ul>
                 </motion.div>
               );
             })}
           </motion.div>
 
-          <motion.div 
+          <motion.div
             initial={{ opacity: 0 }}
             whileInView={{ opacity: 1 }}
             viewport={{ once: true }}
@@ -630,7 +717,7 @@ const Portfolio = () => {
             className="mt-20"
           >
             <h3 className="text-3xl font-bold text-gray-900 mb-8">Technical Skills</h3>
-            <motion.div 
+            <motion.div
               variants={staggerContainer}
               initial="hidden"
               whileInView="visible"
@@ -653,15 +740,15 @@ const Portfolio = () => {
                   emerald: 'bg-emerald-100 text-emerald-700 hover:bg-emerald-200',
                   blue: 'bg-blue-100 text-blue-700 hover:bg-blue-200'
                 };
-                
+
                 return (
                   <motion.div key={index} variants={fadeInUp}>
                     <h4 className="font-semibold text-gray-900 mb-3">{category.title}</h4>
                     <div className="flex flex-wrap gap-2">
                       {category.skills.map(skill => (
-                        <motion.span 
-                          whileHover={{ scale: 1.05 }} 
-                          key={skill} 
+                        <motion.span
+                          whileHover={{ scale: 1.05 }}
+                          key={skill}
                           className={`px-3 py-1 ${colorClasses[category.color]} rounded-full text-sm cursor-default transition-colors`}
                         >
                           {skill}
@@ -677,15 +764,15 @@ const Portfolio = () => {
       </section>
 
       {/* Contact Section */}
-      <motion.section 
+      <motion.section
         initial={{ opacity: 0 }}
         whileInView={{ opacity: 1 }}
         viewport={{ once: true }}
-        id="contact" 
+        id="contact"
         className="py-20 px-6 bg-gray-800 text-white"
       >
         <div className="max-w-4xl mx-auto text-center">
-          <motion.h2 
+          <motion.h2
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
@@ -693,7 +780,7 @@ const Portfolio = () => {
           >
             Interested in working together?
           </motion.h2>
-          <motion.p 
+          <motion.p
             initial={{ opacity: 0 }}
             whileInView={{ opacity: 1 }}
             viewport={{ once: true }}
@@ -702,10 +789,10 @@ const Portfolio = () => {
           >
             Let's discuss cloud architecture, DevOps consulting, or full-stack development projects.
           </motion.p>
-          <motion.a 
+          <motion.a
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
-            href="mailto:yatheeshnagella17@gmail.com" 
+            href="mailto:yatheeshnagella17@gmail.com"
             className="inline-block bg-orange-500 hover:bg-orange-600 text-white font-semibold px-8 py-4 rounded-lg transition-colors"
           >
             Get in Touch

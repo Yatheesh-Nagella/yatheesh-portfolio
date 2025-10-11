@@ -2,7 +2,6 @@
 
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { trackProjectClick, trackSectionView, trackContactClick, trackSocialClick } from '../lib/analytics';
 
 const Portfolio = () => {
   const [activeSection, setActiveSection] = useState('home');
@@ -22,7 +21,6 @@ const Portfolio = () => {
     if (element) {
       element.scrollIntoView({ behavior: 'smooth' });
       setActiveSection(sectionId);
-      trackSectionView(sectionId);
     }
   };
 
@@ -48,7 +46,116 @@ const Portfolio = () => {
   };
 
   return (
-    <div className="min-h-screen bg-white">
+    <div className="min-h-screen bg-white relative overflow-hidden">
+      {/* Animated Gradient Wave Background */}
+      <div className="fixed inset-0 -z-10 overflow-hidden pointer-events-none">
+        {/* Base gradient layer */}
+        <div className="absolute inset-0 bg-gradient-to-br from-white via-orange-50/30 to-white" />
+        
+        {/* Animated gradient waves */}
+        <motion.div
+          animate={{
+            background: [
+              'radial-gradient(circle at 20% 50%, rgba(255, 87, 34, 0.15) 0%, transparent 50%), radial-gradient(circle at 80% 80%, rgba(6, 182, 212, 0.15) 0%, transparent 50%), radial-gradient(circle at 40% 20%, rgba(139, 92, 246, 0.15) 0%, transparent 50%)',
+              'radial-gradient(circle at 80% 50%, rgba(255, 87, 34, 0.15) 0%, transparent 50%), radial-gradient(circle at 20% 80%, rgba(6, 182, 212, 0.15) 0%, transparent 50%), radial-gradient(circle at 60% 20%, rgba(139, 92, 246, 0.15) 0%, transparent 50%)',
+              'radial-gradient(circle at 50% 80%, rgba(255, 87, 34, 0.15) 0%, transparent 50%), radial-gradient(circle at 30% 30%, rgba(6, 182, 212, 0.15) 0%, transparent 50%), radial-gradient(circle at 70% 60%, rgba(139, 92, 246, 0.15) 0%, transparent 50%)',
+              'radial-gradient(circle at 20% 50%, rgba(255, 87, 34, 0.15) 0%, transparent 50%), radial-gradient(circle at 80% 80%, rgba(6, 182, 212, 0.15) 0%, transparent 50%), radial-gradient(circle at 40% 20%, rgba(139, 92, 246, 0.15) 0%, transparent 50%)',
+            ],
+          }}
+          transition={{
+            duration: 15,
+            repeat: Infinity,
+            ease: "easeInOut",
+          }}
+          className="absolute inset-0"
+        />
+        
+        {/* Secondary wave layer */}
+        <motion.div
+          animate={{
+            background: [
+              'radial-gradient(circle at 60% 40%, rgba(236, 72, 153, 0.1) 0%, transparent 50%), radial-gradient(circle at 30% 70%, rgba(99, 102, 241, 0.1) 0%, transparent 50%)',
+              'radial-gradient(circle at 40% 60%, rgba(236, 72, 153, 0.1) 0%, transparent 50%), radial-gradient(circle at 70% 30%, rgba(99, 102, 241, 0.1) 0%, transparent 50%)',
+              'radial-gradient(circle at 50% 50%, rgba(236, 72, 153, 0.1) 0%, transparent 50%), radial-gradient(circle at 50% 50%, rgba(99, 102, 241, 0.1) 0%, transparent 50%)',
+              'radial-gradient(circle at 60% 40%, rgba(236, 72, 153, 0.1) 0%, transparent 50%), radial-gradient(circle at 30% 70%, rgba(99, 102, 241, 0.1) 0%, transparent 50%)',
+            ],
+          }}
+          transition={{
+            duration: 20,
+            repeat: Infinity,
+            ease: "easeInOut",
+            delay: 1,
+          }}
+          className="absolute inset-0"
+        />
+        
+        {/* Floating gradient orbs for depth */}
+        <motion.div
+          animate={{
+            scale: [1, 1.2, 1],
+            opacity: [0.3, 0.5, 0.3],
+            x: [0, 50, 0],
+            y: [0, -30, 0],
+          }}
+          transition={{
+            duration: 25,
+            repeat: Infinity,
+            ease: "easeInOut",
+          }}
+          className="absolute top-20 left-10 w-96 h-96 bg-gradient-to-br from-orange-400/20 via-pink-400/20 to-transparent rounded-full blur-3xl"
+        />
+        
+        <motion.div
+          animate={{
+            scale: [1, 1.3, 1],
+            opacity: [0.3, 0.4, 0.3],
+            x: [0, -80, 0],
+            y: [0, 50, 0],
+          }}
+          transition={{
+            duration: 30,
+            repeat: Infinity,
+            ease: "easeInOut",
+            delay: 2,
+          }}
+          className="absolute top-1/3 right-10 w-[500px] h-[500px] bg-gradient-to-br from-cyan-400/20 via-blue-400/20 to-transparent rounded-full blur-3xl"
+        />
+        
+        <motion.div
+          animate={{
+            scale: [1, 1.1, 1],
+            opacity: [0.25, 0.45, 0.25],
+            x: [0, 60, 0],
+            y: [0, -40, 0],
+          }}
+          transition={{
+            duration: 28,
+            repeat: Infinity,
+            ease: "easeInOut",
+            delay: 4,
+          }}
+          className="absolute bottom-20 left-1/4 w-[450px] h-[450px] bg-gradient-to-br from-purple-400/20 via-indigo-400/20 to-transparent rounded-full blur-3xl"
+        />
+        
+        <motion.div
+          animate={{
+            scale: [1, 1.15, 1],
+            opacity: [0.2, 0.4, 0.2],
+            x: [0, -40, 0],
+            y: [0, 60, 0],
+          }}
+          transition={{
+            duration: 35,
+            repeat: Infinity,
+            ease: "easeInOut",
+            delay: 6,
+          }}
+          className="absolute bottom-1/4 right-1/3 w-[400px] h-[400px] bg-gradient-to-br from-emerald-400/15 via-teal-400/15 to-transparent rounded-full blur-3xl"
+        />
+        
+        {/* Subtle grain texture overlay */}
+        <div className="absolute inset-0 opacity-[0.015] bg-[url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIzMDAiIGhlaWdodD0iMzAwIj48ZmlsdGVyIGlkPSJhIiB4PSIwIiB5PSIwIj48ZmVUdXJidWxlbmNlIGJhc2VGcmVxdWVuY3k9Ii43NSIgc3RpdGNoVGlsZXM9InN0aXRjaCIgdHlwZT0iZnJhY3RhbE5vaXNlIi8+PGZlQ29sb3JNYXRyaXggdHlwZT0ic2F0dXJhdGUiIHZhbHVlcz0iMCIvPjwvZmlsdGVyPjxwYXRoIGQ9Ik0wIDBoMzAwdjMwMEgweiIgZmlsdGVyPSJ1cmwoI2EpIiBvcGFjaXR5PSIuMDUiLz48L3N2Zz4=')]" />
+      </div>
       {/* Navigation */}
       <motion.nav 
         initial={{ y: -100 }}
@@ -58,7 +165,7 @@ const Portfolio = () => {
       >
         <div className="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
           <button onClick={() => scrollToSection('home')} className="text-xl font-semibold text-gray-900 hover:text-orange-500 transition-colors">
-            Yatheesh
+            Yatheesh Nagella
           </button>
           
           {/* Desktop Navigation */}
@@ -115,67 +222,85 @@ const Portfolio = () => {
       </motion.nav>
 
       {/* Hero Section */}
-      <section id="home" className="pt-32 pb-20 px-6">
+      <section id="home" className="pt-20 md:pt-32 pb-12 md:pb-20 px-6">
         <div className="max-w-7xl mx-auto">
-          <div className="mb-12">
-            <motion.div 
-              initial={{ scale: 0 }}
-              animate={{ scale: 1 }}
-              transition={{ type: "spring", stiffness: 200, delay: 0.2 }}
-              className="w-32 h-32 rounded-full bg-gray-200 flex items-center justify-center text-6xl mb-8"
-            >
-              👤
-            </motion.div>
-            
-            <motion.h1 
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.4 }}
-              className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-normal text-gray-900 mb-6 md:mb-8 leading-[1.15] max-w-5xl"
-            >
-              I'm Yatheesh Nagella, a Software Engineer & Cloud Solutions Consultant specializing in building scalable cloud infrastructure and intelligent AI applications.
-            </motion.h1>
-            
-            <motion.p 
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.6 }}
-              className="text-base sm:text-lg md:text-xl text-gray-600 max-w-4xl leading-relaxed"
-            >
-              Leveraging expertise in multi-cloud architecture, DevOps automation, and modern web technologies, I help organizations build resilient systems that drive business value.
-            </motion.p>
-          </div>
-
-          <motion.div 
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 0.8 }}
-            className="flex gap-6 mb-16"
+          {/* Glassmorphism Container */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8 }}
+            className="relative backdrop-blur-xl bg-white/40 border border-white/60 rounded-3xl p-6 md:p-12 shadow-2xl"
           >
-            <motion.a whileHover={{ scale: 1.1 }} whileTap={{ scale: 0.95 }} href="https://github.com/Yatheesh-Nagella" target="_blank" rel="noopener noreferrer" onClick={() => trackSocialClick('GitHub')} className="text-gray-600 hover:text-orange-500 transition-colors">
-              GitHub
-            </motion.a>
-            <motion.a whileHover={{ scale: 1.1 }} whileTap={{ scale: 0.95 }} href="https://linkedin.com/in/Yatheesh-Nagella" target="_blank" rel="noopener noreferrer" onClick={() => trackSocialClick('LinkedIn')} className="text-gray-600 hover:text-orange-500 transition-colors">
-              LinkedIn
-            </motion.a>
-            <motion.a whileHover={{ scale: 1.1 }} whileTap={{ scale: 0.95 }} href="mailto:yatheeshnagella17@gmail.com" onClick={trackContactClick} className="text-gray-600 hover:text-orange-500 transition-colors">
-              Email
-            </motion.a>
-          </motion.div>
+            {/* Gradient overlay on card */}
+            <div className="absolute inset-0 bg-gradient-to-br from-orange-500/5 via-transparent to-cyan-500/5 rounded-3xl pointer-events-none" />
+            
+            {/* Content */}
+            <div className="relative z-10">
+              <div className="mb-8 md:mb-12">
+                <motion.div 
+                  initial={{ scale: 0 }}
+                  animate={{ scale: 1 }}
+                  transition={{ type: "spring", stiffness: 200, delay: 0.2 }}
+                  className="w-32 h-32 rounded-full bg-gradient-to-br from-orange-500/20 to-cyan-500/20 backdrop-blur-sm border-2 border-white/50 overflow-hidden mb-8 shadow-lg"
+                >
+                  <img 
+                    src="/profile.png" 
+                    alt="Yatheesh Nagella"
+                    className="w-full h-full object-cover"
+                  />
+                </motion.div>
+                
+                <motion.h1 
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.6, delay: 0.4 }}
+                  className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-normal text-gray-900 mb-6 md:mb-8 leading-[1.15] max-w-5xl"
+                >
+                  I'm Yatheesh Nagella, a Software Engineer & Cloud Solutions Consultant.
+                </motion.h1>
+                
+                <motion.p 
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.6, delay: 0.6 }}
+                  className="text-base sm:text-lg md:text-xl text-gray-600 max-w-4xl leading-relaxed"
+                >
+                  Leveraging expertise in multi-cloud architecture, DevOps automation, and modern web technologies, I help organizations build resilient systems that drive business value.
+                </motion.p>
+              </div>
 
-          <motion.div 
-            variants={staggerContainer}
-            initial="hidden"
-            animate="visible"
-            className="grid grid-cols-2 md:grid-cols-4 gap-4"
-          >
-            {[1, 2, 3, 4].map((i) => (
-              <motion.div key={i} variants={fadeInUp} whileHover={{ scale: 1.05, y: -5 }} transition={{ type: "spring", stiffness: 300 }} className="aspect-square bg-gray-100 rounded-lg overflow-hidden hover:shadow-lg transition-shadow cursor-pointer">
-                <div className="w-full h-full flex items-center justify-center text-4xl">
-                  📱
-                </div>
+              <motion.div 
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ delay: 0.8 }}
+                className="flex gap-6 mb-16"
+              >
+                <motion.a whileHover={{ scale: 1.1, color: '#06B6D4' }} whileTap={{ scale: 0.95 }} href="https://github.com/Yatheesh-Nagella" target="_blank" rel="noopener noreferrer" className="text-gray-600 hover:text-cyan-500 transition-colors font-medium">
+                  GitHub
+                </motion.a>
+                <motion.a whileHover={{ scale: 1.1, color: '#6366F1' }} whileTap={{ scale: 0.95 }} href="https://linkedin.com/in/Yatheesh-Nagella" target="_blank" rel="noopener noreferrer" className="text-gray-600 hover:text-indigo-500 transition-colors font-medium">
+                  LinkedIn
+                </motion.a>
+                <motion.a whileHover={{ scale: 1.1, color: '#FF5722' }} whileTap={{ scale: 0.95 }} href="mailto:yatheeshnagella17@gmail.com" className="text-gray-600 hover:text-orange-500 transition-colors font-medium">
+                  Email
+                </motion.a>
               </motion.div>
-            ))}
+
+              <motion.div 
+                variants={staggerContainer}
+                initial="hidden"
+                animate="visible"
+                className="grid grid-cols-2 md:grid-cols-4 gap-4"
+              >
+                {[1, 2, 3, 4].map((i) => (
+                  <motion.div key={i} variants={fadeInUp} whileHover={{ scale: 1.05, y: -5 }} transition={{ type: "spring", stiffness: 300 }} className="aspect-square bg-white/60 backdrop-blur-sm border border-white/60 rounded-lg overflow-hidden hover:shadow-lg transition-shadow cursor-pointer">
+                    <div className="w-full h-full flex items-center justify-center text-4xl">
+                      📱
+                    </div>
+                  </motion.div>
+                ))}
+              </motion.div>
+            </div>
           </motion.div>
         </div>
       </section>
@@ -213,9 +338,9 @@ const Portfolio = () => {
             {/* Project 1: F1-GPT */}
             <motion.div variants={fadeInUp} className="group cursor-pointer">
               <motion.div 
-                whileHover={{ y: -10 }}
+                whileHover={{ y: -10, boxShadow: "0 20px 40px rgba(6, 182, 212, 0.3)" }}
                 transition={{ type: "spring", stiffness: 300 }}
-                className="aspect-[4/3] bg-gradient-to-br from-gray-900 to-gray-700 rounded-lg mb-6 overflow-hidden relative hover:shadow-2xl transition-shadow"
+                className="aspect-[4/3] bg-gradient-to-br from-gray-900 via-cyan-900 to-gray-700 rounded-lg mb-6 overflow-hidden relative hover:shadow-2xl transition-shadow"
               >
                 <div className="absolute inset-0 flex items-center justify-center">
                   <div className="text-center">
@@ -231,10 +356,10 @@ const Portfolio = () => {
                 Building a production-ready AI chatbot with Next.js 14, TypeScript, and OpenAI GPT-3.5-turbo with real-time streaming responses and semantic search capabilities using DataStax Astra DB vector database.
               </p>
               <div className="flex gap-4">
-                <motion.a whileHover={{ x: 5 }} href="https://f1-gpt-eta.vercel.app/" target="_blank" rel="noopener noreferrer" onClick={() => trackProjectClick('F1-GPT', 'https://f1-gpt-eta.vercel.app/')} className="text-orange-500 hover:text-orange-600 font-medium">
+                <motion.a whileHover={{ x: 5 }} href="https://f1-gpt-eta.vercel.app/" target="_blank" rel="noopener noreferrer" className="text-orange-500 hover:text-orange-600 font-medium">
                   Live Demo →
                 </motion.a>
-                <motion.a whileHover={{ x: 5 }} href="https://github.com/Yatheesh-Nagella" target="_blank" rel="noopener noreferrer" onClick={() => trackProjectClick('F1-GPT', 'https://github.com/Yatheesh-Nagella')} className="text-gray-600 hover:text-orange-500 font-medium">
+                <motion.a whileHover={{ x: 5 }} href="https://github.com/Yatheesh-Nagella" target="_blank" rel="noopener noreferrer" className="text-gray-600 hover:text-orange-500 font-medium">
                   View Code →
                 </motion.a>
               </div>
@@ -243,9 +368,9 @@ const Portfolio = () => {
             {/* Project 2: Jump Markdown Editor */}
             <motion.div variants={fadeInUp} className="group cursor-pointer">
               <motion.div 
-                whileHover={{ y: -10 }}
+                whileHover={{ y: -10, boxShadow: "0 20px 40px rgba(139, 92, 246, 0.3)" }}
                 transition={{ type: "spring", stiffness: 300 }}
-                className="aspect-[4/3] bg-gradient-to-br from-blue-500 to-purple-600 rounded-lg mb-6 overflow-hidden relative hover:shadow-2xl transition-shadow"
+                className="aspect-[4/3] bg-gradient-to-br from-blue-500 via-purple-500 to-purple-600 rounded-lg mb-6 overflow-hidden relative hover:shadow-2xl transition-shadow"
               >
                 <div className="absolute inset-0 flex items-center justify-center">
                   <div className="text-center">
@@ -273,9 +398,9 @@ const Portfolio = () => {
             {/* Project 3: Kubernetes Infrastructure */}
             <motion.div variants={fadeInUp} className="group cursor-pointer">
               <motion.div 
-                whileHover={{ y: -10 }}
+                whileHover={{ y: -10, boxShadow: "0 20px 40px rgba(16, 185, 129, 0.3)" }}
                 transition={{ type: "spring", stiffness: 300 }}
-                className="aspect-[4/3] bg-gradient-to-br from-green-600 to-teal-500 rounded-lg mb-6 overflow-hidden relative hover:shadow-2xl transition-shadow"
+                className="aspect-[4/3] bg-gradient-to-br from-green-600 via-emerald-500 to-teal-500 rounded-lg mb-6 overflow-hidden relative hover:shadow-2xl transition-shadow"
               >
                 <div className="absolute inset-0 flex items-center justify-center">
                   <div className="text-center">
@@ -395,16 +520,25 @@ const Portfolio = () => {
               className="space-y-6"
             >
               {[
-                { value: '3+', label: 'Years Experience' },
-                { value: '3.78', label: 'M.S. Computer Science GPA' },
-                { value: 'AWS Certified', label: 'Solutions Architect - Associate' },
-                { value: 'Oklahoma City, OK', label: 'Available for Remote Work' }
-              ].map((stat, index) => (
-                <motion.div key={index} variants={fadeInUp} className="border-l-4 border-orange-500 pl-6">
-                  <div className="text-3xl font-bold text-gray-900">{stat.value}</div>
-                  <div className="text-gray-600">{stat.label}</div>
-                </motion.div>
-              ))}
+                { value: '3+', label: 'Years Experience', color: 'orange' },
+                { value: '3.78', label: 'M.S. Computer Science GPA', color: 'cyan' },
+                { value: 'AWS Certified', label: 'Solutions Architect - Associate', color: 'indigo' },
+                { value: 'Oklahoma City, OK', label: 'Available for Remote Work', color: 'emerald' }
+              ].map((stat, index) => {
+                const colorClasses = {
+                  orange: 'border-orange-500',
+                  cyan: 'border-cyan-500',
+                  indigo: 'border-indigo-500',
+                  emerald: 'border-emerald-500'
+                };
+                
+                return (
+                  <motion.div key={index} variants={fadeInUp} className={`border-l-4 ${colorClasses[stat.color]} pl-6`}>
+                    <div className="text-3xl font-bold text-gray-900">{stat.value}</div>
+                    <div className="text-gray-600">{stat.label}</div>
+                  </motion.div>
+                );
+              })}
             </motion.div>
           </div>
         </div>
@@ -460,9 +594,17 @@ const Portfolio = () => {
                   'Implemented CI/CD pipelines using Jenkins and GitHub Actions for automated deployment'
                 ]
               }
-            ].map((job, index) => (
-              <motion.div key={index} variants={fadeInUp} className="border-l-2 border-gray-200 pl-8 relative">
-                <div className="absolute w-4 h-4 bg-orange-500 rounded-full" style={{left: '-9px', top: 0}}></div>
+                          ].map((job, index) => {
+                const colors = ['orange', 'cyan', 'indigo'];
+                const colorClasses = {
+                  orange: 'bg-orange-500',
+                  cyan: 'bg-cyan-500',
+                  indigo: 'bg-indigo-500'
+                };
+                
+                return (
+                  <motion.div key={index} variants={fadeInUp} className="border-l-2 border-gray-200 pl-8 relative">
+                    <div className={`absolute w-4 h-4 ${colorClasses[colors[index]]} rounded-full`} style={{left: '-9px', top: 0}}></div>
                 <div className="flex justify-between items-start mb-2">
                   <div>
                     <h3 className="text-2xl font-semibold text-gray-900">{job.title}</h3>
@@ -474,9 +616,10 @@ const Portfolio = () => {
                   {job.achievements.map((achievement, i) => (
                     <li key={i}>• {achievement}</li>
                   ))}
-                </ul>
-              </motion.div>
-            ))}
+                                  </ul>
+                </motion.div>
+              );
+            })}
           </motion.div>
 
           <motion.div 
@@ -495,22 +638,39 @@ const Portfolio = () => {
               className="grid md:grid-cols-2 lg:grid-cols-3 gap-8"
             >
               {[
-                { title: 'Cloud & Infrastructure', skills: ['AWS', 'GCP', 'Azure', 'Kubernetes', 'Docker', 'Terraform'] },
-                { title: 'Programming Languages', skills: ['JavaScript', 'TypeScript', 'Python', 'Java', 'Go', 'PHP'] },
-                { title: 'Frontend Technologies', skills: ['React', 'Next.js', 'Angular', 'Flutter', 'Tailwind CSS'] },
-                { title: 'Backend & APIs', skills: ['Node.js', 'Express.js', 'Spring Boot', 'GraphQL', 'REST'] },
-                { title: 'Databases', skills: ['PostgreSQL', 'MongoDB', 'Astra DB', 'Vector DBs'] },
-                { title: 'DevOps & Tools', skills: ['Jenkins', 'GitHub Actions', 'CI/CD', 'Istio', 'Kafka'] }
-              ].map((category, index) => (
-                <motion.div key={index} variants={fadeInUp}>
-                  <h4 className="font-semibold text-gray-900 mb-3">{category.title}</h4>
-                  <div className="flex flex-wrap gap-2">
-                    {category.skills.map(skill => (
-                      <motion.span whileHover={{ scale: 1.05 }} key={skill} className="px-3 py-1 bg-gray-100 text-gray-700 rounded-full text-sm cursor-default">{skill}</motion.span>
-                    ))}
-                  </div>
-                </motion.div>
-              ))}
+                { title: 'Cloud & Infrastructure', skills: ['AWS', 'GCP', 'Azure', 'Kubernetes', 'Docker', 'Terraform'], color: 'cyan' },
+                { title: 'Programming Languages', skills: ['JavaScript', 'TypeScript', 'Python', 'Java', 'Go', 'PHP'], color: 'purple' },
+                { title: 'Frontend Technologies', skills: ['React', 'Next.js', 'Angular', 'Flutter', 'Tailwind CSS'], color: 'indigo' },
+                { title: 'Backend & APIs', skills: ['Node.js', 'Express.js', 'Spring Boot', 'GraphQL', 'REST'], color: 'orange' },
+                { title: 'Databases', skills: ['PostgreSQL', 'MongoDB', 'Astra DB', 'Vector DBs'], color: 'emerald' },
+                { title: 'DevOps & Tools', skills: ['Jenkins', 'GitHub Actions', 'CI/CD', 'Istio', 'Kafka'], color: 'blue' }
+              ].map((category, index) => {
+                const colorClasses = {
+                  cyan: 'bg-cyan-100 text-cyan-700 hover:bg-cyan-200',
+                  purple: 'bg-purple-100 text-purple-700 hover:bg-purple-200',
+                  indigo: 'bg-indigo-100 text-indigo-700 hover:bg-indigo-200',
+                  orange: 'bg-orange-100 text-orange-700 hover:bg-orange-200',
+                  emerald: 'bg-emerald-100 text-emerald-700 hover:bg-emerald-200',
+                  blue: 'bg-blue-100 text-blue-700 hover:bg-blue-200'
+                };
+                
+                return (
+                  <motion.div key={index} variants={fadeInUp}>
+                    <h4 className="font-semibold text-gray-900 mb-3">{category.title}</h4>
+                    <div className="flex flex-wrap gap-2">
+                      {category.skills.map(skill => (
+                        <motion.span 
+                          whileHover={{ scale: 1.05 }} 
+                          key={skill} 
+                          className={`px-3 py-1 ${colorClasses[category.color]} rounded-full text-sm cursor-default transition-colors`}
+                        >
+                          {skill}
+                        </motion.span>
+                      ))}
+                    </div>
+                  </motion.div>
+                );
+              })}
             </motion.div>
           </motion.div>
         </div>

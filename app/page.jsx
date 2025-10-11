@@ -209,7 +209,7 @@ const Portfolio = () => {
             initial={{ opacity: 0, height: 0 }}
             animate={{ opacity: 1, height: 'auto' }}
             exit={{ opacity: 0, height: 0 }}
-            className="md:hidden bg-white border-t border-gray-200"
+            className="md:hidden bg-white border-t border-gray-200 shadow-lg"
           >
             <div className="px-6 py-4 space-y-4">
               {['Projects', 'Services', 'About', 'Blog', 'Experience', 'Contact'].map((item) => (
@@ -221,8 +221,10 @@ const Portfolio = () => {
                     } else {
                       scrollToSection(item.toLowerCase());
                     }
+                    setIsMobileMenuOpen(false); // Close menu after click
                   }}
-                  className={`text-gray-600 hover:text-orange-500 transition-colors`}
+                  className={`block w-full text-left py-2 text-gray-600 hover:text-orange-500 transition-colors ${activeSection === item.toLowerCase() ? 'text-orange-500 font-semibold' : ''
+                    }`}
                 >
                   {item}
                 </button>

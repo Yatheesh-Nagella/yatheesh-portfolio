@@ -52,3 +52,49 @@ export const trackSocialClick = (platform) => {
     value: 1,
   });
 };
+
+// Tutorial-specific tracking functions
+export const trackTutorialView = (tutorialName, step) => {
+  event({
+    action: 'view',
+    category: 'Tutorial',
+    label: `${tutorialName} - Step ${step}`,
+    value: 1,
+  });
+};
+
+export const trackCodeCopy = (snippetTitle) => {
+  event({
+    action: 'code_copy',
+    category: 'Tutorial',
+    label: snippetTitle,
+    value: 1,
+  });
+};
+
+export const trackTutorialAction = (action, label) => {
+  event({
+    action: action,
+    category: 'Tutorial',
+    label: label,
+    value: 1,
+  });
+};
+
+export const trackTutorialNavigation = (destination) => {
+  event({
+    action: 'navigation',
+    category: 'Tutorial',
+    label: destination,
+    value: 1,
+  });
+};
+
+export const trackTutorialShare = (platform) => {
+  event({
+    action: 'social_share',
+    category: 'Tutorial',
+    label: platform,
+    value: 1,
+  });
+};

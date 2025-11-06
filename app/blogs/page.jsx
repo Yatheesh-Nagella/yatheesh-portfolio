@@ -17,17 +17,17 @@ export default function BlogsPage() {
     },
     {
       id: 'build-pong-game',
-      title: 'Build Pong Game in React (Advanced)',
+      title: 'Build Pong Game in React',
       description: 'Take your skills to the next level! Learn game loops, collision detection, AI programming, and canvas rendering by building the classic Pong game from scratch.',
-      date: 'February 2025',
-      readTime: '25 min read',
+      date: 'November 2, 2025',
+      readTime: '25 min read, play it now!',
       tags: ['React', 'Game Dev', 'Canvas API', 'Advanced'],
       path: '/blogs/build-pong-game',
       featured: true,
-      badge: 'COMING SOON',
+      badge: 'NEW',
       badgeColor: 'bg-purple-500',
       emoji: '🏓',
-      comingSoon: true
+      comingSoon: false
     },
     {
       id: 'evolution-of-trust',

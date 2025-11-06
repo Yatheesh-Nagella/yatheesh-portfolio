@@ -67,34 +67,44 @@ A modern, responsive portfolio website showcasing my work as a Software Engineer
 
 ```
 yatheesh-portfolio/
-├── app/                      # Next.js App Router
-│   ├── layout.jsx           # Root layout with analytics
-│   ├── page.jsx             # Homepage (main portfolio)
-│   ├── globals.css          # Global styles + Tailwind
-│   ├── favicon.ico          # Site favicon
-│   └── blogs/               # Blog section
-│       ├── page.jsx         # Blog index
-│       └── evolution-of-trust/
-│           └── page.jsx     # Individual blog post
 │
-├── lib/                     # Utilities and helpers
-│   └── analytics.jsx        # Google Analytics wrapper
+├── app/ # Main application source folder
+│ ├── blogs/ # Blog posts directory
+│ │ ├── build-pong-game/
+│ │ │ └── page.jsx # Blog: Building a Pong game (page component)
+│ │ ├── evolution-of-trust/
+│ │ │ └── page.jsx # Blog: Evolution of Trust article (page component)
+│ │ ├── interactive-mouse-effects/
+│ │ │ ├── metadata.js # Metadata for interactive mouse effects blog
+│ │ │ └── page.jsx # Blog: Interactive Mouse Effects (page component)
+│ │ └── page.jsx # Main blogs overview/listing page
+│ ├── favicon.ico # Website favicon
+│ ├── globals.css # Global CSS for the app
+│ ├── layout.jsx # Root layout file for the app
+│ └── page.jsx # Main landing page of the app
 │
-├── public/                  # Static assets
-│   ├── profile.png          # Profile photo
-│   ├── marathon.png         # Marathon achievement
-│   └── *.svg                # Icon files
-│
-├── .github/                 # GitHub configuration
-│   └── workflows/           # CI/CD workflows (optional)
-│
-├── package.json             # Dependencies and scripts
-├── next.config.ts           # Next.js configuration
-├── tailwind.config.js       # Tailwind CSS config
-├── postcss.config.mjs       # PostCSS config
-├── tsconfig.json            # TypeScript config
-├── DEPLOY.md                # Deployment checklist
-└── README.md                # This file
+├── DEPLOY.md # Deployment instructions/documentation
+├── eslint.config.mjs # ESLint configuration for linting
+├── lib/
+│ └── analytics.jsx # Analytics library/utilities (likely tracking/metrics)
+├── next-env.d.ts # Next.js type definitions (TypeScript support)
+├── next.config.ts # Next.js configuration file
+├── node_modules/ # Installed npm dependencies
+├── package-lock.json # Auto-generated lockfile for npm
+├── package.json # Project manifest: scripts, dependencies, project meta
+├── postcss.config.mjs # PostCSS configuration (for advanced CSS processing)
+├── PROJECT_STRUCTURE.md # Project structure documentation (current or older)
+├── public/ # Static public files served at root URL
+│ ├── file.svg
+│ ├── globe.svg
+│ ├── marathon.png
+│ ├── next.svg
+│ ├── profile.png
+│ ├── vercel.svg
+│ ├── window.svg
+│ └── YN_Resume.pdf # Your CV/Resume (PDF format, downloadable)
+├── README.md # Main project documentation
+├── tsconfig.json # TypeScript project configuration
 ```
 
 ---

@@ -3,6 +3,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
 import { event } from '@/lib/analytics';
+import KofiButton from '@/components/KofiButton';
 
 // ============================================================================
 // ANALYTICS HELPER (Same pattern as Mouse Effects tutorial)
@@ -1294,6 +1295,10 @@ function PongGame() {
                             </a>
                         </div>
                     </div>
+                </section>
+                {/* NEW: Ko-fi Support Section */}
+                <section className="mt-10">
+                    <KofiButton />
                 </section>
 
             </div>

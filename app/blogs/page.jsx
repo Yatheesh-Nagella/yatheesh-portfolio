@@ -156,27 +156,48 @@ export default function BlogsPage() {
             ))}
           </div>
 
-          {/* Newsletter CTA */}
-          <div className="mt-12 bg-gradient-to-r from-orange-500 to-pink-500 rounded-3xl p-8 lg:p-12 text-white text-center">
-            <h3 className="text-3xl lg:text-4xl font-black mb-4">
-              Want More Tutorials? 📚
-            </h3>
-            <p className="text-lg mb-6 opacity-90">
-              Get notified when I publish new interactive tutorials and coding guides!
-            </p>
-            <div className="flex flex-col sm:flex-row gap-3 max-w-md mx-auto">
-              <input 
-                type="email" 
-                placeholder="your@email.com"
-                className="flex-1 px-6 py-3 rounded-full bg-white text-gray-900 font-medium focus:outline-none focus:ring-4 focus:ring-white/50 placeholder:text-gray-400"
-              />
-              <button className="px-8 py-3 bg-white text-orange-500 rounded-full font-bold hover:bg-gray-100 transition-colors">
-                Subscribe
-              </button>
+          {/* Newsletter + Ko-fi CTA */}
+          <div className="mt-12 space-y-6">
+            {/* Newsletter */}
+            <div className="bg-gradient-to-r from-orange-500 to-pink-500 rounded-3xl p-8 lg:p-12 text-white text-center">
+              <h3 className="text-3xl lg:text-4xl font-black mb-4">
+                Want More Tutorials? 📚
+              </h3>
+              <p className="text-lg mb-6 opacity-90">
+                Get notified when I publish new interactive tutorials and coding guides!
+              </p>
+              <div className="flex flex-col sm:flex-row gap-3 max-w-md mx-auto">
+                <input 
+                  type="email" 
+                  placeholder="your@email.com"
+                  className="flex-1 px-6 py-3 rounded-full bg-white text-gray-900 font-medium focus:outline-none focus:ring-4 focus:ring-white/50 placeholder:text-gray-400"
+                />
+                <button className="px-8 py-3 bg-white text-orange-500 rounded-full font-bold hover:bg-gray-100 transition-colors">
+                  Subscribe
+                </button>
+              </div>
+              <p className="mt-4 text-sm opacity-75">
+                No spam, ever. Unsubscribe anytime.
+              </p>
             </div>
-            <p className="mt-4 text-sm opacity-75">
-              No spam, ever. Unsubscribe anytime.
-            </p>
+            {/* Ko-fi */}
+            <div className="bg-white rounded-3xl p-8 text-center shadow-xl">
+              <h3 className="text-2xl font-bold text-gray-900 mb-3">
+                ☕ Enjoy the Tutorials?
+              </h3>
+              <p className="text-gray-600 mb-6">
+                Support my work and help me create more free, interactive content!
+              </p>
+              <a
+                href="https://ko-fi.com/yatheeshnagella"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 bg-[#FF5E5B] hover:bg-[#FF4542] text-white px-8 py-4 rounded-full font-bold transition-all hover:scale-105"
+              >
+                <span className="text-xl">☕</span>
+                <span>Buy Me a Coffee on Ko-fi</span>
+              </a>
+            </div>
           </div>
         </div>
       </main>

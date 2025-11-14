@@ -11,7 +11,7 @@
  * </ProtectedRoute>
  */
 
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { useAuth } from '@/contexts/AuthContext';
 import { Loader } from 'lucide-react';
@@ -28,6 +28,13 @@ export default function ProtectedRoute({
   const { user, loading } = useAuth();
   const router = useRouter();
 
+  // Redirect to login if not authenticated (use useEffect to avoid render-time navigation)
+  useEffect(() => {
+    if (!loading && !user) {
+      router.push(redirectTo);
+    }
+  }, [user, loading, router, redirectTo]);
+
   // Show loading spinner while checking auth
   if (loading) {
     return (
@@ -40,9 +47,8 @@ export default function ProtectedRoute({
     );
   }
 
-  // Redirect to login if not authenticated
+  // Show nothing while redirecting or if not authenticated
   if (!user) {
-    router.push(redirectTo);
     return null;
   }
 

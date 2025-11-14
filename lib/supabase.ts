@@ -11,9 +11,8 @@ import type {
   Account, 
   Transaction, 
   Budget,
-  InviteCode,
   PlaidItem,
-} from '../types/database.types';
+} from '@/types/database.types';
 
 // Create typed Supabase client
 export const supabase = createClient<Database>(
@@ -47,7 +46,7 @@ export async function getCurrentUser(): Promise<User | null> {
       return null;
     }
     
-    return profile as User;
+    return profile;
   } catch (error) {
     console.error('Error fetching current user:', error);
     return null;
@@ -112,12 +111,14 @@ export async function signUpWithInvite(
     }
     
     // Check expiration
-    if (invite.expires_at && new Date(invite.expires_at) < new Date()) {
+    if (new Date(invite.expires_at) < new Date()) {
       return { user: null, error: 'Invite code has expired' };
     }
     
     // Check usage limit
-    if (invite.used_count !== null && invite.max_uses !== null && invite.used_count >= invite.max_uses) {
+    const currentUsedCount = invite.used_count ?? 0;
+    const maxUses = invite.max_uses ?? 1;
+    if (currentUsedCount >= maxUses) {
       return { user: null, error: 'Invite code has been fully used' };
     }
     
@@ -137,8 +138,7 @@ export async function signUpWithInvite(
     }
     
     // Update invite code usage
-    const newUsedCount = (invite.used_count ?? 0) + 1;
-    const maxUses = invite.max_uses ?? 1;
+    const newUsedCount = currentUsedCount + 1;
     await supabase
       .from('invite_codes')
       .update({ 
@@ -232,20 +232,7 @@ export async function getUserAccounts(userId: string): Promise<Account[]> {
       return [];
     }
     
-    // Map to Account type (removing plaid_items relation)
-    return (data || []).map((item: any) => ({
-      id: item.id,
-      user_id: item.user_id,
-      plaid_item_id: item.plaid_item_id,
-      plaid_account_id: item.plaid_account_id,
-      account_name: item.account_name,
-      account_type: item.account_type,
-      current_balance: item.current_balance,
-      available_balance: item.available_balance,
-      currency: item.currency,
-      is_hidden: item.is_hidden,
-      created_at: item.created_at,
-    })) as Account[];
+    return data as Account[];
   } catch (error) {
     console.error('Error in getUserAccounts:', error);
     return [];
@@ -328,22 +315,7 @@ export async function getUserTransactions(
       return [];
     }
     
-    // Map to Transaction type (removing accounts relation)
-    return (data || []).map((item: any) => ({
-      id: item.id,
-      user_id: item.user_id,
-      account_id: item.account_id,
-      plaid_transaction_id: item.plaid_transaction_id,
-      amount: item.amount,
-      transaction_date: item.transaction_date,
-      merchant_name: item.merchant_name,
-      category: item.category,
-      is_pending: item.is_pending,
-      is_hidden: item.is_hidden,
-      user_notes: item.user_notes,
-      currency: item.currency,
-      created_at: item.created_at,
-    })) as Transaction[];
+    return data as Transaction[];
   } catch (error) {
     console.error('Error in getUserTransactions:', error);
     return [];
@@ -422,7 +394,7 @@ export async function getUserBudgets(userId: string): Promise<Budget[]> {
       return [];
     }
     
-    return (data || []) as Budget[];
+    return data;
   } catch (error) {
     console.error('Error in getUserBudgets:', error);
     return [];
@@ -448,7 +420,6 @@ export async function createBudget(
         category,
         amount,
         period,
-        is_active: true,
       })
       .select()
       .single();
@@ -511,7 +482,7 @@ export async function getUserPlaidItems(userId: string): Promise<PlaidItem[]> {
       return [];
     }
     
-    return (data || []) as PlaidItem[];
+    return data;
   } catch (error) {
     console.error('Error in getUserPlaidItems:', error);
     return [];

@@ -5,6 +5,7 @@
  */
 
 import { Configuration, PlaidApi, PlaidEnvironments, Products, CountryCode } from 'plaid';
+import crypto from 'crypto';
 import { env } from './env';
 
 // ============================================
@@ -443,7 +444,6 @@ export function verifyWebhookSignature(
   signature: string,
   webhookSecret: string
 ): boolean {
-  const crypto = require('crypto');
   const hmac = crypto.createHmac('sha256', webhookSecret);
   hmac.update(body);
   const computedSignature = hmac.digest('hex');
@@ -505,10 +505,12 @@ export async function sandboxFireWebhook(
   }
 
   try {
+    /* eslint-disable @typescript-eslint/no-explicit-any */
     await plaidClient.sandboxItemFireWebhook({
       access_token: accessToken,
       webhook_code: webhookCode as any,
     });
+    /* eslint-enable @typescript-eslint/no-explicit-any */
 
     return {
       success: true,

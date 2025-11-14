@@ -1,14 +1,26 @@
+/**
+ * Finance App Layout
+ * Wraps all finance pages with AuthProvider
+ * Provides consistent navigation for authenticated pages
+ */
+
+import React from 'react';
+import { AuthProvider } from '@/contexts/AuthContext';
+import type { Metadata } from 'next';
+
+export const metadata: Metadata = {
+  title: 'OneLedger - Personal Finance',
+  description: 'Manage your finances with OneLedger',
+};
+
 export default function FinanceLayout({
-    children,
-  }: {
-    children: React.ReactNode;
-  }) {
-    return (
-      <div>
-        <div className="bg-blue-600 text-white p-4">
-          <h1 className="text-xl font-bold">OneLedger Finance</h1>
-        </div>
-        {children}
-      </div>
-    );
-  }
+  children,
+}: {
+  children: React.ReactNode;
+}) {
+  return (
+    <AuthProvider>
+      {children}
+    </AuthProvider>
+  );
+}

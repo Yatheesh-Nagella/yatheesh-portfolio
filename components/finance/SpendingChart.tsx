@@ -42,6 +42,7 @@ export default function SpendingChart({
   /**
    * Custom tooltip component
    */
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const CustomTooltip = ({ active, payload }: any) => {
     if (active && payload && payload.length) {
       return (

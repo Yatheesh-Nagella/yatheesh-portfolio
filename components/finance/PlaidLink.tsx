@@ -72,6 +72,7 @@ export default function PlaidLink({
    * Handle successful bank connection
    */
   const onPlaidSuccess = useCallback(
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     async (publicToken: string, metadata: any) => {
       try {
         setLoading(true);
@@ -115,7 +116,8 @@ export default function PlaidLink({
    * Handle Plaid Link exit
    */
   const onPlaidExit = useCallback(
-    (err: any, metadata: any) => {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    (err: any, _metadata: any) => {
       if (err) {
         console.error('Plaid Link error:', err);
         setError('Connection failed. Please try again.');

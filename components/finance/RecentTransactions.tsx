@@ -13,7 +13,7 @@
 
 import React from 'react';
 import Link from 'next/link';
-import { ArrowRight, ArrowUpRight, ArrowDownRight } from 'lucide-react';
+import { ArrowRight } from 'lucide-react';
 import { formatCurrency, formatDate } from '@/lib/supabase';
 import type { Transaction } from '@/types/database.types';
 

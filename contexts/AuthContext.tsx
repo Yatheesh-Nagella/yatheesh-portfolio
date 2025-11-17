@@ -79,7 +79,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       }
 
       setUser(newUser);
-      router.push('/finance');
+      router.push('/finance/dashboard');
       return { error: null };
     } catch (error) {
       return { 
@@ -110,7 +110,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       }
 
       setUser(newUser);
-      router.push('/finance');
+      router.push('/finance/dashboard');
       return { error: null };
     } catch (error) {
       return { 

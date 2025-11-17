@@ -6,13 +6,16 @@
 
 import { createClient } from '@supabase/supabase-js';
 import type { Database } from '@/types/supabase';
-import type { 
-  User, 
-  Account, 
-  Transaction, 
+import type {
+  User,
+  Account,
+  Transaction,
   Budget,
   PlaidItem,
 } from '@/types/database.types';
+
+// Re-export types for convenience
+export type { User, Account, Transaction, Budget, PlaidItem };
 
 // Create typed Supabase client
 export const supabase = createClient<Database>(
@@ -69,13 +72,15 @@ export async function signIn(
     if (error) {
       return { user: null, error: error.message };
     }
-    
-    // Update last login time
+
+    // Update last login time (ignore errors if user doesn't exist in users table yet)
     await supabase
       .from('users')
       .update({ last_login_at: new Date().toISOString() })
-      .eq('id', data.user.id);
-    
+      .eq('id', data.user.id)
+      .then(() => {})
+      .catch(() => {});
+
     // Get full profile
     const user = await getCurrentUser();
     return { user, error: null };
@@ -147,7 +152,7 @@ export async function signUpWithInvite(
       })
       .eq('id', invite.id);
     
-    // Update user with invite info
+    // Update user profile with invite info (trigger already created the user)
     await supabase
       .from('users')
       .update({
@@ -156,7 +161,7 @@ export async function signUpWithInvite(
         invite_expires_at: invite.expires_at
       })
       .eq('id', data.user.id);
-    
+
     const user = await getCurrentUser();
     return { user, error: null };
     

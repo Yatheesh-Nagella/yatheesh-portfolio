@@ -38,6 +38,8 @@ export default function FinanceDashboard() {
   const [transactions, setTransactions] = useState<Transaction[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [monthlySpending, setMonthlySpending] = useState(0);
+  const [chartData, setChartData] = useState<{ date: string; amount: number }[]>([]);
 
   /**
    * Calculate total balance across all accounts
@@ -47,28 +49,25 @@ export default function FinanceDashboard() {
   }, 0);
 
   /**
-   * Calculate monthly spending (last 30 days)
+   * Calculate monthly spending and chart data (client-side only to avoid hydration issues)
    */
-  const calculateMonthlySpending = () => {
+  useEffect(() => {
+    // Calculate monthly spending (last 30 days)
     const thirtyDaysAgo = new Date();
     thirtyDaysAgo.setDate(thirtyDaysAgo.getDate() - 30);
 
-    return transactions
+    const spending = transactions
       .filter((tx) => {
         const txDate = new Date(tx.transaction_date);
         return txDate >= thirtyDaysAgo && tx.amount > 0; // Positive amounts are expenses
       })
       .reduce((sum, tx) => sum + tx.amount, 0);
-  };
 
-  const monthlySpending = calculateMonthlySpending();
+    setMonthlySpending(spending);
 
-  /**
-   * Generate spending chart data (last 30 days)
-   */
-  const generateChartData = () => {
+    // Generate spending chart data (last 30 days)
     const days = 30;
-    const chartData = [];
+    const data = [];
 
     for (let i = days - 1; i >= 0; i--) {
       const date = new Date();
@@ -88,16 +87,14 @@ export default function FinanceDashboard() {
         })
         .reduce((sum, tx) => sum + tx.amount, 0);
 
-      chartData.push({
+      data.push({
         date: dateStr,
         amount: daySpending,
       });
     }
 
-    return chartData;
-  };
-
-  const chartData = generateChartData();
+    setChartData(data);
+  }, [transactions]);
 
   /**
    * Fetch dashboard data

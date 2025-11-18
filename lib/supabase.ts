@@ -74,12 +74,14 @@ export async function signIn(
     }
 
     // Update last login time (ignore errors if user doesn't exist in users table yet)
-    await supabase
-      .from('users')
-      .update({ last_login_at: new Date().toISOString() })
-      .eq('id', data.user.id)
-      .then(() => {})
-      .catch(() => {});
+    try {
+      await supabase
+        .from('users')
+        .update({ last_login_at: new Date().toISOString() })
+        .eq('id', data.user.id);
+    } catch {
+      // Ignore errors - user profile might not exist yet
+    }
 
     // Get full profile
     const user = await getCurrentUser();

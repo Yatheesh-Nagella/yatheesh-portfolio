@@ -8,8 +8,7 @@
 
 import { NextRequest, NextResponse } from 'next/server';
 import { syncTransactions } from '@/lib/plaid';
-import { getCurrentUser } from '@/lib/supabase';
-import { supabase } from '@/lib/supabase';
+import { getServerUser, createServerSupabaseClient } from '@/lib/supabase-server';
 import crypto from 'crypto';
 
 /**
@@ -34,7 +33,8 @@ function decryptAccessToken(encryptedToken: string): string {
 export async function POST(request: NextRequest) {
   try {
     // Get current user (optional for this endpoint)
-    const user = await getCurrentUser();
+    const user = await getServerUser();
+    const supabase = await createServerSupabaseClient();
 
     // Get request body
     const body = await request.json();

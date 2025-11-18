@@ -30,7 +30,7 @@ import {
 import { formatCurrency } from '@/lib/supabase';
 
 export default function FinanceDashboard() {
-  const { user } = useAuth();
+  const { user, signOut } = useAuth();
   const router = useRouter();
 
   // State
@@ -197,6 +197,16 @@ export default function FinanceDashboard() {
                   buttonText="Connect"
                   variant="primary"
                 />
+                <button
+                  onClick={() => {
+                    if (confirm('Are you sure you want to sign out?')) {
+                      signOut();
+                    }
+                  }}
+                  className="text-sm text-red-600 hover:text-red-700 font-medium"
+                >
+                  Sign Out
+                </button>
               </div>
 
               {/* Mobile Navigation */}

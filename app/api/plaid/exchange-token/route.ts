@@ -8,8 +8,7 @@
 
 import { NextRequest, NextResponse } from 'next/server';
 import { exchangePublicToken, getAccounts } from '@/lib/plaid';
-import { getCurrentUser } from '@/lib/supabase';
-import { supabase } from '@/lib/supabase';
+import { getServerUser, createServerSupabaseClient } from '@/lib/supabase-server';
 import crypto from 'crypto';
 
 /**
@@ -31,8 +30,13 @@ function encryptAccessToken(accessToken: string): string {
 
 export async function POST(request: NextRequest) {
   try {
-    // Get current user
-    const user = await getCurrentUser();
+    // Get auth token from Authorization header
+    const authHeader = request.headers.get('authorization');
+    const token = authHeader?.replace('Bearer ', '');
+
+    // Get current user (server-side)
+    const user = await getServerUser(token);
+    const supabase = await createServerSupabaseClient();
 
     if (!user) {
       return NextResponse.json(

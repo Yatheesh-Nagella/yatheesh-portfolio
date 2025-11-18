@@ -12,6 +12,7 @@
 import React, { useState, useCallback } from 'react';
 import { usePlaidLink } from 'react-plaid-link';
 import { useAuth } from '@/contexts/AuthContext';
+import { supabase } from '@/lib/supabase';
 import { Loader2, Link as LinkIcon, AlertCircle } from 'lucide-react';
 
 interface PlaidLinkProps {
@@ -45,10 +46,18 @@ export default function PlaidLink({
       setLoading(true);
       setError(null);
 
+      // Get session token
+      const { data: { session } } = await supabase.auth.getSession();
+
+      if (!session) {
+        throw new Error('No active session');
+      }
+
       const response = await fetch('/api/plaid/create-link-token', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
+          'Authorization': `Bearer ${session.access_token}`,
         },
         body: JSON.stringify({ userId: user.id }),
       });
@@ -78,11 +87,19 @@ export default function PlaidLink({
         setLoading(true);
         setError(null);
 
+        // Get session token
+        const { data: { session } } = await supabase.auth.getSession();
+
+        if (!session) {
+          throw new Error('No active session');
+        }
+
         // Exchange public token for access token
         const response = await fetch('/api/plaid/exchange-token', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
+            'Authorization': `Bearer ${session.access_token}`,
           },
           body: JSON.stringify({
             publicToken,

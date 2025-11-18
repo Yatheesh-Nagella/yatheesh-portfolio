@@ -8,14 +8,24 @@
 
 import { NextRequest, NextResponse } from 'next/server';
 import { createLinkToken } from '@/lib/plaid';
-import { getCurrentUser } from '@/lib/supabase';
+import { getServerUser } from '@/lib/supabase-server';
 
 export async function POST(request: NextRequest) {
   try {
-    // Get current user
-    const user = await getCurrentUser();
+    // Get auth token from Authorization header
+    const authHeader = request.headers.get('authorization');
+    const token = authHeader?.replace('Bearer ', '');
+
+    console.log('[create-link-token] Auth header:', authHeader ? 'Present' : 'Missing');
+    console.log('[create-link-token] Token:', token ? `${token.substring(0, 20)}...` : 'None');
+
+    // Get current user (server-side)
+    const user = await getServerUser(token);
+
+    console.log('[create-link-token] User:', user ? user.id : 'null');
 
     if (!user) {
+      console.log('[create-link-token] No user found, returning 401');
       return NextResponse.json(
         { error: 'Unauthorized - Please log in' },
         { status: 401 }

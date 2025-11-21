@@ -26,6 +26,7 @@ import {
   Building2,
   Loader2,
   AlertCircle,
+  Target,
 } from 'lucide-react';
 import { formatCurrency } from '@/lib/supabase';
 
@@ -182,6 +183,12 @@ export default function FinanceDashboard() {
                   className="text-sm text-gray-600 hover:text-gray-900 font-medium"
                 >
                   Transactions
+                </button>
+                <button
+                  onClick={() => router.push('/finance/budgets')}
+                  className="text-sm text-gray-600 hover:text-gray-900 font-medium"
+                >
+                  Budgets
                 </button>
                 <button
                   onClick={() => router.push('/finance/settings')}
@@ -350,16 +357,18 @@ export default function FinanceDashboard() {
                         </p>
                       </button>
 
-                      <div className="p-4 border border-gray-200 rounded-lg hover:bg-gray-50 transition-colors">
-                        <PlaidLink
-                          onSuccess={handleBankConnected}
-                          buttonText="Connect Another Bank"
-                          variant="secondary"
-                        />
-                        <p className="text-sm text-gray-600 mt-2">
-                          Add more bank accounts
+                      <button
+                        onClick={() => router.push('/finance/budgets')}
+                        className="p-4 border border-gray-200 rounded-lg hover:bg-gray-50 transition-colors text-left"
+                      >
+                        <Target className="w-6 h-6 text-green-600 mb-2" />
+                        <p className="font-medium text-gray-900">
+                          Manage Budgets
                         </p>
-                      </div>
+                        <p className="text-sm text-gray-600 mt-1">
+                          Set and track spending goals
+                        </p>
+                      </button>
                     </div>
                   </div>
                 </div>

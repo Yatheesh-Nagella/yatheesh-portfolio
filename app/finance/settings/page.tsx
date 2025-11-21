@@ -12,6 +12,7 @@ import { useRouter } from 'next/navigation';
 import { getUserPlaidItems, supabase } from '@/lib/supabase';
 import type { PlaidItem } from '@/lib/supabase';
 import { formatDate, formatRelativeTime } from '@/lib/supabase';
+import toast from 'react-hot-toast';
 import {
   ArrowLeft,
   User,
@@ -67,7 +68,7 @@ export default function SettingsPage() {
         await signOut();
         router.push('/finance/login');
       } catch (error) {
-        alert('Error signing out: ' + (error instanceof Error ? error.message : 'Unknown error'));
+        toast.error('Error signing out: ' + (error instanceof Error ? error.message : 'Unknown error'));
       }
     }
   };
@@ -107,10 +108,10 @@ export default function SettingsPage() {
 
       // Remove from local state
       setPlaidItems(items => items.filter(item => item.id !== itemId));
-      alert('Account unlinked successfully!');
+      toast.success('Account unlinked successfully!');
     } catch (error) {
       console.error('Error unlinking account:', error);
-      alert('Error: ' + (error instanceof Error ? error.message : 'Failed to unlink account'));
+      toast.error('Error: ' + (error instanceof Error ? error.message : 'Failed to unlink account'));
     } finally {
       setUnlinkingItemId(null);
     }

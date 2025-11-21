@@ -14,6 +14,7 @@ import PlaidLink from '@/components/finance/PlaidLink';
 import AccountCard from '@/components/finance/AccountCard';
 import { getUserAccounts, type Account } from '@/lib/supabase';
 import { Building2, Loader2, ArrowLeft } from 'lucide-react';
+import toast from 'react-hot-toast';
 
 export default function AccountsPage() {
   const { user } = useAuth();
@@ -22,6 +23,7 @@ export default function AccountsPage() {
   // State
   const [accounts, setAccounts] = useState<Account[]>([]);
   const [loading, setLoading] = useState(true);
+  const [syncingAccountId, setSyncingAccountId] = useState<string | null>(null);
 
   /**
    * Fetch user accounts
@@ -51,6 +53,63 @@ export default function AccountsPage() {
    */
   function handleBankConnected() {
     fetchAccounts();
+  }
+
+  /**
+   * Handle sync account transactions
+   */
+  async function handleSyncAccount(accountId: string) {
+    try {
+      setSyncingAccountId(accountId);
+
+      // Find the account to get plaid_item_id
+      const account = accounts.find((a) => a.id === accountId);
+      if (!account) {
+        toast.error('Account not found');
+        return;
+      }
+
+      // Get plaid_item_id from the account (cash accounts don't have this)
+      const plaidItemId = account.plaid_item_id;
+      if (!plaidItemId) {
+        toast.error('Unable to sync: this is a cash account');
+        return;
+      }
+
+      // Call sync API
+      const response = await fetch('/api/plaid/sync-transactions', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ itemId: plaidItemId }),
+      });
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error(data.error || 'Sync failed');
+      }
+
+      // Show success message
+      const added = data.added || 0;
+      const modified = data.modified || 0;
+      const removed = data.removed || 0;
+
+      if (added === 0 && modified === 0 && removed === 0) {
+        toast.success('Account is up to date!');
+      } else {
+        toast.success(`Synced! Added: ${added}, Modified: ${modified}`);
+      }
+
+      // Refresh accounts to get updated balances
+      fetchAccounts();
+    } catch (error) {
+      console.error('Error syncing account:', error);
+      toast.error(
+        error instanceof Error ? error.message : 'Failed to sync transactions'
+      );
+    } finally {
+      setSyncingAccountId(null);
+    }
   }
 
   return (
@@ -117,7 +176,12 @@ export default function AccountsPage() {
 
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                 {accounts.map((account) => (
-                  <AccountCard key={account.id} account={account} />
+                  <AccountCard
+                    key={account.id}
+                    account={account}
+                    onSync={handleSyncAccount}
+                    loading={syncingAccountId === account.id}
+                  />
                 ))}
               </div>
             </>

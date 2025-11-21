@@ -12,6 +12,8 @@ import { getUserTransactions } from '@/lib/supabase';
 import type { Transaction } from '@/lib/supabase';
 import { formatCurrency, formatDate } from '@/lib/supabase';
 import { useRouter } from 'next/navigation';
+import { exportTransactionsToCSV } from '@/lib/export';
+import toast from 'react-hot-toast';
 import {
   Search,
   Filter,
@@ -21,6 +23,8 @@ import {
   Loader2,
   AlertCircle,
   ChevronDown,
+  Download,
+  PlusCircle,
 } from 'lucide-react';
 
 type DateFilter = '7d' | '30d' | '90d' | '365d' | 'all';
@@ -120,6 +124,24 @@ export default function TransactionsPage() {
   }, [transactions, searchQuery, categoryFilter]);
 
   /**
+   * Handle export transactions to CSV
+   */
+  function handleExport() {
+    try {
+      if (filteredTransactions.length === 0) {
+        toast.error('No transactions to export');
+        return;
+      }
+
+      exportTransactionsToCSV(filteredTransactions);
+      toast.success(`Exported ${filteredTransactions.length} transactions`);
+    } catch (error) {
+      console.error('Error exporting transactions:', error);
+      toast.error('Failed to export transactions');
+    }
+  }
+
+  /**
    * Render loading state
    */
   if (loading) {
@@ -161,14 +183,23 @@ export default function TransactionsPage() {
               No transactions yet
             </h2>
             <p className="text-gray-600 mb-6">
-              Connect a bank account to start tracking your transactions.
+              Connect a bank account or add transactions manually.
             </p>
-            <button
-              onClick={() => router.push('/finance/dashboard')}
-              className="bg-blue-500 hover:bg-blue-600 text-white px-6 py-3 rounded-lg font-semibold transition-colors"
-            >
-              Go to Dashboard
-            </button>
+            <div className="flex flex-col sm:flex-row gap-3 justify-center">
+              <button
+                onClick={() => router.push('/finance/transactions/add')}
+                className="bg-green-500 hover:bg-green-600 text-white px-6 py-3 rounded-lg font-semibold transition-colors flex items-center justify-center gap-2"
+              >
+                <PlusCircle className="w-5 h-5" />
+                Add Transaction
+              </button>
+              <button
+                onClick={() => router.push('/finance/dashboard')}
+                className="bg-blue-500 hover:bg-blue-600 text-white px-6 py-3 rounded-lg font-semibold transition-colors"
+              >
+                Connect Bank
+              </button>
+            </div>
           </div>
         </div>
       </div>
@@ -187,12 +218,33 @@ export default function TransactionsPage() {
             <ArrowLeft className="w-5 h-5 mr-2" />
             Back to Dashboard
           </button>
-          <h1 className="text-3xl sm:text-4xl font-bold text-gray-900">
-            Transactions
-          </h1>
-          <p className="text-gray-600 mt-2">
-            {filteredTransactions.length} of {transactions.length} transactions
-          </p>
+          <div className="flex items-center justify-between">
+            <div>
+              <h1 className="text-3xl sm:text-4xl font-bold text-gray-900">
+                Transactions
+              </h1>
+              <p className="text-gray-600 mt-2">
+                {filteredTransactions.length} of {transactions.length} transactions
+              </p>
+            </div>
+            <div className="flex items-center gap-3">
+              <button
+                onClick={() => router.push('/finance/transactions/add')}
+                className="flex items-center gap-2 bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded-lg font-medium transition-colors"
+              >
+                <PlusCircle className="w-4 h-4" />
+                <span className="hidden sm:inline">Add</span>
+              </button>
+              <button
+                onClick={handleExport}
+                disabled={filteredTransactions.length === 0}
+                className="flex items-center gap-2 bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-lg font-medium transition-colors disabled:bg-gray-300 disabled:cursor-not-allowed"
+              >
+                <Download className="w-4 h-4" />
+                <span className="hidden sm:inline">Export</span>
+              </button>
+            </div>
+          </div>
         </div>
 
         {/* Filters Section */}

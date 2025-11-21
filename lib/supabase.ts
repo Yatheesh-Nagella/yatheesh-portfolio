@@ -218,28 +218,50 @@ export async function isAdmin(userId: string): Promise<boolean> {
 
 /**
  * Get user's bank accounts with Plaid item info
+ * Includes both Plaid-connected accounts and virtual cash account
  */
 export async function getUserAccounts(userId: string): Promise<Account[]> {
   try {
-    const { data, error } = await supabase
+    // First get Plaid-connected accounts with institution info
+    const { data: plaidAccounts, error: plaidError } = await supabase
       .from('accounts')
       .select(`
         *,
-        plaid_items!inner (
+        plaid_items (
           institution_name,
-          status
+          status,
+          last_synced_at
         )
       `)
       .eq('user_id', userId)
       .eq('is_hidden', false)
+      .not('plaid_item_id', 'is', null)
       .order('created_at', { ascending: false });
-    
-    if (error) {
-      console.error('Error fetching accounts:', error);
-      return [];
+
+    if (plaidError) {
+      console.error('Error fetching Plaid accounts:', plaidError);
     }
-    
-    return data as Account[];
+
+    // Then get cash/manual accounts (no plaid_item_id)
+    const { data: cashAccounts, error: cashError } = await supabase
+      .from('accounts')
+      .select('*')
+      .eq('user_id', userId)
+      .eq('is_hidden', false)
+      .is('plaid_item_id', null)
+      .order('created_at', { ascending: false });
+
+    if (cashError) {
+      console.error('Error fetching cash accounts:', cashError);
+    }
+
+    // Combine both types, with cash accounts first
+    const allAccounts = [
+      ...(cashAccounts || []),
+      ...(plaidAccounts || []),
+    ] as Account[];
+
+    return allAccounts;
   } catch (error) {
     console.error('Error in getUserAccounts:', error);
     return [];
@@ -292,7 +314,7 @@ export async function getUserTransactions(
       .from('transactions')
       .select(`
         *,
-        accounts!inner (
+        accounts (
           account_name,
           account_type
         )

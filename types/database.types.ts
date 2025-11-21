@@ -29,6 +29,12 @@ export interface Account {
   currency: string | null;
   is_hidden: boolean | null;
   created_at: string | null;
+  // Joined data from plaid_items (optional)
+  plaid_items?: {
+    institution_name: string | null;
+    status: string | null;
+    last_synced_at: string | null;
+  } | null;
 }
 
 export interface Transaction {

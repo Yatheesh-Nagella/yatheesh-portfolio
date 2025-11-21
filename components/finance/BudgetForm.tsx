@@ -112,7 +112,6 @@ export default function BudgetForm({
             category,
             amount: amountInCents,
             period,
-            updated_at: new Date().toISOString(),
           })
           .eq('id', initialData.id);
 

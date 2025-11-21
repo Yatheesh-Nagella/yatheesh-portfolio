@@ -8,7 +8,7 @@
 
 import { NextRequest, NextResponse } from 'next/server';
 import { exchangePublicToken, getAccounts } from '@/lib/plaid';
-import { getServerUser, createServerSupabaseClient } from '@/lib/supabase-server';
+import { getServerUser, createServiceRoleClient } from '@/lib/supabase-server';
 import crypto from 'crypto';
 
 /**
@@ -36,7 +36,8 @@ export async function POST(request: NextRequest) {
 
     // Get current user (server-side)
     const user = await getServerUser(token);
-    const supabase = await createServerSupabaseClient();
+    // Use service role client for database operations (bypasses RLS)
+    const supabase = createServiceRoleClient();
 
     if (!user) {
       return NextResponse.json(

@@ -8,7 +8,7 @@
 
 import { NextRequest, NextResponse } from 'next/server';
 import { syncTransactions } from '@/lib/plaid';
-import { getServerUser, createServerSupabaseClient } from '@/lib/supabase-server';
+import { getServerUser, createServiceRoleClient } from '@/lib/supabase-server';
 import crypto from 'crypto';
 
 /**
@@ -34,7 +34,8 @@ export async function POST(request: NextRequest) {
   try {
     // Get current user (optional for this endpoint)
     const user = await getServerUser();
-    const supabase = await createServerSupabaseClient();
+    // Use service role client for database operations (bypasses RLS)
+    const supabase = createServiceRoleClient();
 
     // Get request body
     const body = await request.json();
@@ -131,18 +132,24 @@ export async function POST(request: NextRequest) {
           amount: Math.round(tx.amount * 100), // Convert to cents
           transaction_date: tx.date,
           merchant_name: tx.merchant_name || tx.name,
-          category: tx.category ? tx.category[0] : null,
+          // Use most specific category (last in array) or join with " > "
+          category: tx.category && tx.category.length > 0
+            ? tx.category.join(' > ')  // "Food and Drink > Restaurants"
+            : null,
           is_pending: tx.pending,
           currency: 'USD',
         }));
 
       if (transactionsToInsert.length > 0) {
-        const { error: insertError } = await supabase
+        const { error: upsertError } = await supabase
           .from('transactions')
-          .insert(transactionsToInsert);
+          .upsert(transactionsToInsert, {
+            onConflict: 'plaid_transaction_id',
+            ignoreDuplicates: false, // Update existing records
+          });
 
-        if (insertError) {
-          console.error('Error inserting transactions:', insertError);
+        if (upsertError) {
+          console.error('Error upserting transactions:', upsertError);
           // Don't fail the entire request
         }
       }
@@ -160,7 +167,9 @@ export async function POST(request: NextRequest) {
             amount: Math.round(tx.amount * 100),
             transaction_date: tx.date,
             merchant_name: tx.merchant_name || tx.name,
-            category: tx.category ? tx.category[0] : null,
+            category: tx.category && tx.category.length > 0
+              ? tx.category.join(' > ')
+              : null,
             is_pending: tx.pending,
           })
           .eq('plaid_transaction_id', tx.transaction_id);

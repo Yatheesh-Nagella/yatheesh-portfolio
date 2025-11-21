@@ -68,43 +68,56 @@ A modern, responsive portfolio website showcasing my work as a Software Engineer
 ```
 yatheesh-portfolio/
 │
-├── app/ # Main application source folder
-│ ├── blogs/ # Blog posts directory
-│ │ ├── build-pong-game/
-│ │ │ └── page.jsx # Blog: Building a Pong game (page component)
-│ │ ├── evolution-of-trust/
-│ │ │ └── page.jsx # Blog: Evolution of Trust article (page component)
-│ │ ├── interactive-mouse-effects/
-│ │ │ ├── metadata.js # Metadata for interactive mouse effects blog
-│ │ │ └── page.jsx # Blog: Interactive Mouse Effects (page component)
-│ │ └── page.jsx # Main blogs overview/listing page
-│ ├── favicon.ico # Website favicon
-│ ├── globals.css # Global CSS for the app
-│ ├── layout.jsx # Root layout file for the app
-│ └── page.jsx # Main landing page of the app
+├── app/                                    # Next.js App Router directory (main application source)
+│   │
+│   ├── api/                                # API routes directory (Next.js API endpoints)
+│   │   └── subscribe/
+│   │       └── route.js                    # POST endpoint for newsletter subscriptions via ConvertKit API
+│   │
+│   ├── blogs/                              # Blog posts directory (dynamic routing)
+│   │   ├── build-pong-game/                # Blog post: Building a Pong game tutorial
+│   │   │   ├── metadata.js                 # SEO metadata (title, description, OpenGraph, Twitter cards)
+│   │   │   └── page.jsx                    # Blog post page component with interactive Pong game tutorial
+│   │   ├── evolution-of-trust/             # Blog post: Evolution of Trust article
+│   │   │   └── page.jsx                    # Blog post page component
+│   │   ├── interactive-mouse-effects/      # Blog post: Interactive mouse effects tutorial
+│   │   │   ├── metadata.js                 # SEO metadata for mouse effects blog
+│   │   │   └── page.jsx                    # Blog post page component with interactive examples
+│   │   └── page.jsx                        # Blog index/listing page (shows all blog posts)
+│   │
+│   ├── globals.css                         # Global CSS styles (Tailwind directives, custom styles)
+│   ├── icon.png                            # Favicon/website icon
+│   ├── layout.jsx                          # Root layout component (wraps all pages, includes metadata, fonts, analytics)
+│   └── page.jsx                           # Homepage/landing page (hero, projects, services, about, contact sections)
 │
-├── DEPLOY.md # Deployment instructions/documentation
-├── eslint.config.mjs # ESLint configuration for linting
-├── lib/
-│ └── analytics.jsx # Analytics library/utilities (likely tracking/metrics)
-├── next-env.d.ts # Next.js type definitions (TypeScript support)
-├── next.config.ts # Next.js configuration file
-├── node_modules/ # Installed npm dependencies
-├── package-lock.json # Auto-generated lockfile for npm
-├── package.json # Project manifest: scripts, dependencies, project meta
-├── postcss.config.mjs # PostCSS configuration (for advanced CSS processing)
-├── PROJECT_STRUCTURE.md # Project structure documentation (current or older)
-├── public/ # Static public files served at root URL
-│ ├── file.svg
-│ ├── globe.svg
-│ ├── marathon.png
-│ ├── next.svg
-│ ├── profile.png
-│ ├── vercel.svg
-│ ├── window.svg
-│ └── YN_Resume.pdf # Your CV/Resume (PDF format, downloadable)
-├── README.md # Main project documentation
-├── tsconfig.json # TypeScript project configuration
+├── components/                             # Reusable React components
+│   ├── KofiButton.jsx                      # Ko-fi donation/support button component (floating, minimal, default styles)
+│   └── NewsletterSignup.jsx                # Newsletter subscription form component (email input, ConvertKit integration, analytics tracking)
+│
+├── lib/                                    # Utility libraries and helper functions
+│   └── analytics.jsx                       # Google Analytics event tracking utilities
+│
+├── public/                                 # Static assets served at root URL
+│   ├── file.svg                            # SVG icon for file/document
+│   ├── globe.svg                           # SVG icon for globe/world
+│   ├── marathon.png                        # Marathon achievement image
+│   ├── next.svg                            # Next.js logo SVG
+│   ├── profile.png                         # Profile picture/avatar image
+│   ├── vercel.svg                          # Vercel logo SVG
+│   ├── window.svg                          # SVG icon for window
+│   └── YN_Resume.pdf                       # Resume/CV PDF (downloadable)
+│
+├── DEPLOY.md                               # Deployment instructions and documentation
+├── eslint.config.mjs                       # ESLint configuration (code quality and linting rules)
+├── next-env.d.ts                           # Next.js TypeScript environment type definitions (auto-generated)
+├── next.config.ts                          # Next.js configuration (build settings, image optimization, etc.)
+├── node_modules/                           # npm dependencies (installed packages)
+├── package-lock.json                       # npm lockfile (exact dependency versions for reproducible installs)
+├── package.json                            # Project manifest (dependencies, scripts, project metadata)
+├── postcss.config.mjs                      # PostCSS configuration (CSS processing, Tailwind CSS integration)
+├── PROJECT_STRUCTURE.md                    # Project structure documentation file
+├── README.md                               # Main project documentation (this file)
+└── tsconfig.json                           # TypeScript configuration (compiler options, paths, etc.)
 ```
 
 ---

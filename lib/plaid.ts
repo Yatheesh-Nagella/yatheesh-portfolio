@@ -82,7 +82,8 @@ export async function createLinkToken(
   products: Products[] = [Products.Transactions, Products.Auth]
 ): Promise<{ linkToken: string | null; error: string | null }> {
   try {
-    const response = await plaidClient.linkTokenCreate({
+    // Build link token config
+    const linkConfig: Parameters<typeof plaidClient.linkTokenCreate>[0] = {
       user: {
         client_user_id: userId,
       },
@@ -90,8 +91,17 @@ export async function createLinkToken(
       products,
       country_codes: [CountryCode.Us],
       language: 'en',
-      webhook: process.env.PLAID_WEBHOOK_URL, // Optional
-    });
+    };
+
+    // Add webhook URL if configured
+    // In production: https://finance.yatheeshnagella.com/api/plaid/webhook
+    // In development: Use ngrok or similar for testing
+    if (env.plaid.webhookUrl) {
+      linkConfig.webhook = env.plaid.webhookUrl;
+      console.log('[Plaid] Webhook URL registered:', env.plaid.webhookUrl);
+    }
+
+    const response = await plaidClient.linkTokenCreate(linkConfig);
 
     return {
       linkToken: response.data.link_token,

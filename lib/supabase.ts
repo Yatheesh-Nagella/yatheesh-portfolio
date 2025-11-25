@@ -24,6 +24,31 @@ export const supabase = createClient<Database>(
 );
 
 // ============================================
+// ENCRYPTION UTILITIES
+// ============================================
+
+/**
+ * Decrypt Plaid access token
+ * Using AES-256-CBC decryption
+ */
+export function decryptAccessToken(encryptedToken: string): string {
+  const crypto = require('crypto');
+  const algorithm = 'aes-256-cbc';
+  const key = Buffer.from(process.env.ENCRYPTION_KEY!, 'hex');
+
+  // Split IV and encrypted data
+  const parts = encryptedToken.split(':');
+  const iv = Buffer.from(parts[0], 'hex');
+  const encryptedText = parts[1];
+
+  const decipher = crypto.createDecipheriv(algorithm, key, iv);
+  let decrypted = decipher.update(encryptedText, 'hex', 'utf8');
+  decrypted += decipher.final('utf8');
+
+  return decrypted;
+}
+
+// ============================================
 // AUTHENTICATION
 // ============================================
 

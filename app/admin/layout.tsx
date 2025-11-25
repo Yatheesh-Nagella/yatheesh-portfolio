@@ -1,14 +1,20 @@
+/**
+ * Admin Layout
+ * Server component wrapper that provides AdminAuthProvider context
+ */
+
+import React from 'react';
+import { AdminAuthProvider } from '@/contexts/AdminAuthContext';
+import AdminLayoutInner from '@/components/admin/AdminLayoutInner';
+
 export default function AdminLayout({
-    children,
-  }: {
-    children: React.ReactNode;
-  }) {
-    return (
-      <div>
-        <div className="bg-gray-800 text-white p-4">
-          <h1 className="text-xl font-bold">Admin Dashboard</h1>
-        </div>
-        {children}
-      </div>
-    );
-  }
+  children,
+}: {
+  children: React.ReactNode;
+}) {
+  return (
+    <AdminAuthProvider>
+      <AdminLayoutInner>{children}</AdminLayoutInner>
+    </AdminAuthProvider>
+  );
+}

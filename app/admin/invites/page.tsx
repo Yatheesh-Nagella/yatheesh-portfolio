@@ -84,7 +84,7 @@ export default function InviteCodesPage() {
 
       if (error) throw error;
 
-      setInvites(data || []);
+      setInvites((data || []) as unknown as InviteCode[]);
     } catch (error) {
       console.error('Error fetching invite codes:', error);
       toast.error('Failed to load invite codes');

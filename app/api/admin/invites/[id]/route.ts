@@ -9,9 +9,10 @@ import { verifyAdminSession, getAdminServiceClient } from '@/lib/admin-auth';
 
 export async function PATCH(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
+    const { id } = await params;
     const { token, is_active } = await request.json();
 
     if (!token) {
@@ -31,7 +32,7 @@ export async function PATCH(
     const { data, error } = await supabase
       .from('invite_codes')
       .update({ is_active })
-      .eq('id', params.id)
+      .eq('id', id)
       .select()
       .single();
 
@@ -55,9 +56,11 @@ export async function PATCH(
 
 export async function DELETE(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
+    const { id } = await params;
+
     // Get token from query params or headers
     const token = request.headers.get('Authorization')?.replace('Bearer ', '');
 
@@ -78,7 +81,7 @@ export async function DELETE(
     const { error } = await supabase
       .from('invite_codes')
       .delete()
-      .eq('id', params.id);
+      .eq('id', id);
 
     if (error) {
       console.error('Database delete error:', error);

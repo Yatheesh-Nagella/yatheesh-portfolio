@@ -458,8 +458,8 @@ export async function verifyTOTPSetup(
     const isValid = authenticator.verify({
       token: code,
       secret,
-      window: 2 // Allow 2 time steps (±60 seconds) for clock skew
-    });
+      window: 2, // Allow 2 time steps (±60 seconds) for clock skew
+    } as any);
 
     if (!isValid) {
       console.error('TOTP code invalid');

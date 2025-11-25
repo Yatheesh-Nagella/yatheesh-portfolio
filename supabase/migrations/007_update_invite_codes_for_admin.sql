@@ -25,22 +25,36 @@ ALTER TABLE invite_codes ALTER COLUMN created_by DROP NOT NULL;
 -- Add new column for admin creators
 ALTER TABLE invite_codes ADD COLUMN IF NOT EXISTS created_by_admin_id UUID;
 
--- Add foreign key constraint to admin_users
-ALTER TABLE invite_codes
-  ADD CONSTRAINT invite_codes_created_by_admin_id_fkey
-  FOREIGN KEY (created_by_admin_id)
-  REFERENCES admin_users(id)
-  ON DELETE SET NULL;
+-- Add foreign key constraint to admin_users (skip if exists)
+DO $$ BEGIN
+  IF NOT EXISTS (
+    SELECT 1 FROM pg_constraint
+    WHERE conname = 'invite_codes_created_by_admin_id_fkey'
+  ) THEN
+    ALTER TABLE invite_codes
+      ADD CONSTRAINT invite_codes_created_by_admin_id_fkey
+      FOREIGN KEY (created_by_admin_id)
+      REFERENCES admin_users(id)
+      ON DELETE SET NULL;
+  END IF;
+END $$;
 
 -- Add check constraint to ensure at least one creator is set
 -- Allow both to be NULL for legacy/system-created codes
-ALTER TABLE invite_codes
-  ADD CONSTRAINT invite_codes_creator_check
-  CHECK (
-    (created_by IS NOT NULL AND created_by_admin_id IS NULL) OR
-    (created_by IS NULL AND created_by_admin_id IS NOT NULL) OR
-    (created_by IS NULL AND created_by_admin_id IS NULL)
-  );
+DO $$ BEGIN
+  IF NOT EXISTS (
+    SELECT 1 FROM pg_constraint
+    WHERE conname = 'invite_codes_creator_check'
+  ) THEN
+    ALTER TABLE invite_codes
+      ADD CONSTRAINT invite_codes_creator_check
+      CHECK (
+        (created_by IS NOT NULL AND created_by_admin_id IS NULL) OR
+        (created_by IS NULL AND created_by_admin_id IS NOT NULL) OR
+        (created_by IS NULL AND created_by_admin_id IS NULL)
+      );
+  END IF;
+END $$;
 
 -- Add index for better query performance
 CREATE INDEX IF NOT EXISTS idx_invite_codes_created_by_admin_id

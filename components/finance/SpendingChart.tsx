@@ -46,12 +46,12 @@ export default function SpendingChart({
   const CustomTooltip = ({ active, payload }: any) => {
     if (active && payload && payload.length) {
       return (
-        <div className="bg-white px-4 py-2 rounded-lg shadow-lg border border-gray-200">
-          <p className="text-sm font-semibold text-gray-900">
+        <div className="bg-white dark:bg-gray-800 px-4 py-2 rounded-lg shadow-lg border border-gray-200 dark:border-gray-700">
+          <p className="text-sm font-semibold text-gray-900 dark:text-white">
             {payload[0].payload.date}
           </p>
-          <p className="text-sm text-gray-600">
-            Spent: <span className="font-bold text-blue-600">
+          <p className="text-sm text-gray-600 dark:text-gray-300">
+            Spent: <span className="font-bold text-blue-600 dark:text-blue-400">
               {formatCurrency(payload[0].value)}
             </span>
           </p>
@@ -64,9 +64,9 @@ export default function SpendingChart({
   // Loading state
   if (loading) {
     return (
-      <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
-        <h3 className="text-lg font-semibold text-gray-900 mb-4">{title}</h3>
-        <div className="h-64 bg-gray-100 rounded animate-pulse"></div>
+      <div className="bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-gray-200 dark:border-gray-700 p-6">
+        <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">{title}</h3>
+        <div className="h-64 bg-gray-100 dark:bg-gray-700 rounded animate-pulse"></div>
       </div>
     );
   }
@@ -74,9 +74,9 @@ export default function SpendingChart({
   // Empty state
   if (!data || data.length === 0) {
     return (
-      <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
-        <h3 className="text-lg font-semibold text-gray-900 mb-4">{title}</h3>
-        <div className="h-64 flex items-center justify-center text-gray-500">
+      <div className="bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-gray-200 dark:border-gray-700 p-6">
+        <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">{title}</h3>
+        <div className="h-64 flex items-center justify-center text-gray-500 dark:text-gray-400">
           <div className="text-center">
             <p className="text-sm">No spending data available</p>
             <p className="text-xs mt-1">Connect a bank account to see your spending</p>
@@ -87,8 +87,8 @@ export default function SpendingChart({
   }
 
   return (
-    <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
-      <h3 className="text-lg font-semibold text-gray-900 mb-4">{title}</h3>
+    <div className="bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-gray-200 dark:border-gray-700 p-6">
+      <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">{title}</h3>
       
       <ResponsiveContainer width="100%" height={300}>
         <LineChart data={data} margin={{ top: 5, right: 5, left: 5, bottom: 5 }}>

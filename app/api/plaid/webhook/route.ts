@@ -119,11 +119,10 @@ export async function POST(request: Request) {
 /**
  * Handle TRANSACTIONS webhook events
  */
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
 async function handleTransactionsWebhook(
   payload: PlaidWebhookPayload,
-  plaidItem: any,
-  supabase: any
+  plaidItem: any, // eslint-disable-line @typescript-eslint/no-explicit-any
+  supabase: any // eslint-disable-line @typescript-eslint/no-explicit-any
 ) {
   const code = payload.webhook_code as TransactionsWebhookCode;
 
@@ -150,11 +149,10 @@ async function handleTransactionsWebhook(
 /**
  * Handle ITEM webhook events
  */
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
 async function handleItemWebhook(
   payload: PlaidWebhookPayload,
-  plaidItem: any,
-  supabase: any
+  plaidItem: any, // eslint-disable-line @typescript-eslint/no-explicit-any
+  supabase: any // eslint-disable-line @typescript-eslint/no-explicit-any
 ) {
   const code = payload.webhook_code as ItemWebhookCode;
 
@@ -252,9 +250,8 @@ async function syncTransactionsForItem(plaidItem: any, supabase: any) {
         .select('id, plaid_account_id')
         .eq('plaid_item_id', plaidItem.id);
 
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       const accountMap = new Map(
-        accounts?.map((a: any) => [a.plaid_account_id, a.id]) || []
+        accounts?.map((a: any) => [a.plaid_account_id, a.id]) || [] // eslint-disable-line @typescript-eslint/no-explicit-any
       );
 
       // Process added transactions

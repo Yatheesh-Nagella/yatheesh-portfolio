@@ -9,6 +9,7 @@
 import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { useAuth } from '@/contexts/AuthContext';
+import { useFinanceTheme } from '@/contexts/FinanceThemeContext';
 import ProtectedRoute from '@/components/finance/ProtectedRoute';
 import DashboardCard from '@/components/finance/DashboardCard';
 import SpendingChart from '@/components/finance/SpendingChart';
@@ -27,12 +28,15 @@ import {
   Loader2,
   AlertCircle,
   Target,
+  Moon,
+  Sun,
 } from 'lucide-react';
 import { formatCurrency } from '@/lib/supabase';
 
 export default function FinanceDashboard() {
   const { user, signOut } = useAuth();
   const router = useRouter();
+  const { theme, toggleTheme } = useFinanceTheme();
 
   // State
   const [accounts, setAccounts] = useState<Account[]>([]);
@@ -150,16 +154,16 @@ export default function FinanceDashboard() {
 
   return (
     <ProtectedRoute>
-      <div className="min-h-screen bg-gray-50">
+      <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
         {/* Header */}
-        <header className="bg-white border-b border-gray-200">
+        <header className="bg-white dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="flex items-center justify-between h-16">
               <div>
-                <h1 className="text-2xl font-bold text-gray-900">
+                <h1 className="text-2xl font-bold text-gray-900 dark:text-white">
                   OneLedger Finance
                 </h1>
-                <p className="text-sm text-gray-600">
+                <p className="text-sm text-gray-600 dark:text-gray-300">
                   Welcome back, {user?.full_name || 'User'}
                 </p>
               </div>
@@ -168,33 +172,40 @@ export default function FinanceDashboard() {
               <div className="hidden md:flex items-center space-x-4">
                 <button
                   onClick={() => router.push('/finance/dashboard')}
-                  className="text-sm text-gray-600 hover:text-gray-900 font-medium"
+                  className="text-sm text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white font-medium"
                 >
                   Dashboard
                 </button>
                 <button
                   onClick={() => router.push('/finance/accounts')}
-                  className="text-sm text-gray-600 hover:text-gray-900 font-medium"
+                  className="text-sm text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white font-medium"
                 >
                   Accounts
                 </button>
                 <button
                   onClick={() => router.push('/finance/transactions')}
-                  className="text-sm text-gray-600 hover:text-gray-900 font-medium"
+                  className="text-sm text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white font-medium"
                 >
                   Transactions
                 </button>
                 <button
                   onClick={() => router.push('/finance/budgets')}
-                  className="text-sm text-gray-600 hover:text-gray-900 font-medium"
+                  className="text-sm text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white font-medium"
                 >
                   Budgets
                 </button>
                 <button
                   onClick={() => router.push('/finance/settings')}
-                  className="text-sm text-gray-600 hover:text-gray-900 font-medium"
+                  className="text-sm text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white font-medium"
                 >
                   Settings
+                </button>
+                <button
+                  onClick={toggleTheme}
+                  className="p-2 text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700"
+                  title={theme === 'dark' ? 'Switch to light mode' : 'Switch to dark mode'}
+                >
+                  {theme === 'dark' ? <Sun className="w-5 h-5" /> : <Moon className="w-5 h-5" />}
                 </button>
                 <PlaidLink
                   onSuccess={handleBankConnected}
@@ -215,6 +226,13 @@ export default function FinanceDashboard() {
 
               {/* Mobile Navigation */}
               <div className="flex md:hidden items-center space-x-2">
+                <button
+                  onClick={toggleTheme}
+                  className="p-2 text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white"
+                  title={theme === 'dark' ? 'Switch to light mode' : 'Switch to dark mode'}
+                >
+                  {theme === 'dark' ? <Sun className="w-5 h-5" /> : <Moon className="w-5 h-5" />}
+                </button>
                 <PlaidLink
                   onSuccess={handleBankConnected}
                   buttonText="+"
@@ -222,7 +240,7 @@ export default function FinanceDashboard() {
                 />
                 <button
                   onClick={() => router.push('/finance/settings')}
-                  className="p-2 text-gray-600 hover:text-gray-900"
+                  className="p-2 text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white"
                 >
                   <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
@@ -237,11 +255,11 @@ export default function FinanceDashboard() {
         <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
           {/* Error State */}
           {error && (
-            <div className="mb-6 bg-red-50 border border-red-200 rounded-lg p-4 flex items-start">
-              <AlertCircle className="w-5 h-5 text-red-500 mr-3 flex-shrink-0 mt-0.5" />
+            <div className="mb-6 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-lg p-4 flex items-start">
+              <AlertCircle className="w-5 h-5 text-red-500 dark:text-red-400 mr-3 flex-shrink-0 mt-0.5" />
               <div>
-                <h3 className="text-sm font-medium text-red-800">Error</h3>
-                <p className="text-sm text-red-700 mt-1">{error}</p>
+                <h3 className="text-sm font-medium text-red-800 dark:text-red-300">Error</h3>
+                <p className="text-sm text-red-700 dark:text-red-400 mt-1">{error}</p>
               </div>
             </div>
           )}
@@ -258,12 +276,12 @@ export default function FinanceDashboard() {
             <>
               {/* Empty State - No Accounts */}
               {accounts.length === 0 && (
-                <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-12 text-center">
-                  <Building2 className="w-16 h-16 text-gray-400 mx-auto mb-4" />
-                  <h3 className="text-xl font-semibold text-gray-900 mb-2">
+                <div className="bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-gray-200 dark:border-gray-700 p-12 text-center">
+                  <Building2 className="w-16 h-16 text-gray-400 dark:text-gray-500 mx-auto mb-4" />
+                  <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-2">
                     Welcome to OneLedger!
                   </h3>
-                  <p className="text-gray-600 mb-6 max-w-md mx-auto">
+                  <p className="text-gray-600 dark:text-gray-300 mb-6 max-w-md mx-auto">
                     Connect your bank account to start tracking your finances.
                     Your data is secure and encrypted.
                   </p>
@@ -326,46 +344,46 @@ export default function FinanceDashboard() {
                   />
 
                   {/* Quick Actions */}
-                  <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
-                    <h3 className="text-lg font-semibold text-gray-900 mb-4">
+                  <div className="bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-gray-200 dark:border-gray-700 p-6">
+                    <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">
                       Quick Actions
                     </h3>
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                       <button
                         onClick={() => router.push('/finance/accounts')}
-                        className="p-4 border border-gray-200 rounded-lg hover:bg-gray-50 transition-colors text-left"
+                        className="p-4 border border-gray-200 dark:border-gray-600 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors text-left"
                       >
-                        <Building2 className="w-6 h-6 text-blue-600 mb-2" />
-                        <p className="font-medium text-gray-900">
+                        <Building2 className="w-6 h-6 text-blue-600 dark:text-blue-400 mb-2" />
+                        <p className="font-medium text-gray-900 dark:text-white">
                           View All Accounts
                         </p>
-                        <p className="text-sm text-gray-600 mt-1">
+                        <p className="text-sm text-gray-600 dark:text-gray-300 mt-1">
                           Manage your connected banks
                         </p>
                       </button>
 
                       <button
                         onClick={() => router.push('/finance/transactions')}
-                        className="p-4 border border-gray-200 rounded-lg hover:bg-gray-50 transition-colors text-left"
+                        className="p-4 border border-gray-200 dark:border-gray-600 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors text-left"
                       >
-                        <TrendingDown className="w-6 h-6 text-purple-600 mb-2" />
-                        <p className="font-medium text-gray-900">
+                        <TrendingDown className="w-6 h-6 text-purple-600 dark:text-purple-400 mb-2" />
+                        <p className="font-medium text-gray-900 dark:text-white">
                           View All Transactions
                         </p>
-                        <p className="text-sm text-gray-600 mt-1">
+                        <p className="text-sm text-gray-600 dark:text-gray-300 mt-1">
                           Browse and filter transactions
                         </p>
                       </button>
 
                       <button
                         onClick={() => router.push('/finance/budgets')}
-                        className="p-4 border border-gray-200 rounded-lg hover:bg-gray-50 transition-colors text-left"
+                        className="p-4 border border-gray-200 dark:border-gray-600 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors text-left"
                       >
-                        <Target className="w-6 h-6 text-green-600 mb-2" />
-                        <p className="font-medium text-gray-900">
+                        <Target className="w-6 h-6 text-green-600 dark:text-green-400 mb-2" />
+                        <p className="font-medium text-gray-900 dark:text-white">
                           Manage Budgets
                         </p>
-                        <p className="text-sm text-gray-600 mt-1">
+                        <p className="text-sm text-gray-600 dark:text-gray-300 mt-1">
                           Set and track spending goals
                         </p>
                       </button>

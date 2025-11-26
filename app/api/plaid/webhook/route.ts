@@ -119,6 +119,7 @@ export async function POST(request: Request) {
 /**
  * Handle TRANSACTIONS webhook events
  */
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 async function handleTransactionsWebhook(
   payload: PlaidWebhookPayload,
   plaidItem: any,
@@ -149,6 +150,7 @@ async function handleTransactionsWebhook(
 /**
  * Handle ITEM webhook events
  */
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 async function handleItemWebhook(
   payload: PlaidWebhookPayload,
   plaidItem: any,
@@ -220,6 +222,7 @@ async function handleItemWebhook(
  * Sync transactions for a specific Plaid item
  * Reuses existing sync logic
  */
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 async function syncTransactionsForItem(plaidItem: any, supabase: any) {
   try {
     // Decrypt the access token
@@ -249,6 +252,7 @@ async function syncTransactionsForItem(plaidItem: any, supabase: any) {
         .select('id, plaid_account_id')
         .eq('plaid_item_id', plaidItem.id);
 
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       const accountMap = new Map(
         accounts?.map((a: any) => [a.plaid_account_id, a.id]) || []
       );
@@ -343,6 +347,7 @@ async function syncTransactionsForItem(plaidItem: any, supabase: any) {
 /**
  * Update account balances from Plaid
  */
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 async function updateAccountBalances(plaidItem: any, accessToken: string, supabase: any) {
   try {
     const response = await plaidClient.accountsBalanceGet({

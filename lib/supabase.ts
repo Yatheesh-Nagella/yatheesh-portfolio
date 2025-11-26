@@ -13,6 +13,7 @@ import type {
   Budget,
   PlaidItem,
 } from '@/types/database.types';
+import crypto from 'crypto';
 
 // Re-export types for convenience
 export type { User, Account, Transaction, Budget, PlaidItem };
@@ -32,7 +33,6 @@ export const supabase = createClient<Database>(
  * Using AES-256-CBC decryption
  */
 export function decryptAccessToken(encryptedToken: string): string {
-  const crypto = require('crypto');
   const algorithm = 'aes-256-cbc';
   const key = Buffer.from(process.env.ENCRYPTION_KEY!, 'hex');
 

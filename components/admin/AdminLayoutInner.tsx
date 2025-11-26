@@ -10,6 +10,7 @@ import React, { useEffect, useState } from 'react';
 import { useRouter, usePathname } from 'next/navigation';
 import Link from 'next/link';
 import { useAdminAuth } from '@/contexts/AdminAuthContext';
+import { useAdminTheme } from '@/contexts/AdminThemeContext';
 import {
   LayoutDashboard,
   Users,
@@ -21,6 +22,8 @@ import {
   X,
   Shield,
   Loader2,
+  Moon,
+  Sun,
 } from 'lucide-react';
 
 // Navigation items
@@ -40,6 +43,7 @@ export default function AdminLayoutInner({
   const router = useRouter();
   const pathname = usePathname();
   const { adminUser, loading: authLoading, signOut } = useAdminAuth();
+  const { theme, toggleTheme } = useAdminTheme();
   const [sidebarOpen, setSidebarOpen] = useState(false);
 
   // Check if admin is logged in
@@ -94,7 +98,7 @@ export default function AdminLayoutInner({
   }
 
   return (
-    <div className="min-h-screen bg-gray-100">
+    <div className="min-h-screen bg-gray-100 dark:bg-gray-900 transition-colors">
       {/* Mobile sidebar backdrop */}
       {sidebarOpen && (
         <div
@@ -147,9 +151,9 @@ export default function AdminLayoutInner({
           })}
         </nav>
 
-        {/* User info & logout */}
-        <div className="absolute bottom-0 left-0 right-0 p-4 border-t border-gray-800">
-          <div className="flex items-center gap-3 mb-3">
+        {/* User info, theme toggle & logout */}
+        <div className="absolute bottom-0 left-0 right-0 p-4 border-t border-gray-800 space-y-2">
+          <div className="flex items-center gap-3 mb-2">
             <div className="w-10 h-10 rounded-full bg-blue-600 flex items-center justify-center">
               <span className="text-white font-semibold">
                 {adminUser?.full_name?.charAt(0) || adminUser?.email?.charAt(0) || 'A'}
@@ -163,6 +167,13 @@ export default function AdminLayoutInner({
             </div>
           </div>
           <button
+            onClick={toggleTheme}
+            className="flex items-center gap-2 w-full px-4 py-2 text-gray-400 hover:text-white hover:bg-gray-800 rounded-lg transition-colors"
+          >
+            {theme === 'dark' ? <Sun className="w-5 h-5" /> : <Moon className="w-5 h-5" />}
+            <span>{theme === 'dark' ? 'Light Mode' : 'Dark Mode'}</span>
+          </button>
+          <button
             onClick={handleSignOut}
             className="flex items-center gap-2 w-full px-4 py-2 text-gray-400 hover:text-white hover:bg-gray-800 rounded-lg transition-colors"
           >
@@ -175,19 +186,24 @@ export default function AdminLayoutInner({
       {/* Main content */}
       <div className="lg:pl-64">
         {/* Mobile header */}
-        <header className="sticky top-0 z-30 bg-white border-b border-gray-200 lg:hidden">
+        <header className="sticky top-0 z-30 bg-white dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700 lg:hidden transition-colors">
           <div className="flex items-center justify-between h-16 px-4">
             <button
               onClick={() => setSidebarOpen(true)}
-              className="text-gray-600 hover:text-gray-900"
+              className="text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white"
             >
               <Menu className="w-6 h-6" />
             </button>
             <div className="flex items-center gap-2">
               <Shield className="w-6 h-6 text-blue-500" />
-              <span className="font-bold text-gray-900">Admin</span>
+              <span className="font-bold text-gray-900 dark:text-white">Admin</span>
             </div>
-            <div className="w-6" /> {/* Spacer for centering */}
+            <button
+              onClick={toggleTheme}
+              className="text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white"
+            >
+              {theme === 'dark' ? <Sun className="w-6 h-6" /> : <Moon className="w-6 h-6" />}
+            </button>
           </div>
         </header>
 

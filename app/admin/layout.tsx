@@ -1,10 +1,11 @@
 /**
  * Admin Layout
- * Server component wrapper that provides AdminAuthProvider context
+ * Server component wrapper that provides AdminAuthProvider and AdminThemeProvider contexts
  */
 
 import React from 'react';
 import { AdminAuthProvider } from '@/contexts/AdminAuthContext';
+import { AdminThemeProvider } from '@/contexts/AdminThemeContext';
 import AdminLayoutInner from '@/components/admin/AdminLayoutInner';
 
 export default function AdminLayout({
@@ -14,7 +15,9 @@ export default function AdminLayout({
 }) {
   return (
     <AdminAuthProvider>
-      <AdminLayoutInner>{children}</AdminLayoutInner>
+      <AdminThemeProvider>
+        <AdminLayoutInner>{children}</AdminLayoutInner>
+      </AdminThemeProvider>
     </AdminAuthProvider>
   );
 }

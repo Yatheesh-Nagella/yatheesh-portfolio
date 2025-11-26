@@ -26,13 +26,13 @@ export default function AccountCard({ account, onSync, loading = false }: Accoun
   // Get account type color
   const getAccountTypeColor = (type: string | null) => {
     const colors: Record<string, string> = {
-      checking: 'bg-blue-100 text-blue-800',
-      savings: 'bg-green-100 text-green-800',
-      credit: 'bg-purple-100 text-purple-800',
-      loan: 'bg-red-100 text-red-800',
-      cash: 'bg-emerald-100 text-emerald-800',
+      checking: 'bg-blue-100 dark:bg-blue-900/20 text-blue-800 dark:text-blue-400',
+      savings: 'bg-green-100 dark:bg-green-900/20 text-green-800 dark:text-green-400',
+      credit: 'bg-purple-100 dark:bg-purple-900/20 text-purple-800 dark:text-purple-400',
+      loan: 'bg-red-100 dark:bg-red-900/20 text-red-800 dark:text-red-400',
+      cash: 'bg-emerald-100 dark:bg-emerald-900/20 text-emerald-800 dark:text-emerald-400',
     };
-    return colors[type?.toLowerCase() || ''] || 'bg-gray-100 text-gray-800';
+    return colors[type?.toLowerCase() || ''] || 'bg-gray-100 dark:bg-gray-700 text-gray-800 dark:text-gray-300';
   };
 
   const typeColor = getAccountTypeColor(account.account_type);
@@ -40,26 +40,26 @@ export default function AccountCard({ account, onSync, loading = false }: Accoun
   return (
     <div className={`rounded-xl shadow-sm border p-6 hover:shadow-md transition-shadow ${
       isCashAccount
-        ? 'bg-gradient-to-br from-emerald-50 to-white border-emerald-200'
-        : 'bg-white border-gray-200'
+        ? 'bg-gradient-to-br from-emerald-50 to-white dark:from-emerald-900/20 dark:to-gray-800 border-emerald-200 dark:border-emerald-700'
+        : 'bg-white dark:bg-gray-800 border-gray-200 dark:border-gray-700'
     }`}>
       {/* Header */}
       <div className="flex items-start justify-between mb-4">
         <div className="flex items-center">
           <div className={`w-12 h-12 rounded-full flex items-center justify-center mr-4 ${
-            isCashAccount ? 'bg-emerald-100' : 'bg-blue-50'
+            isCashAccount ? 'bg-emerald-100 dark:bg-emerald-900/20' : 'bg-blue-50 dark:bg-blue-900/20'
           }`}>
             {isCashAccount ? (
-              <Wallet className="w-6 h-6 text-emerald-600" />
+              <Wallet className="w-6 h-6 text-emerald-600 dark:text-emerald-400" />
             ) : (
-              <Building2 className="w-6 h-6 text-blue-600" />
+              <Building2 className="w-6 h-6 text-blue-600 dark:text-blue-400" />
             )}
           </div>
           <div>
-            <h3 className="text-lg font-semibold text-gray-900">
+            <h3 className="text-lg font-semibold text-gray-900 dark:text-white">
               {account.account_name || 'Unknown Account'}
             </h3>
-            <p className="text-sm text-gray-500">
+            <p className="text-sm text-gray-500 dark:text-gray-400">
               {isCashAccount
                 ? 'Manual Transactions'
                 : (account.plaid_items?.institution_name || 'Unknown Bank')}
@@ -75,14 +75,14 @@ export default function AccountCard({ account, onSync, loading = false }: Accoun
 
       {/* Balance */}
       <div className="mb-4">
-        <p className="text-sm text-gray-600 mb-1">Current Balance</p>
-        <p className="text-3xl font-bold text-gray-900">
+        <p className="text-sm text-gray-600 dark:text-gray-400 mb-1">Current Balance</p>
+        <p className="text-3xl font-bold text-gray-900 dark:text-white">
           {formatCurrency(account.current_balance || 0)}
         </p>
-        
-        {account.available_balance !== null && 
+
+        {account.available_balance !== null &&
          account.available_balance !== account.current_balance && (
-          <p className="text-sm text-gray-500 mt-1">
+          <p className="text-sm text-gray-500 dark:text-gray-400 mt-1">
             Available: {formatCurrency(account.available_balance)}
           </p>
         )}
@@ -90,9 +90,9 @@ export default function AccountCard({ account, onSync, loading = false }: Accoun
 
       {/* Footer */}
       <div className={`flex items-center justify-between pt-4 border-t ${
-        isCashAccount ? 'border-emerald-200' : 'border-gray-200'
+        isCashAccount ? 'border-emerald-200 dark:border-emerald-700' : 'border-gray-200 dark:border-gray-700'
       }`}>
-        <div className="flex items-center text-xs text-gray-500">
+        <div className="flex items-center text-xs text-gray-500 dark:text-gray-400">
           {isCashAccount ? (
             <>
               <Banknote className="w-4 h-4 mr-1" />
@@ -111,7 +111,7 @@ export default function AccountCard({ account, onSync, loading = false }: Accoun
           <button
             onClick={() => onSync(account.id)}
             disabled={loading}
-            className="text-sm text-blue-600 hover:text-blue-700 font-medium disabled:text-gray-400"
+            className="text-sm text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300 font-medium disabled:text-gray-400 dark:disabled:text-gray-500"
           >
             {loading ? 'Syncing...' : 'Sync Now'}
           </button>

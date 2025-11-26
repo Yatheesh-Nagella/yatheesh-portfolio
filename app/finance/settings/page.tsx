@@ -122,10 +122,10 @@ export default function SettingsPage() {
    */
   if (loading) {
     return (
-      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+      <div className="min-h-screen bg-gray-50 dark:bg-gray-900 flex items-center justify-center">
         <div className="text-center">
           <Loader2 className="w-12 h-12 animate-spin text-blue-500 mx-auto" />
-          <p className="mt-4 text-gray-600">Loading settings...</p>
+          <p className="mt-4 text-gray-600 dark:text-gray-300">Loading settings...</p>
         </div>
       </div>
     );
@@ -136,43 +136,43 @@ export default function SettingsPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50 p-4 sm:p-6 lg:p-8">
+    <div className="min-h-screen bg-gray-50 dark:bg-gray-900 p-4 sm:p-6 lg:p-8">
       <div className="max-w-4xl mx-auto">
         {/* Header */}
         <div className="mb-6">
           <button
             onClick={() => router.push('/finance/dashboard')}
-            className="flex items-center text-gray-600 hover:text-gray-900 mb-4"
+            className="flex items-center text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white mb-4"
           >
             <ArrowLeft className="w-5 h-5 mr-2" />
             Back to Dashboard
           </button>
-          <h1 className="text-3xl sm:text-4xl font-bold text-gray-900">
+          <h1 className="text-3xl sm:text-4xl font-bold text-gray-900 dark:text-white">
             Settings
           </h1>
-          <p className="text-gray-600 mt-2">
+          <p className="text-gray-600 dark:text-gray-300 mt-2">
             Manage your account and preferences
           </p>
         </div>
 
         <div className="space-y-6">
           {/* Profile Section */}
-          <section className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
-            <h2 className="text-xl font-semibold text-gray-900 mb-6 flex items-center">
+          <section className="bg-white dark:bg-gray-800 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700 p-6">
+            <h2 className="text-xl font-semibold text-gray-900 dark:text-white mb-6 flex items-center">
               <User className="w-5 h-5 mr-2" />
               Profile Information
             </h2>
 
             <div className="space-y-4">
               {/* Full Name */}
-              <div className="flex items-start justify-between py-3 border-b border-gray-100">
+              <div className="flex items-start justify-between py-3 border-b border-gray-100 dark:border-gray-700">
                 <div className="flex items-start">
-                  <User className="w-5 h-5 text-gray-400 mt-0.5 mr-3" />
+                  <User className="w-5 h-5 text-gray-400 dark:text-gray-500 mt-0.5 mr-3" />
                   <div>
-                    <p className="text-sm font-medium text-gray-500">
+                    <p className="text-sm font-medium text-gray-500 dark:text-gray-400">
                       Full Name
                     </p>
-                    <p className="text-base text-gray-900 mt-1">
+                    <p className="text-base text-gray-900 dark:text-white mt-1">
                       {user.full_name || 'Not provided'}
                     </p>
                   </div>
@@ -180,32 +180,32 @@ export default function SettingsPage() {
               </div>
 
               {/* Email */}
-              <div className="flex items-start justify-between py-3 border-b border-gray-100">
+              <div className="flex items-start justify-between py-3 border-b border-gray-100 dark:border-gray-700">
                 <div className="flex items-start">
-                  <Mail className="w-5 h-5 text-gray-400 mt-0.5 mr-3" />
+                  <Mail className="w-5 h-5 text-gray-400 dark:text-gray-500 mt-0.5 mr-3" />
                   <div>
-                    <p className="text-sm font-medium text-gray-500">Email</p>
-                    <p className="text-base text-gray-900 mt-1">{user.email}</p>
+                    <p className="text-sm font-medium text-gray-500 dark:text-gray-400">Email</p>
+                    <p className="text-base text-gray-900 dark:text-white mt-1">{user.email}</p>
                   </div>
                 </div>
                 {user.is_admin && (
-                  <span className="px-2 py-1 bg-blue-100 text-blue-700 rounded-full text-xs font-medium">
+                  <span className="px-2 py-1 bg-blue-100 dark:bg-blue-900/20 text-blue-700 dark:text-blue-400 rounded-full text-xs font-medium">
                     Admin
                   </span>
                 )}
               </div>
 
               {/* Member Since */}
-              <div className="flex items-start py-3 border-b border-gray-100">
-                <Calendar className="w-5 h-5 text-gray-400 mt-0.5 mr-3" />
+              <div className="flex items-start py-3 border-b border-gray-100 dark:border-gray-700">
+                <Calendar className="w-5 h-5 text-gray-400 dark:text-gray-500 mt-0.5 mr-3" />
                 <div>
-                  <p className="text-sm font-medium text-gray-500">
+                  <p className="text-sm font-medium text-gray-500 dark:text-gray-400">
                     Member Since
                   </p>
-                  <p className="text-base text-gray-900 mt-1">
+                  <p className="text-base text-gray-900 dark:text-white mt-1">
                     {user.created_at ? formatDate(user.created_at) : 'N/A'}
                   </p>
-                  <p className="text-sm text-gray-500 mt-0.5">
+                  <p className="text-sm text-gray-500 dark:text-gray-400 mt-0.5">
                     {user.created_at ? formatRelativeTime(user.created_at) : 'N/A'}
                   </p>
                 </div>
@@ -214,15 +214,15 @@ export default function SettingsPage() {
               {/* Last Login */}
               {user.last_login_at && (
                 <div className="flex items-start py-3">
-                  <Calendar className="w-5 h-5 text-gray-400 mt-0.5 mr-3" />
+                  <Calendar className="w-5 h-5 text-gray-400 dark:text-gray-500 mt-0.5 mr-3" />
                   <div>
-                    <p className="text-sm font-medium text-gray-500">
+                    <p className="text-sm font-medium text-gray-500 dark:text-gray-400">
                       Last Login
                     </p>
-                    <p className="text-base text-gray-900 mt-1">
+                    <p className="text-base text-gray-900 dark:text-white mt-1">
                       {formatDate(user.last_login_at)}
                     </p>
-                    <p className="text-sm text-gray-500 mt-0.5">
+                    <p className="text-sm text-gray-500 dark:text-gray-400 mt-0.5">
                       {formatRelativeTime(user.last_login_at)}
                     </p>
                   </div>
@@ -233,21 +233,21 @@ export default function SettingsPage() {
 
           {/* Invite Information */}
           {user.invite_code && (
-            <section className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
-              <h2 className="text-xl font-semibold text-gray-900 mb-6 flex items-center">
+            <section className="bg-white dark:bg-gray-800 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700 p-6">
+              <h2 className="text-xl font-semibold text-gray-900 dark:text-white mb-6 flex items-center">
                 <Shield className="w-5 h-5 mr-2" />
                 Invite Information
               </h2>
 
               <div className="space-y-4">
                 {/* Invite Code */}
-                <div className="flex items-start py-3 border-b border-gray-100">
-                  <Shield className="w-5 h-5 text-gray-400 mt-0.5 mr-3" />
+                <div className="flex items-start py-3 border-b border-gray-100 dark:border-gray-700">
+                  <Shield className="w-5 h-5 text-gray-400 dark:text-gray-500 mt-0.5 mr-3" />
                   <div>
-                    <p className="text-sm font-medium text-gray-500">
+                    <p className="text-sm font-medium text-gray-500 dark:text-gray-400">
                       Invite Code Used
                     </p>
-                    <p className="text-base text-gray-900 mt-1 font-mono">
+                    <p className="text-base text-gray-900 dark:text-white mt-1 font-mono">
                       {user.invite_code}
                     </p>
                   </div>
@@ -256,18 +256,18 @@ export default function SettingsPage() {
                 {/* Invite Expiration */}
                 {user.invite_expires_at && (
                   <div className="flex items-start py-3">
-                    <Calendar className="w-5 h-5 text-gray-400 mt-0.5 mr-3" />
+                    <Calendar className="w-5 h-5 text-gray-400 dark:text-gray-500 mt-0.5 mr-3" />
                     <div>
-                      <p className="text-sm font-medium text-gray-500">
+                      <p className="text-sm font-medium text-gray-500 dark:text-gray-400">
                         Invite Expiration
                       </p>
-                      <p className="text-base text-gray-900 mt-1">
+                      <p className="text-base text-gray-900 dark:text-white mt-1">
                         {formatDate(user.invite_expires_at)}
                       </p>
                       {new Date(user.invite_expires_at) < new Date() ? (
-                        <p className="text-sm text-red-600 mt-0.5">Expired</p>
+                        <p className="text-sm text-red-600 dark:text-red-400 mt-0.5">Expired</p>
                       ) : (
-                        <p className="text-sm text-green-600 mt-0.5">Active</p>
+                        <p className="text-sm text-green-600 dark:text-green-400 mt-0.5">Active</p>
                       )}
                     </div>
                   </div>
@@ -277,19 +277,19 @@ export default function SettingsPage() {
           )}
 
           {/* Connected Banks */}
-          <section className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
-            <h2 className="text-xl font-semibold text-gray-900 mb-6 flex items-center">
+          <section className="bg-white dark:bg-gray-800 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700 p-6">
+            <h2 className="text-xl font-semibold text-gray-900 dark:text-white mb-6 flex items-center">
               <CreditCard className="w-5 h-5 mr-2" />
               Connected Banks
             </h2>
 
             {plaidItems.length === 0 ? (
               <div className="text-center py-8">
-                <AlertCircle className="w-12 h-12 text-gray-400 mx-auto mb-3" />
-                <p className="text-gray-600">No bank accounts connected</p>
+                <AlertCircle className="w-12 h-12 text-gray-400 dark:text-gray-500 mx-auto mb-3" />
+                <p className="text-gray-600 dark:text-gray-300">No bank accounts connected</p>
                 <button
                   onClick={() => router.push('/finance/dashboard')}
-                  className="mt-4 text-blue-500 hover:text-blue-600 font-medium text-sm"
+                  className="mt-4 text-blue-500 dark:text-blue-400 hover:text-blue-600 dark:hover:text-blue-300 font-medium text-sm"
                 >
                   Connect a bank account
                 </button>
@@ -299,19 +299,19 @@ export default function SettingsPage() {
                 {plaidItems.map((item) => (
                   <div
                     key={item.id}
-                    className="flex items-center justify-between p-4 border border-gray-200 rounded-lg hover:bg-gray-50 transition-colors"
+                    className="flex items-center justify-between p-4 border border-gray-200 dark:border-gray-700 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors"
                   >
                     <div className="flex items-center flex-1">
-                      <CreditCard className="w-5 h-5 text-gray-400 mr-3" />
+                      <CreditCard className="w-5 h-5 text-gray-400 dark:text-gray-500 mr-3" />
                       <div className="flex-1">
-                        <p className="font-semibold text-gray-900">
+                        <p className="font-semibold text-gray-900 dark:text-white">
                           {item.institution_name}
                         </p>
-                        <p className="text-sm text-gray-500">
+                        <p className="text-sm text-gray-500 dark:text-gray-400">
                           Connected {item.created_at ? formatRelativeTime(item.created_at) : 'recently'}
                         </p>
                         {item.last_synced_at && (
-                          <p className="text-xs text-gray-400 mt-0.5">
+                          <p className="text-xs text-gray-400 dark:text-gray-500 mt-0.5">
                             Last synced {formatRelativeTime(item.last_synced_at)}
                           </p>
                         )}
@@ -321,17 +321,17 @@ export default function SettingsPage() {
                     {/* Status Badge and Actions */}
                     <div className="flex items-center gap-3">
                       {item.status === 'active' ? (
-                        <span className="flex items-center px-3 py-1 bg-green-100 text-green-700 rounded-full text-xs font-medium">
+                        <span className="flex items-center px-3 py-1 bg-green-100 dark:bg-green-900/20 text-green-700 dark:text-green-400 rounded-full text-xs font-medium">
                           <CheckCircle className="w-3 h-3 mr-1" />
                           Active
                         </span>
                       ) : item.status === 'error' ? (
-                        <span className="flex items-center px-3 py-1 bg-red-100 text-red-700 rounded-full text-xs font-medium">
+                        <span className="flex items-center px-3 py-1 bg-red-100 dark:bg-red-900/20 text-red-700 dark:text-red-400 rounded-full text-xs font-medium">
                           <XCircle className="w-3 h-3 mr-1" />
                           Error
                         </span>
                       ) : (
-                        <span className="flex items-center px-3 py-1 bg-yellow-100 text-yellow-700 rounded-full text-xs font-medium">
+                        <span className="flex items-center px-3 py-1 bg-yellow-100 dark:bg-yellow-900/20 text-yellow-700 dark:text-yellow-400 rounded-full text-xs font-medium">
                           <AlertCircle className="w-3 h-3 mr-1" />
                           {item.status}
                         </span>
@@ -341,7 +341,7 @@ export default function SettingsPage() {
                       <button
                         onClick={() => handleUnlinkAccount(item.id, item.institution_name || 'this bank')}
                         disabled={unlinkingItemId === item.id}
-                        className="p-2 text-red-600 hover:bg-red-50 rounded-lg transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                        className="p-2 text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-900/20 rounded-lg transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
                         title="Unlink account"
                       >
                         {unlinkingItemId === item.id ? (
@@ -358,18 +358,18 @@ export default function SettingsPage() {
           </section>
 
           {/* Danger Zone */}
-          <section className="bg-white rounded-lg shadow-sm border border-red-200 p-6">
-            <h2 className="text-xl font-semibold text-red-600 mb-6 flex items-center">
+          <section className="bg-white dark:bg-gray-800 rounded-lg shadow-sm border border-red-200 dark:border-red-900/50 p-6">
+            <h2 className="text-xl font-semibold text-red-600 dark:text-red-400 mb-6 flex items-center">
               <LogOut className="w-5 h-5 mr-2" />
               Account Actions
             </h2>
 
             <div className="space-y-4">
               {/* Sign Out */}
-              <div className="flex items-center justify-between p-4 border border-gray-200 rounded-lg">
+              <div className="flex items-center justify-between p-4 border border-gray-200 dark:border-gray-700 rounded-lg">
                 <div>
-                  <p className="font-semibold text-gray-900">Sign Out</p>
-                  <p className="text-sm text-gray-600 mt-1">
+                  <p className="font-semibold text-gray-900 dark:text-white">Sign Out</p>
+                  <p className="text-sm text-gray-600 dark:text-gray-300 mt-1">
                     Sign out of your OneLedger account
                   </p>
                 </div>
@@ -383,8 +383,8 @@ export default function SettingsPage() {
               </div>
 
               {/* Account Info */}
-              <div className="p-4 bg-gray-50 rounded-lg border border-gray-200">
-                <p className="text-sm text-gray-600">
+              <div className="p-4 bg-gray-50 dark:bg-gray-700 rounded-lg border border-gray-200 dark:border-gray-600">
+                <p className="text-sm text-gray-600 dark:text-gray-300">
                   <strong>Account ID:</strong>{' '}
                   <span className="font-mono text-xs">{user.id}</span>
                 </p>

@@ -158,78 +158,78 @@ export default function AdminDashboard() {
     <div className="space-y-8">
       {/* Header */}
       <div>
-        <h1 className="text-3xl font-bold text-gray-900">Dashboard</h1>
-        <p className="text-gray-600 mt-1">Platform overview and metrics</p>
+        <h1 className="text-3xl font-bold text-gray-900 dark:text-white">Dashboard</h1>
+        <p className="text-gray-600 dark:text-gray-300 mt-1">Platform overview and metrics</p>
       </div>
 
       {/* Metrics Grid */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
         {/* Total Users */}
-        <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
+        <div className="bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-gray-200 dark:border-gray-700 p-6">
           <div className="flex items-center justify-between">
             <div>
-              <p className="text-sm font-medium text-gray-600">Total Users</p>
-              <p className="text-3xl font-bold text-gray-900 mt-1">
+              <p className="text-sm font-medium text-gray-600 dark:text-gray-300">Total Users</p>
+              <p className="text-3xl font-bold text-gray-900 dark:text-white mt-1">
                 {metrics?.totalUsers || 0}
               </p>
               <p className="text-sm text-green-600 mt-1">
                 +{metrics?.newUsersThisWeek || 0} this week
               </p>
             </div>
-            <div className="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center">
-              <Users className="w-6 h-6 text-blue-600" />
+            <div className="w-12 h-12 bg-blue-100 dark:bg-blue-900 rounded-full flex items-center justify-center">
+              <Users className="w-6 h-6 text-blue-600 dark:text-blue-400" />
             </div>
           </div>
         </div>
 
         {/* Active Users */}
-        <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
+        <div className="bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-gray-200 dark:border-gray-700 p-6">
           <div className="flex items-center justify-between">
             <div>
-              <p className="text-sm font-medium text-gray-600">Active Users</p>
-              <p className="text-3xl font-bold text-gray-900 mt-1">
+              <p className="text-sm font-medium text-gray-600 dark:text-gray-300">Active Users</p>
+              <p className="text-3xl font-bold text-gray-900 dark:text-white mt-1">
                 {metrics?.activeUsers || 0}
               </p>
-              <p className="text-sm text-gray-500 mt-1">Last 30 days</p>
+              <p className="text-sm text-gray-500 dark:text-gray-400 mt-1">Last 30 days</p>
             </div>
-            <div className="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center">
-              <Activity className="w-6 h-6 text-green-600" />
+            <div className="w-12 h-12 bg-green-100 dark:bg-green-900 rounded-full flex items-center justify-center">
+              <Activity className="w-6 h-6 text-green-600 dark:text-green-400" />
             </div>
           </div>
         </div>
 
         {/* Active Invite Codes */}
-        <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
+        <div className="bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-gray-200 dark:border-gray-700 p-6">
           <div className="flex items-center justify-between">
             <div>
-              <p className="text-sm font-medium text-gray-600">Active Invites</p>
-              <p className="text-3xl font-bold text-gray-900 mt-1">
+              <p className="text-sm font-medium text-gray-600 dark:text-gray-300">Active Invites</p>
+              <p className="text-3xl font-bold text-gray-900 dark:text-white mt-1">
                 {metrics?.activeInviteCodes || 0}
               </p>
-              <p className="text-sm text-gray-500 mt-1">
+              <p className="text-sm text-gray-500 dark:text-gray-400 mt-1">
                 of {metrics?.totalInviteCodes || 0} total
               </p>
             </div>
-            <div className="w-12 h-12 bg-purple-100 rounded-full flex items-center justify-center">
-              <Ticket className="w-6 h-6 text-purple-600" />
+            <div className="w-12 h-12 bg-purple-100 dark:bg-purple-900 rounded-full flex items-center justify-center">
+              <Ticket className="w-6 h-6 text-purple-600 dark:text-purple-400" />
             </div>
           </div>
         </div>
 
         {/* Total Transactions */}
-        <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
+        <div className="bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-gray-200 dark:border-gray-700 p-6">
           <div className="flex items-center justify-between">
             <div>
-              <p className="text-sm font-medium text-gray-600">Transactions</p>
-              <p className="text-3xl font-bold text-gray-900 mt-1">
+              <p className="text-sm font-medium text-gray-600 dark:text-gray-300">Transactions</p>
+              <p className="text-3xl font-bold text-gray-900 dark:text-white mt-1">
                 {metrics?.totalTransactions?.toLocaleString() || 0}
               </p>
-              <p className="text-sm text-gray-500 mt-1">
+              <p className="text-sm text-gray-500 dark:text-gray-400 mt-1">
                 {metrics?.totalAccounts || 0} accounts
               </p>
             </div>
-            <div className="w-12 h-12 bg-orange-100 rounded-full flex items-center justify-center">
-              <CreditCard className="w-6 h-6 text-orange-600" />
+            <div className="w-12 h-12 bg-orange-100 dark:bg-orange-900 rounded-full flex items-center justify-center">
+              <CreditCard className="w-6 h-6 text-orange-600 dark:text-orange-400" />
             </div>
           </div>
         </div>
@@ -238,34 +238,34 @@ export default function AdminDashboard() {
       {/* Recent Activity */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         {/* Recent Users */}
-        <div className="bg-white rounded-xl shadow-sm border border-gray-200">
-          <div className="flex items-center justify-between p-6 border-b border-gray-200">
-            <h2 className="text-lg font-semibold text-gray-900">Recent Users</h2>
+        <div className="bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-gray-200 dark:border-gray-700">
+          <div className="flex items-center justify-between p-6 border-b border-gray-200 dark:border-gray-700">
+            <h2 className="text-lg font-semibold text-gray-900 dark:text-white">Recent Users</h2>
             <Link
               href="/admin/users"
-              className="text-sm text-blue-600 hover:text-blue-700 flex items-center gap-1"
+              className="text-sm text-blue-600 hover:text-blue-700 dark:text-blue-400 dark:hover:text-blue-300 flex items-center gap-1"
             >
               View all <ArrowRight className="w-4 h-4" />
             </Link>
           </div>
-          <div className="divide-y divide-gray-100">
+          <div className="divide-y divide-gray-100 dark:divide-gray-700">
             {recentUsers.length === 0 ? (
-              <p className="p-6 text-gray-500 text-center">No users yet</p>
+              <p className="p-6 text-gray-500 dark:text-gray-400 text-center">No users yet</p>
             ) : (
               recentUsers.map((user) => (
                 <div key={user.id} className="flex items-center justify-between p-4">
                   <div className="flex items-center gap-3">
-                    <div className="w-10 h-10 rounded-full bg-gray-100 flex items-center justify-center">
-                      <UserPlus className="w-5 h-5 text-gray-500" />
+                    <div className="w-10 h-10 rounded-full bg-gray-100 dark:bg-gray-700 flex items-center justify-center">
+                      <UserPlus className="w-5 h-5 text-gray-500 dark:text-gray-400" />
                     </div>
                     <div>
-                      <p className="font-medium text-gray-900">
+                      <p className="font-medium text-gray-900 dark:text-white">
                         {user.full_name || 'No name'}
                       </p>
-                      <p className="text-sm text-gray-500">{user.email}</p>
+                      <p className="text-sm text-gray-500 dark:text-gray-400">{user.email}</p>
                     </div>
                   </div>
-                  <span className="text-sm text-gray-400">
+                  <span className="text-sm text-gray-400 dark:text-gray-500">
                     {user.created_at ? formatRelativeTime(user.created_at) : 'N/A'}
                   </span>
                 </div>
@@ -275,19 +275,19 @@ export default function AdminDashboard() {
         </div>
 
         {/* Recent Invite Codes */}
-        <div className="bg-white rounded-xl shadow-sm border border-gray-200">
-          <div className="flex items-center justify-between p-6 border-b border-gray-200">
-            <h2 className="text-lg font-semibold text-gray-900">Recent Invites</h2>
+        <div className="bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-gray-200 dark:border-gray-700">
+          <div className="flex items-center justify-between p-6 border-b border-gray-200 dark:border-gray-700">
+            <h2 className="text-lg font-semibold text-gray-900 dark:text-white">Recent Invites</h2>
             <Link
               href="/admin/invites"
-              className="text-sm text-blue-600 hover:text-blue-700 flex items-center gap-1"
+              className="text-sm text-blue-600 hover:text-blue-700 dark:text-blue-400 dark:hover:text-blue-300 flex items-center gap-1"
             >
               View all <ArrowRight className="w-4 h-4" />
             </Link>
           </div>
-          <div className="divide-y divide-gray-100">
+          <div className="divide-y divide-gray-100 dark:divide-gray-700">
             {recentInvites.length === 0 ? (
-              <p className="p-6 text-gray-500 text-center">No invite codes yet</p>
+              <p className="p-6 text-gray-500 dark:text-gray-400 text-center">No invite codes yet</p>
             ) : (
               recentInvites.map((invite) => {
                 const isExpired = new Date(invite.expires_at) < new Date();
@@ -309,8 +309,8 @@ export default function AdminDashboard() {
                 return (
                   <div key={invite.id} className="flex items-center justify-between p-4">
                     <div>
-                      <p className="font-mono font-medium text-gray-900">{invite.code}</p>
-                      <p className="text-sm text-gray-500">
+                      <p className="font-mono font-medium text-gray-900 dark:text-white">{invite.code}</p>
+                      <p className="text-sm text-gray-500 dark:text-gray-400">
                         {invite.used_count || 0} / {invite.max_uses || '∞'} uses
                       </p>
                     </div>
@@ -326,8 +326,8 @@ export default function AdminDashboard() {
       </div>
 
       {/* Quick Actions */}
-      <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
-        <h2 className="text-lg font-semibold text-gray-900 mb-4">Quick Actions</h2>
+      <div className="bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-gray-200 dark:border-gray-700 p-6">
+        <h2 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">Quick Actions</h2>
         <div className="flex flex-wrap gap-4">
           <Link
             href="/admin/invites/create"
@@ -338,14 +338,14 @@ export default function AdminDashboard() {
           </Link>
           <Link
             href="/admin/users"
-            className="inline-flex items-center gap-2 px-4 py-2 bg-gray-100 text-gray-700 rounded-lg hover:bg-gray-200 transition-colors"
+            className="inline-flex items-center gap-2 px-4 py-2 bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 rounded-lg hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors"
           >
             <Users className="w-4 h-4" />
             Manage Users
           </Link>
           <Link
             href="/admin/logs"
-            className="inline-flex items-center gap-2 px-4 py-2 bg-gray-100 text-gray-700 rounded-lg hover:bg-gray-200 transition-colors"
+            className="inline-flex items-center gap-2 px-4 py-2 bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 rounded-lg hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors"
           >
             <TrendingUp className="w-4 h-4" />
             View Logs

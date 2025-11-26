@@ -260,8 +260,8 @@ export default function InviteCodesPage() {
       {/* Header */}
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-3xl font-bold text-gray-900">Invite Codes</h1>
-          <p className="text-gray-600 mt-1">Manage platform access codes</p>
+          <h1 className="text-3xl font-bold text-gray-900 dark:text-white">Invite Codes</h1>
+          <p className="text-gray-600 dark:text-gray-300 mt-1">Manage platform access codes</p>
         </div>
         <Link
           href="/admin/invites/create"
@@ -274,24 +274,24 @@ export default function InviteCodesPage() {
 
       {/* Stats */}
       <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
-        <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-4">
-          <p className="text-sm text-gray-600">Total Codes</p>
-          <p className="text-2xl font-bold text-gray-900">{invites.length}</p>
+        <div className="bg-white dark:bg-gray-800 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700 p-4">
+          <p className="text-sm text-gray-600 dark:text-gray-300">Total Codes</p>
+          <p className="text-2xl font-bold text-gray-900 dark:text-white">{invites.length}</p>
         </div>
-        <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-4">
-          <p className="text-sm text-gray-600">Active</p>
+        <div className="bg-white dark:bg-gray-800 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700 p-4">
+          <p className="text-sm text-gray-600 dark:text-gray-300">Active</p>
           <p className="text-2xl font-bold text-green-600">
             {invites.filter((i) => getInviteStatus(i) === 'active').length}
           </p>
         </div>
-        <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-4">
-          <p className="text-sm text-gray-600">Expired</p>
+        <div className="bg-white dark:bg-gray-800 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700 p-4">
+          <p className="text-sm text-gray-600 dark:text-gray-300">Expired</p>
           <p className="text-2xl font-bold text-red-600">
             {invites.filter((i) => getInviteStatus(i) === 'expired').length}
           </p>
         </div>
-        <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-4">
-          <p className="text-sm text-gray-600">Total Uses</p>
+        <div className="bg-white dark:bg-gray-800 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700 p-4">
+          <p className="text-sm text-gray-600 dark:text-gray-300">Total Uses</p>
           <p className="text-2xl font-bold text-blue-600">
             {invites.reduce((sum, i) => sum + (i.used_count || 0), 0)}
           </p>
@@ -299,7 +299,7 @@ export default function InviteCodesPage() {
       </div>
 
       {/* Filters */}
-      <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-4">
+      <div className="bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-gray-200 dark:border-gray-700 p-4">
         <div className="flex flex-col sm:flex-row gap-4">
           {/* Search */}
           <div className="relative flex-1">
@@ -312,7 +312,7 @@ export default function InviteCodesPage() {
                 setSearchQuery(e.target.value);
                 setCurrentPage(1);
               }}
-              className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              className="w-full pl-10 pr-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
             />
           </div>
 
@@ -323,7 +323,7 @@ export default function InviteCodesPage() {
               setStatusFilter(e.target.value as typeof statusFilter);
               setCurrentPage(1);
             }}
-            className="px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-white"
+            className="px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
           >
             <option value="all">All Status</option>
             <option value="active">Active</option>
@@ -334,40 +334,40 @@ export default function InviteCodesPage() {
       </div>
 
       {/* Invite Codes Table */}
-      <div className="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden">
+      <div className="bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-gray-200 dark:border-gray-700 overflow-hidden">
         <div className="overflow-x-auto">
           <table className="w-full">
-            <thead className="bg-gray-50 border-b border-gray-200">
+            <thead className="bg-gray-50 dark:bg-gray-900 border-b border-gray-200 dark:border-gray-700">
               <tr>
-                <th className="text-left px-6 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider">
+                <th className="text-left px-6 py-3 text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
                   Code
                 </th>
-                <th className="text-left px-6 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider">
+                <th className="text-left px-6 py-3 text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
                   Status
                 </th>
-                <th className="text-left px-6 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider">
+                <th className="text-left px-6 py-3 text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
                   Usage
                 </th>
-                <th className="text-left px-6 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider">
+                <th className="text-left px-6 py-3 text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
                   Expires
                 </th>
-                <th className="text-left px-6 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider">
+                <th className="text-left px-6 py-3 text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
                   Created
                 </th>
-                <th className="text-right px-6 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider">
+                <th className="text-right px-6 py-3 text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
                   Actions
                 </th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-gray-100">
+            <tbody className="divide-y divide-gray-100 dark:divide-gray-700">
               {paginatedInvites.length === 0 ? (
                 <tr>
-                  <td colSpan={6} className="px-6 py-12 text-center text-gray-500">
-                    <Ticket className="w-12 h-12 mx-auto text-gray-300 mb-3" />
+                  <td colSpan={6} className="px-6 py-12 text-center text-gray-500 dark:text-gray-400">
+                    <Ticket className="w-12 h-12 mx-auto text-gray-300 dark:text-gray-600 mb-3" />
                     <p>No invite codes found</p>
                     <Link
                       href="/admin/invites/create"
-                      className="text-blue-600 hover:text-blue-700 mt-2 inline-block"
+                      className="text-blue-600 hover:text-blue-700 dark:text-blue-400 dark:hover:text-blue-300 mt-2 inline-block"
                     >
                       Create your first invite code
                     </Link>
@@ -378,15 +378,15 @@ export default function InviteCodesPage() {
                   const status = getInviteStatus(invite);
 
                   return (
-                    <tr key={invite.id} className="hover:bg-gray-50">
+                    <tr key={invite.id} className="hover:bg-gray-50 dark:hover:bg-gray-700">
                       <td className="px-6 py-4">
                         <div className="flex items-center gap-2">
-                          <code className="font-mono text-sm bg-gray-100 px-2 py-1 rounded">
+                          <code className="font-mono text-sm bg-gray-100 dark:bg-gray-700 text-gray-900 dark:text-white px-2 py-1 rounded">
                             {invite.code}
                           </code>
                           <button
                             onClick={() => copyCode(invite.code, invite.id)}
-                            className="p-1 text-gray-400 hover:text-gray-600"
+                            className="p-1 text-gray-400 hover:text-gray-600 dark:hover:text-gray-300"
                             title="Copy code"
                           >
                             {copiedId === invite.id ? (
@@ -401,21 +401,21 @@ export default function InviteCodesPage() {
                         {getStatusBadge(status)}
                       </td>
                       <td className="px-6 py-4">
-                        <div className="flex items-center gap-1.5 text-sm text-gray-600">
+                        <div className="flex items-center gap-1.5 text-sm text-gray-600 dark:text-gray-300">
                           <Users className="w-4 h-4" />
                           {invite.used_count || 0} / {invite.max_uses || '∞'}
                         </div>
                       </td>
                       <td className="px-6 py-4">
-                        <div className="flex items-center gap-1.5 text-sm text-gray-600">
+                        <div className="flex items-center gap-1.5 text-sm text-gray-600 dark:text-gray-300">
                           <Calendar className="w-4 h-4" />
                           {formatDate(invite.expires_at)}
                         </div>
                       </td>
-                      <td className="px-6 py-4 text-sm text-gray-600">
+                      <td className="px-6 py-4 text-sm text-gray-600 dark:text-gray-300">
                         {invite.created_at ? formatDate(invite.created_at) : 'N/A'}
                         {(invite.creator || invite.admin_creator) && (
-                          <p className="text-xs text-gray-400 mt-0.5">
+                          <p className="text-xs text-gray-400 dark:text-gray-500 mt-0.5">
                             by {invite.admin_creator
                               ? `${invite.admin_creator.full_name || invite.admin_creator.email} (Admin)`
                               : (invite.creator?.full_name || invite.creator?.email)}
@@ -427,7 +427,7 @@ export default function InviteCodesPage() {
                           <button
                             onClick={() => toggleActive(invite)}
                             disabled={togglingId === invite.id}
-                            className="p-2 text-gray-400 hover:text-gray-600 hover:bg-gray-100 rounded-lg disabled:opacity-50"
+                            className="p-2 text-gray-400 hover:text-gray-600 dark:hover:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg disabled:opacity-50"
                             title={invite.is_active ? 'Deactivate' : 'Activate'}
                           >
                             {togglingId === invite.id ? (
@@ -441,7 +441,7 @@ export default function InviteCodesPage() {
                           <button
                             onClick={() => deleteInvite(invite.id)}
                             disabled={deletingId === invite.id}
-                            className="p-2 text-gray-400 hover:text-red-600 hover:bg-red-50 rounded-lg disabled:opacity-50"
+                            className="p-2 text-gray-400 hover:text-red-600 hover:bg-red-50 dark:hover:bg-red-900/20 rounded-lg disabled:opacity-50"
                             title="Delete"
                           >
                             {deletingId === invite.id ? (
@@ -462,8 +462,8 @@ export default function InviteCodesPage() {
 
         {/* Pagination */}
         {totalPages > 1 && (
-          <div className="flex items-center justify-between px-6 py-4 border-t border-gray-200">
-            <p className="text-sm text-gray-600">
+          <div className="flex items-center justify-between px-6 py-4 border-t border-gray-200 dark:border-gray-700">
+            <p className="text-sm text-gray-600 dark:text-gray-300">
               Showing {(currentPage - 1) * ITEMS_PER_PAGE + 1} to{' '}
               {Math.min(currentPage * ITEMS_PER_PAGE, filteredInvites.length)} of{' '}
               {filteredInvites.length} codes
@@ -472,17 +472,17 @@ export default function InviteCodesPage() {
               <button
                 onClick={() => setCurrentPage((p) => Math.max(1, p - 1))}
                 disabled={currentPage === 1}
-                className="p-2 text-gray-600 hover:bg-gray-100 rounded-lg disabled:text-gray-300 disabled:hover:bg-transparent"
+                className="p-2 text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg disabled:text-gray-300 dark:disabled:text-gray-600 disabled:hover:bg-transparent"
               >
                 <ChevronLeft className="w-5 h-5" />
               </button>
-              <span className="text-sm text-gray-600">
+              <span className="text-sm text-gray-600 dark:text-gray-300">
                 Page {currentPage} of {totalPages}
               </span>
               <button
                 onClick={() => setCurrentPage((p) => Math.min(totalPages, p + 1))}
                 disabled={currentPage === totalPages}
-                className="p-2 text-gray-600 hover:bg-gray-100 rounded-lg disabled:text-gray-300 disabled:hover:bg-transparent"
+                className="p-2 text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg disabled:text-gray-300 dark:disabled:text-gray-600 disabled:hover:bg-transparent"
               >
                 <ChevronRight className="w-5 h-5" />
               </button>

@@ -37,7 +37,16 @@ export default function CreateInviteCodePage() {
 
   const [code, setCode] = useState(generateCode());
   const [maxUses, setMaxUses] = useState<string>('10');
-  const [expiresIn, setExpiresIn] = useState<string>('7'); // days
+
+  // Set default expiry to 7 days from now
+  const getDefaultExpiryDate = () => {
+    const date = new Date();
+    date.setDate(date.getDate() + 7);
+    date.setHours(23, 59, 0, 0); // Set to end of day
+    return date.toISOString().slice(0, 16); // Format for datetime-local input
+  };
+
+  const [expiresAt, setExpiresAt] = useState<string>(getDefaultExpiryDate());
 
   // Regenerate code
   function regenerateCode() {
@@ -68,10 +77,6 @@ export default function CreateInviteCodePage() {
     try {
       setLoading(true);
 
-      // Calculate expiry date
-      const expiresAt = new Date();
-      expiresAt.setDate(expiresAt.getDate() + parseInt(expiresIn));
-
       // Get admin token from localStorage
       const token = localStorage.getItem('admin_token');
 
@@ -80,6 +85,9 @@ export default function CreateInviteCodePage() {
         router.push('/admin/login');
         return;
       }
+
+      // Convert datetime-local string to ISO string
+      const expiryDate = new Date(expiresAt);
 
       // Call API route to create invite code
       const response = await fetch('/api/admin/invites/create', {
@@ -91,7 +99,7 @@ export default function CreateInviteCodePage() {
           token,
           code: code.toUpperCase(),
           max_uses: maxUses === '' ? null : parseInt(maxUses),
-          expires_at: expiresAt.toISOString(),
+          expires_at: expiryDate.toISOString(),
         }),
       });
 
@@ -122,21 +130,21 @@ export default function CreateInviteCodePage() {
       <div className="mb-8">
         <Link
           href="/admin/invites"
-          className="inline-flex items-center gap-2 text-gray-600 hover:text-gray-900 mb-4"
+          className="inline-flex items-center gap-2 text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white mb-4"
         >
           <ArrowLeft className="w-4 h-4" />
           Back to Invite Codes
         </Link>
-        <h1 className="text-3xl font-bold text-gray-900">Create Invite Code</h1>
-        <p className="text-gray-600 mt-1">Generate a new invite code for platform access</p>
+        <h1 className="text-3xl font-bold text-gray-900 dark:text-white">Create Invite Code</h1>
+        <p className="text-gray-600 dark:text-gray-300 mt-1">Generate a new invite code for platform access</p>
       </div>
 
       {/* Form */}
       <form onSubmit={handleSubmit} className="space-y-6">
-        <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6 space-y-6">
+        <div className="bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-gray-200 dark:border-gray-700 p-6 space-y-6">
           {/* Code */}
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">
+            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
               Invite Code
             </label>
             <div className="flex gap-2">
@@ -146,7 +154,7 @@ export default function CreateInviteCodePage() {
                   type="text"
                   value={code}
                   onChange={(e) => setCode(e.target.value.toUpperCase())}
-                  className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent font-mono text-lg tracking-wider"
+                  className="w-full pl-10 pr-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent font-mono text-lg tracking-wider bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
                   placeholder="INVITE123"
                   maxLength={20}
                   required
@@ -155,7 +163,7 @@ export default function CreateInviteCodePage() {
               <button
                 type="button"
                 onClick={regenerateCode}
-                className="px-4 py-2 text-gray-600 hover:text-gray-900 hover:bg-gray-100 rounded-lg border border-gray-300 transition-colors"
+                className="px-4 py-2 text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg border border-gray-300 dark:border-gray-600 transition-colors"
                 title="Generate new code"
               >
                 <RefreshCw className="w-5 h-5" />
@@ -163,7 +171,7 @@ export default function CreateInviteCodePage() {
               <button
                 type="button"
                 onClick={copyCode}
-                className="px-4 py-2 text-gray-600 hover:text-gray-900 hover:bg-gray-100 rounded-lg border border-gray-300 transition-colors"
+                className="px-4 py-2 text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg border border-gray-300 dark:border-gray-600 transition-colors"
                 title="Copy code"
               >
                 {copied ? (
@@ -173,57 +181,52 @@ export default function CreateInviteCodePage() {
                 )}
               </button>
             </div>
-            <p className="mt-1.5 text-sm text-gray-500">
+            <p className="mt-1.5 text-sm text-gray-500 dark:text-gray-400">
               The code users will enter during registration
             </p>
           </div>
 
           {/* Max Uses */}
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">
+            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
               Maximum Uses
             </label>
             <input
               type="number"
               value={maxUses}
               onChange={(e) => setMaxUses(e.target.value)}
-              className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
               placeholder="Leave empty for unlimited"
               min="1"
             />
-            <p className="mt-1.5 text-sm text-gray-500">
+            <p className="mt-1.5 text-sm text-gray-500 dark:text-gray-400">
               Leave empty for unlimited uses
             </p>
           </div>
 
-          {/* Expires In */}
+          {/* Expires At */}
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">
-              Expires In
+            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+              Expires At
             </label>
-            <select
-              value={expiresIn}
-              onChange={(e) => setExpiresIn(e.target.value)}
-              className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-white"
-            >
-              <option value="1">1 day</option>
-              <option value="3">3 days</option>
-              <option value="7">7 days</option>
-              <option value="14">14 days</option>
-              <option value="30">30 days</option>
-              <option value="90">90 days</option>
-              <option value="365">1 year</option>
-            </select>
-            <p className="mt-1.5 text-sm text-gray-500">
-              The code will expire after this period
+            <input
+              type="datetime-local"
+              value={expiresAt}
+              onChange={(e) => setExpiresAt(e.target.value)}
+              min={new Date().toISOString().slice(0, 16)}
+              className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
+              required
+            />
+            <p className="mt-1.5 text-sm text-gray-500 dark:text-gray-400">
+              Select the exact date and time when this code will expire
             </p>
           </div>
         </div>
 
         {/* Summary */}
-        <div className="bg-blue-50 rounded-xl p-4 border border-blue-200">
-          <h3 className="font-medium text-blue-900 mb-2">Summary</h3>
-          <ul className="space-y-1 text-sm text-blue-800">
+        <div className="bg-blue-50 dark:bg-blue-900/20 rounded-xl p-4 border border-blue-200 dark:border-blue-800">
+          <h3 className="font-medium text-blue-900 dark:text-blue-300 mb-2">Summary</h3>
+          <ul className="space-y-1 text-sm text-blue-800 dark:text-blue-400">
             <li>
               Code: <span className="font-mono font-medium">{code}</span>
             </li>
@@ -231,15 +234,13 @@ export default function CreateInviteCodePage() {
               Uses: {maxUses === '' ? 'Unlimited' : `${maxUses} times`}
             </li>
             <li>
-              Expires: {(() => {
-                const date = new Date();
-                date.setDate(date.getDate() + parseInt(expiresIn));
-                return date.toLocaleDateString('en-US', {
-                  month: 'long',
-                  day: 'numeric',
-                  year: 'numeric',
-                });
-              })()}
+              Expires: {new Date(expiresAt).toLocaleString('en-US', {
+                month: 'long',
+                day: 'numeric',
+                year: 'numeric',
+                hour: '2-digit',
+                minute: '2-digit',
+              })}
             </li>
           </ul>
         </div>
@@ -248,7 +249,7 @@ export default function CreateInviteCodePage() {
         <div className="flex justify-end gap-4">
           <Link
             href="/admin/invites"
-            className="px-6 py-3 text-gray-700 bg-gray-100 rounded-lg hover:bg-gray-200 transition-colors"
+            className="px-6 py-3 text-gray-700 dark:text-gray-300 bg-gray-100 dark:bg-gray-700 rounded-lg hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors"
           >
             Cancel
           </Link>

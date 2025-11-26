@@ -15,7 +15,6 @@ import {
   Clock,
   Globe,
   CheckCircle,
-  XCircle,
   ExternalLink,
 } from 'lucide-react';
 

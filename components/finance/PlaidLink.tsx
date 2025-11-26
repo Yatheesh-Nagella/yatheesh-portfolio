@@ -133,7 +133,7 @@ export default function PlaidLink({
    * Handle Plaid Link exit
    */
   const onPlaidExit = useCallback(
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/no-unused-vars
     (err: any, _metadata: any) => {
       if (err) {
         console.error('Plaid Link error:', err);

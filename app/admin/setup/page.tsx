@@ -199,7 +199,7 @@ export default function AdminSetupPage() {
                 required
               />
               <p className="text-xs text-gray-500 mt-1">
-                Default: "change-me-in-production" (if not set in .env)
+                Default: &quot;change-me-in-production&quot; (if not set in .env)
               </p>
             </div>
 

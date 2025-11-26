@@ -137,7 +137,7 @@ export default function SetupTOTPPage() {
               <h2 className="text-lg font-semibold text-gray-900 mb-3">What is 2FA?</h2>
               <p className="text-gray-600 mb-4">
                 Two-factor authentication adds an extra layer of security to your account.
-                You'll need both your password and a code from your authenticator app to log in.
+                You&apos;ll need both your password and a code from your authenticator app to log in.
               </p>
             </div>
 
@@ -193,7 +193,7 @@ export default function SetupTOTPPage() {
 
             {/* Manual entry */}
             <div>
-              <h3 className="text-sm font-semibold text-gray-900 mb-2">Can't scan? Enter manually:</h3>
+              <h3 className="text-sm font-semibold text-gray-900 mb-2">Can&apos;t scan? Enter manually:</h3>
               <div className="flex items-center gap-2">
                 <code className="flex-1 px-3 py-2 bg-gray-100 rounded border border-gray-200 font-mono text-sm">
                   {secret}
@@ -258,7 +258,7 @@ export default function SetupTOTPPage() {
                 <div>
                   <h3 className="font-medium text-amber-900">Important</h3>
                   <p className="text-sm text-amber-800 mt-1">
-                    Save your backup codes in a secure location. You'll need them if you lose access to your authenticator app.
+                    Save your backup codes in a secure location. You&apos;ll need them if you lose access to your authenticator app.
                   </p>
                 </div>
               </div>

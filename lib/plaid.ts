@@ -4,7 +4,7 @@
  * Fully typed for type safety
  */
 
-import { Configuration, PlaidApi, PlaidEnvironments, Products, CountryCode } from 'plaid';
+import { Configuration, PlaidApi, PlaidEnvironments, Products, CountryCode, SandboxItemFireWebhookRequestWebhookCodeEnum } from 'plaid';
 import crypto from 'crypto';
 import { env } from './env';
 
@@ -76,6 +76,17 @@ export interface PlaidInstitution {
 /**
  * Create a Link token for a user
  * This token is used to initialize Plaid Link on the frontend
+ * 
+ * @param userId - The unique identifier for the user in your system
+ * @param products - Array of Plaid products to enable for this Link session.
+ *   Available products include:
+ *   - Products.Transactions: Access to transaction history
+ *   - Products.Auth: Access to account and routing numbers for ACH
+ *   - Products.Identity: Access to account holder information
+ *   - Products.Assets: Access to asset reports
+ *   - Products.Investments: Access to investment accounts
+ *   - Products.Liabilities: Access to liability accounts (loans, credit cards)
+ *   See Plaid Products enum for all available options.
  */
 export async function createLinkToken(
   userId: string,
@@ -90,7 +101,7 @@ export async function createLinkToken(
       products,
       country_codes: [CountryCode.Us],
       language: 'en',
-      webhook: process.env.PLAID_WEBHOOK_URL, // Optional
+      webhook: env.plaid.webhookUrl || undefined, // Optional
     });
 
     return {
@@ -492,10 +503,17 @@ export async function sandboxResetLogin(
 
 /**
  * Fire a test webhook (Sandbox only)
+ * @param accessToken - The Plaid access token for the item
+ * @param webhookCode - The webhook code to simulate. Valid values include:
+ *   - DEFAULT_UPDATE: Transactions update webhook
+ *   - NEW_ACCOUNTS_AVAILABLE: New accounts detected
+ *   - SYNC_UPDATES_AVAILABLE: Transaction sync updates available
+ *   - ERROR: Simulate an error webhook
+ *   See SandboxItemFireWebhookRequestWebhookCodeEnum for all options.
  */
 export async function sandboxFireWebhook(
   accessToken: string,
-  webhookCode: string
+  webhookCode: SandboxItemFireWebhookRequestWebhookCodeEnum
 ): Promise<{ success: boolean; error: string | null }> {
   if (env.plaid.env !== 'sandbox') {
     return {
@@ -505,12 +523,10 @@ export async function sandboxFireWebhook(
   }
 
   try {
-    /* eslint-disable @typescript-eslint/no-explicit-any */
     await plaidClient.sandboxItemFireWebhook({
       access_token: accessToken,
-      webhook_code: webhookCode as any,
+      webhook_code: webhookCode,
     });
-    /* eslint-enable @typescript-eslint/no-explicit-any */
 
     return {
       success: true,

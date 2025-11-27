@@ -13,11 +13,12 @@ import type {
   Budget,
   PlaidItem,
 } from '@/types/database.types';
+import { env } from './env';
 
 // Create typed Supabase client
 export const supabase = createClient<Database>(
-  process.env.NEXT_PUBLIC_SUPABASE_URL!,
-  process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
+  env.supabase.url,
+  env.supabase.anonKey
 );
 
 // ============================================
@@ -32,6 +33,9 @@ export async function getCurrentUser(): Promise<User | null> {
     const { data: { user: authUser }, error: authError } = await supabase.auth.getUser();
     
     if (authError || !authUser) {
+      if (authError) {
+        console.error('Error fetching auth user:', authError);
+      }
       return null;
     }
     
@@ -71,10 +75,13 @@ export async function signIn(
     }
     
     // Update last login time
-    await supabase
+    const { error: updateError } = await supabase
       .from('users')
       .update({ last_login_at: new Date().toISOString() })
       .eq('id', data.user.id);
+    if (updateError) {
+      console.error('Failed to update last login:', updateError);
+    }
     
     // Get full profile
     const user = await getCurrentUser();
@@ -115,10 +122,10 @@ export async function signUpWithInvite(
       return { user: null, error: 'Invite code has expired' };
     }
     
-    // Check usage limit
+    // Check usage limit (null max_uses means unlimited uses)
     const currentUsedCount = invite.used_count ?? 0;
-    const maxUses = invite.max_uses ?? 1;
-    if (currentUsedCount >= maxUses) {
+    const maxUses = invite.max_uses;
+    if (maxUses !== null && currentUsedCount >= maxUses) {
       return { user: null, error: 'Invite code has been fully used' };
     }
     
@@ -143,7 +150,8 @@ export async function signUpWithInvite(
       .from('invite_codes')
       .update({ 
         used_count: newUsedCount,
-        is_active: newUsedCount < maxUses
+        // Only deactivate if max_uses is set and reached
+        is_active: maxUses === null || newUsedCount < maxUses
       })
       .eq('id', invite.id);
     
@@ -241,12 +249,22 @@ export async function getUserAccounts(userId: string): Promise<Account[]> {
 
 /**
  * Get total balance across all accounts
+ * Optimized to fetch only balance data instead of full account records
  */
 export async function getTotalBalance(userId: string): Promise<number> {
   try {
-    const accounts = await getUserAccounts(userId);
+    const { data, error } = await supabase
+      .from('accounts')
+      .select('current_balance')
+      .eq('user_id', userId)
+      .eq('is_hidden', false);
     
-    return accounts.reduce((total, account) => {
+    if (error || !data) {
+      console.error('Error fetching account balances:', error);
+      return 0;
+    }
+    
+    return data.reduce((total: number, account: { current_balance: number | null }) => {
       return total + (account.current_balance ?? 0);
     }, 0);
   } catch (error) {
@@ -493,14 +511,17 @@ export async function getUserPlaidItems(userId: string): Promise<PlaidItem[]> {
 // UTILITY FUNCTIONS
 // ============================================
 
+// Reusable currency formatter instance for performance
+const currencyFormatter = new Intl.NumberFormat('en-US', {
+  style: 'currency',
+  currency: 'USD',
+});
+
 /**
  * Format cents to dollars
  */
 export function formatCurrency(cents: number): string {
-  return new Intl.NumberFormat('en-US', {
-    style: 'currency',
-    currency: 'USD',
-  }).format(cents / 100);
+  return currencyFormatter.format(cents / 100);
 }
 
 /**

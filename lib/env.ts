@@ -172,7 +172,5 @@ function getEnvVar(key: string, isOptional = false): string {
     return process.env[key] === 'true' || process.env[key] === '1';
   }
   
-  // Validate on import (in production)
-  if (isProduction) {
-    validateEnv();
-  }
+  // Validate on import (in all environments)
+  validateEnv();

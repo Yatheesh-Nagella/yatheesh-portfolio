@@ -317,7 +317,8 @@ export async function getTotalBalance(userId: string): Promise<number> {
       return 0;
     }
 
-    return data.reduce((total: number, account: { current_balance: number | null }) => {
+    // Use Pick utility type for better type safety and maintainability
+    return data.reduce((total: number, account: Pick<Database['public']['Tables']['accounts']['Row'], 'current_balance'>) => {
       return total + (account.current_balance ?? 0);
     }, 0);
   } catch (error) {

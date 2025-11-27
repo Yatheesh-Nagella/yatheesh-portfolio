@@ -32,6 +32,7 @@ yarn-error.log*
 
 # env files (can opt-in for committing if needed)
 .env*
+!.env.example
 
 # vercel
 .vercel
@@ -46,3 +47,9 @@ PROJECT_DEVELOPMENT.md
 
 # Scripts
 /scripts
+
+# Supabase
+/supabase/.temp/
+
+# Security reports
+SECURITY_FIX_RLS.md

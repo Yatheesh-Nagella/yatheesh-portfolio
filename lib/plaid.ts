@@ -76,6 +76,15 @@ export interface PlaidInstitution {
 /**
  * Create a Link token for a user
  * This token is used to initialize Plaid Link on the frontend
+ *
+ * @param userId - The unique identifier for the user
+ * @param products - Array of Plaid products to enable. Defaults to [Transactions, Auth]
+ *                   - Products.Transactions: Access transaction history
+ *                   - Products.Auth: Access account/routing numbers for ACH
+ *                   - Products.Investments: Access investment holdings
+ *                   - Products.Liabilities: Access loan/credit card debt info
+ * @returns Object containing linkToken (for Plaid Link UI) or error message
+ * @see {@link https://plaid.com/docs/api/products/|Plaid Products Documentation}
  */
 export async function createLinkToken(
   userId: string,

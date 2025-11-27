@@ -14,14 +14,15 @@ import type {
   PlaidItem,
 } from '@/types/database.types';
 import crypto from 'crypto';
+import { env } from './env';
 
 // Re-export types for convenience
 export type { User, Account, Transaction, Budget, PlaidItem };
 
 // Create typed Supabase client
 export const supabase = createClient<Database>(
-  process.env.NEXT_PUBLIC_SUPABASE_URL!,
-  process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
+  env.supabase.url,
+  env.supabase.anonKey
 );
 
 // ============================================
@@ -58,22 +59,28 @@ export function decryptAccessToken(encryptedToken: string): string {
 export async function getCurrentUser(): Promise<User | null> {
   try {
     const { data: { user: authUser }, error: authError } = await supabase.auth.getUser();
-    
+
     if (authError || !authUser) {
+      if (authError) {
+        console.error('Error fetching auth user:', authError);
+      }
       return null;
     }
-    
+
     // Get user profile from users table
     const { data: profile, error: profileError } = await supabase
       .from('users')
       .select('*')
       .eq('id', authUser.id)
       .single();
-    
+
     if (profileError || !profile) {
+      if (profileError) {
+        console.error('Error fetching user profile:', profileError);
+      }
       return null;
     }
-    
+
     return profile;
   } catch (error) {
     console.error('Error fetching current user:', error);
@@ -99,13 +106,13 @@ export async function signIn(
     }
 
     // Update last login time (ignore errors if user doesn't exist in users table yet)
-    try {
-      await supabase
-        .from('users')
-        .update({ last_login_at: new Date().toISOString() })
-        .eq('id', data.user.id);
-    } catch {
-      // Ignore errors - user profile might not exist yet
+    const { error: updateError } = await supabase
+      .from('users')
+      .update({ last_login_at: new Date().toISOString() })
+      .eq('id', data.user.id);
+
+    if (updateError) {
+      console.error('Failed to update last login:', updateError);
     }
 
     // Get full profile
@@ -295,12 +302,22 @@ export async function getUserAccounts(userId: string): Promise<Account[]> {
 
 /**
  * Get total balance across all accounts
+ * Optimized to only fetch balances without Plaid item joins
  */
 export async function getTotalBalance(userId: string): Promise<number> {
   try {
-    const accounts = await getUserAccounts(userId);
-    
-    return accounts.reduce((total, account) => {
+    const { data, error } = await supabase
+      .from('accounts')
+      .select('current_balance')
+      .eq('user_id', userId)
+      .eq('is_hidden', false);
+
+    if (error || !data) {
+      console.error('Error fetching account balances:', error);
+      return 0;
+    }
+
+    return data.reduce((total: number, account: { current_balance: number | null }) => {
       return total + (account.current_balance ?? 0);
     }, 0);
   } catch (error) {
@@ -547,14 +564,17 @@ export async function getUserPlaidItems(userId: string): Promise<PlaidItem[]> {
 // UTILITY FUNCTIONS
 // ============================================
 
+// Create currency formatter once for reuse (performance optimization)
+const currencyFormatter = new Intl.NumberFormat('en-US', {
+  style: 'currency',
+  currency: 'USD',
+});
+
 /**
  * Format cents to dollars
  */
 export function formatCurrency(cents: number): string {
-  return new Intl.NumberFormat('en-US', {
-    style: 'currency',
-    currency: 'USD',
-  }).format(cents / 100);
+  return currencyFormatter.format(cents / 100);
 }
 
 /**

@@ -5,70 +5,112 @@
  */
 
 /**
+ * Check if we're running on the server
+ */
+const isServer = typeof window === 'undefined';
+
+/**
  * Get an environment variable and throw if missing
+ * For client-side, only validates NEXT_PUBLIC_* variables
  */
 function getEnvVar(key: string, isOptional = false): string {
     const value = process.env[key];
-    
+
+    // On client, skip validation for server-only variables
+    if (!isServer && !key.startsWith('NEXT_PUBLIC_')) {
+      return '';
+    }
+
     if (!value && !isOptional) {
+      // Debug: Log available env vars
+      if (!isServer && key.startsWith('NEXT_PUBLIC_')) {
+        console.error('🔴 Missing env var:', key);
+        console.error('🔍 Available NEXT_PUBLIC vars:', Object.keys(process.env).filter(k => k.startsWith('NEXT_PUBLIC_')));
+      }
       throw new Error(
         `Missing required environment variable: ${key}\n` +
         `Please add ${key} to your .env.local file`
       );
     }
-    
+
     return value || '';
   }
   
   /**
    * Validate Plaid environment
+   * Returns 'sandbox' as default on client-side
    */
   function getPlaidEnv(): 'sandbox' | 'development' | 'production' {
     const plaidEnv = getEnvVar('PLAID_ENV');
-    
+
+    // On client, return default
+    if (!plaidEnv) {
+      return 'sandbox';
+    }
+
     if (!['sandbox', 'development', 'production'].includes(plaidEnv)) {
       throw new Error(
         `Invalid PLAID_ENV: ${plaidEnv}\n` +
         `Must be one of: sandbox, development, production`
       );
     }
-    
+
     return plaidEnv as 'sandbox' | 'development' | 'production';
   }
   
   /**
-   * Type-safe environment configuration
+   * Type-safe environment configuration with lazy evaluation
    * Access like: env.supabase.url
    */
   export const env = {
     // Supabase (public - safe for browser)
     supabase: {
-      url: getEnvVar('NEXT_PUBLIC_SUPABASE_URL'),
-      anonKey: getEnvVar('NEXT_PUBLIC_SUPABASE_ANON_KEY'),
+      get url() {
+        return getEnvVar('NEXT_PUBLIC_SUPABASE_URL');
+      },
+      get anonKey() {
+        return getEnvVar('NEXT_PUBLIC_SUPABASE_ANON_KEY');
+      },
     },
-    
+
     // Supabase (private - server only)
-    supabaseServiceKey: getEnvVar('SUPABASE_SERVICE_ROLE_KEY'),
-    
+    get supabaseServiceKey() {
+      return getEnvVar('SUPABASE_SERVICE_ROLE_KEY');
+    },
+
     // Plaid
     plaid: {
-      clientId: getEnvVar('PLAID_CLIENT_ID'),
-      secret: getEnvVar('PLAID_SECRET'),
-      env: getPlaidEnv(),
-      webhookUrl: getEnvVar('PLAID_WEBHOOK_URL', true), // Optional
+      get clientId() {
+        return getEnvVar('PLAID_CLIENT_ID');
+      },
+      get secret() {
+        return getEnvVar('PLAID_SECRET');
+      },
+      get env() {
+        return getPlaidEnv();
+      },
+      get webhookUrl() {
+        return getEnvVar('PLAID_WEBHOOK_URL', true);
+      },
     },
-    
+
     // Encryption
     encryption: {
-      key: getEnvVar('ENCRYPTION_KEY'),
+      get key() {
+        return getEnvVar('ENCRYPTION_KEY');
+      },
     },
-    
+
     // App
     app: {
-      url: getEnvVar('NEXT_PUBLIC_APP_URL', true) || 'http://localhost:3000',
-      nodeEnv: (process.env.NODE_ENV || 'development') as 'development' | 'production' | 'test',
+      get url() {
+        return getEnvVar('NEXT_PUBLIC_APP_URL', true) || 'http://localhost:3000';
+      },
+      get nodeEnv() {
+        return (process.env.NODE_ENV || 'development') as 'development' | 'production' | 'test';
+      },
     },
-  } as const;
+  };
   
   /**
    * Check if we're in production

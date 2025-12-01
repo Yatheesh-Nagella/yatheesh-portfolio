@@ -14,15 +14,15 @@ import type {
   PlaidItem,
 } from '@/types/database.types';
 import crypto from 'crypto';
-import { env } from './env';
 
 // Re-export types for convenience
 export type { User, Account, Transaction, Budget, PlaidItem };
 
 // Create typed Supabase client
+// Note: Using process.env directly for NEXT_PUBLIC_* vars so Next.js can statically replace them
 export const supabase = createClient<Database>(
-  env.supabase.url,
-  env.supabase.anonKey
+  process.env.NEXT_PUBLIC_SUPABASE_URL!,
+  process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
 );
 
 // ============================================

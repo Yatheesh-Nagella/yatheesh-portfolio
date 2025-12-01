@@ -57,10 +57,10 @@ export default function FinanceHeader({ onBankConnected }: FinanceHeaderProps) {
           {/* Logo / Title */}
           <div>
             <h1 className="text-2xl font-bold text-gray-900 dark:text-white">
-              OneLedger Finance
+              OneLedger
             </h1>
             <p className="text-sm text-gray-600 dark:text-gray-300">
-              Welcome back, {user?.full_name || 'User'}
+              Welcome, {user?.full_name || 'User'}
             </p>
           </div>
 

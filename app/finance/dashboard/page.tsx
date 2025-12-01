@@ -6,20 +6,15 @@
  * Displays balance, spending, and recent activity
  */
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import { useRouter } from 'next/navigation';
 import { useAuth } from '@/contexts/AuthContext';
+import { useAccounts, useTransactions } from '@/hooks';
 import ProtectedRoute from '@/components/finance/ProtectedRoute';
 import DashboardCard from '@/components/finance/DashboardCard';
 import SpendingChart from '@/components/finance/SpendingChart';
 import RecentTransactions from '@/components/finance/RecentTransactions';
 import PlaidLink from '@/components/finance/PlaidLink';
-import {
-  getUserAccounts,
-  getUserTransactions,
-  type Account,
-  type Transaction,
-} from '@/lib/supabase';
 import {
   DollarSign,
   TrendingDown,
@@ -34,20 +29,47 @@ export default function FinanceDashboard() {
   const { user } = useAuth();
   const router = useRouter();
 
-  // State
-  const [accounts, setAccounts] = useState<Account[]>([]);
-  const [transactions, setTransactions] = useState<Transaction[]>([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
+  // Calculate date range for transactions (last 30 days)
+  const thirtyDaysAgo = useMemo(() => {
+    const date = new Date();
+    date.setDate(date.getDate() - 30);
+    return date.toISOString().split('T')[0];
+  }, []);
+
+  // SWR Hooks - automatic caching, revalidation, and error handling!
+  const {
+    accounts,
+    isLoading: accountsLoading,
+    isError: accountsError,
+    refresh: refreshAccounts,
+  } = useAccounts(user?.id);
+
+  const {
+    transactions,
+    isLoading: transactionsLoading,
+    isError: transactionsError,
+    refresh: refreshTransactions,
+  } = useTransactions(user?.id, {
+    startDate: thirtyDaysAgo,
+    limit: 50,
+  });
+
+  // Combined loading and error states
+  const loading = accountsLoading || transactionsLoading;
+  const error = accountsError || transactionsError;
+
+  // State for computed data
   const [monthlySpending, setMonthlySpending] = useState(0);
   const [chartData, setChartData] = useState<{ date: string; amount: number }[]>([]);
 
   /**
-   * Calculate total balance across all accounts
+   * Calculate total balance across all accounts (memoized)
    */
-  const totalBalance = accounts.reduce((sum, account) => {
-    return sum + (account.current_balance || 0);
-  }, 0);
+  const totalBalance = useMemo(() => {
+    return accounts.reduce((sum, account) => {
+      return sum + (account.current_balance || 0);
+    }, 0);
+  }, [accounts]);
 
   /**
    * Calculate monthly spending and chart data (client-side only to avoid hydration issues)
@@ -98,50 +120,12 @@ export default function FinanceDashboard() {
   }, [transactions]);
 
   /**
-   * Fetch dashboard data (parallel fetching for performance)
-   */
-  async function fetchDashboardData() {
-    if (!user) return;
-
-    try {
-      setLoading(true);
-      setError(null);
-
-      // Calculate date range for transactions (last 30 days)
-      const thirtyDaysAgo = new Date();
-      thirtyDaysAgo.setDate(thirtyDaysAgo.getDate() - 30);
-
-      // PARALLEL FETCHING: Fetch accounts and transactions simultaneously
-      // This eliminates the waterfall delay (saves 3-5 seconds!)
-      const [userAccounts, userTransactions] = await Promise.all([
-        getUserAccounts(user.id),
-        getUserTransactions(user.id, {
-          startDate: thirtyDaysAgo.toISOString().split('T')[0],
-          limit: 50, // Reduced from 500 to 50 for faster queries
-        }),
-      ]);
-
-      setAccounts(userAccounts);
-      setTransactions(userTransactions);
-    } catch (err) {
-      console.error('Error fetching dashboard data:', err);
-      setError('Failed to load dashboard data. Please refresh the page.');
-    } finally {
-      setLoading(false);
-    }
-  }
-
-  // Fetch data on mount
-  useEffect(() => {
-    fetchDashboardData();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [user]);
-
-  /**
    * Handle successful bank connection
+   * Refresh both accounts and transactions data
    */
   function handleBankConnected() {
-    fetchDashboardData();
+    refreshAccounts();
+    refreshTransactions();
   }
 
   /**
@@ -161,7 +145,18 @@ export default function FinanceDashboard() {
               <AlertCircle className="w-5 h-5 text-red-500 dark:text-red-400 mr-3 flex-shrink-0 mt-0.5" />
               <div>
                 <h3 className="text-sm font-medium text-red-800 dark:text-red-300">Error</h3>
-                <p className="text-sm text-red-700 dark:text-red-400 mt-1">{error}</p>
+                <p className="text-sm text-red-700 dark:text-red-400 mt-1">
+                  Failed to load dashboard data. Please refresh the page.
+                </p>
+                <button
+                  onClick={() => {
+                    refreshAccounts();
+                    refreshTransactions();
+                  }}
+                  className="mt-2 text-sm text-red-800 dark:text-red-300 underline hover:no-underline"
+                >
+                  Try again
+                </button>
               </div>
             </div>
           )}

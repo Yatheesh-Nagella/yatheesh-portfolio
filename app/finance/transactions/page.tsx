@@ -8,7 +8,6 @@
 
 import React, { useState, useEffect } from 'react';
 import { useAuth } from '@/contexts/AuthContext';
-import { useFinanceTheme } from '@/contexts/FinanceThemeContext';
 import { getUserTransactions } from '@/lib/supabase';
 import type { Transaction } from '@/lib/supabase';
 import { formatCurrency, formatDate } from '@/lib/supabase';
@@ -20,14 +19,11 @@ import {
   Filter,
   Calendar,
   Tag,
-  ArrowLeft,
   Loader2,
   AlertCircle,
   ChevronDown,
   Download,
   PlusCircle,
-  Moon,
-  Sun,
 } from 'lucide-react';
 
 type DateFilter = '7d' | '30d' | '90d' | '365d' | 'all';
@@ -43,7 +39,6 @@ const DATE_FILTERS: { value: DateFilter; label: string }[] = [
 export default function TransactionsPage() {
   const router = useRouter();
   const { user } = useAuth();
-  const { theme, toggleTheme } = useFinanceTheme();
 
   // State
   const [transactions, setTransactions] = useState<Transaction[]>([]);
@@ -150,7 +145,7 @@ export default function TransactionsPage() {
    */
   if (loading) {
     return (
-      <div className="min-h-screen bg-gray-50 dark:bg-gray-900 flex items-center justify-center">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 flex items-center justify-center">
         <div className="text-center">
           <Loader2 className="w-12 h-12 animate-spin text-blue-500 mx-auto" />
           <p className="mt-4 text-gray-600 dark:text-gray-300">Loading transactions...</p>
@@ -164,30 +159,13 @@ export default function TransactionsPage() {
    */
   if (transactions.length === 0) {
     return (
-      <div className="min-h-screen bg-gray-50 dark:bg-gray-900 p-4 sm:p-6 lg:p-8">
-        <div className="max-w-7xl mx-auto">
-          {/* Header */}
-          <div className="mb-6">
-            <button
-              onClick={() => router.push('/finance/dashboard')}
-              className="flex items-center text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white mb-4"
-            >
-              <ArrowLeft className="w-5 h-5 mr-2" />
-              Back to Dashboard
-            </button>
-            <div className="flex items-center justify-between">
-              <h1 className="text-3xl sm:text-4xl font-bold text-gray-900 dark:text-white">
-                Transactions
-              </h1>
-              <button
-                onClick={toggleTheme}
-                className="p-2 text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800"
-                title={theme === 'dark' ? 'Switch to light mode' : 'Switch to dark mode'}
-              >
-                {theme === 'dark' ? <Sun className="w-5 h-5" /> : <Moon className="w-5 h-5" />}
-              </button>
-            </div>
-          </div>
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <div className="mb-6">
+          <h2 className="text-3xl font-bold text-gray-900 dark:text-white">Transactions</h2>
+          <p className="text-gray-600 dark:text-gray-300 mt-2">
+            View and manage your transactions
+          </p>
+        </div>
 
           {/* Empty State */}
           <div className="bg-white dark:bg-gray-800 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700 p-12 text-center">
@@ -214,58 +192,42 @@ export default function TransactionsPage() {
               </button>
             </div>
           </div>
-        </div>
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen bg-gray-50 dark:bg-gray-900 p-4 sm:p-6 lg:p-8">
-      <div className="max-w-7xl mx-auto">
-        {/* Header */}
-        <div className="mb-6">
-          <button
-            onClick={() => router.push('/finance/dashboard')}
-            className="flex items-center text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white mb-4"
-          >
-            <ArrowLeft className="w-5 h-5 mr-2" />
-            Back to Dashboard
-          </button>
-          <div className="flex items-center justify-between">
-            <div>
-              <h1 className="text-3xl sm:text-4xl font-bold text-gray-900 dark:text-white">
-                Transactions
-              </h1>
-              <p className="text-gray-600 dark:text-gray-300 mt-2">
-                {filteredTransactions.length} of {transactions.length} transactions
-              </p>
-            </div>
-            <div className="flex items-center gap-3">
-              <button
-                onClick={toggleTheme}
-                className="p-2 text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800"
-                title={theme === 'dark' ? 'Switch to light mode' : 'Switch to dark mode'}
-              >
-                {theme === 'dark' ? <Sun className="w-5 h-5" /> : <Moon className="w-5 h-5" />}
-              </button>
-              <button
-                onClick={() => router.push('/finance/transactions/add')}
-                className="flex items-center gap-2 bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded-lg font-medium transition-colors"
-              >
-                <PlusCircle className="w-4 h-4" />
-                <span className="hidden sm:inline">Add</span>
-              </button>
-              <button
-                onClick={handleExport}
-                disabled={filteredTransactions.length === 0}
-                className="flex items-center gap-2 bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-lg font-medium transition-colors disabled:bg-gray-300 disabled:cursor-not-allowed"
-              >
-                <Download className="w-4 h-4" />
-                <span className="hidden sm:inline">Export</span>
-              </button>
-            </div>
+    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+      {/* Page Header */}
+      <div className="mb-6">
+        <div className="flex items-center justify-between">
+          <div>
+            <h2 className="text-3xl font-bold text-gray-900 dark:text-white">
+              Transactions
+            </h2>
+            <p className="text-gray-600 dark:text-gray-300 mt-2">
+              {filteredTransactions.length} of {transactions.length} transactions
+            </p>
+          </div>
+          <div className="flex items-center gap-3">
+            <button
+              onClick={() => router.push('/finance/transactions/add')}
+              className="flex items-center gap-2 bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded-lg font-medium transition-colors"
+            >
+              <PlusCircle className="w-4 h-4" />
+              <span className="hidden sm:inline">Add</span>
+            </button>
+            <button
+              onClick={handleExport}
+              disabled={filteredTransactions.length === 0}
+              className="flex items-center gap-2 bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-lg font-medium transition-colors disabled:bg-gray-300 disabled:cursor-not-allowed"
+            >
+              <Download className="w-4 h-4" />
+              <span className="hidden sm:inline">Export</span>
+            </button>
           </div>
         </div>
+      </div>
 
         {/* Filters Section */}
         <div className="bg-white dark:bg-gray-800 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700 p-4 mb-6">
@@ -484,7 +446,6 @@ export default function TransactionsPage() {
             ))
           )}
         </div>
-      </div>
     </div>
   );
 }

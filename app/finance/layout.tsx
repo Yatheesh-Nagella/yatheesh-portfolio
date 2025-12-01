@@ -2,12 +2,14 @@
  * Finance App Layout
  * Wraps all finance pages with AuthProvider and FinanceThemeProvider
  * Provides consistent navigation and persistent header
+ * Includes SWR configuration for data caching
  */
 
 import React from 'react';
 import { AuthProvider } from '@/contexts/AuthContext';
 import { FinanceThemeProvider } from '@/contexts/FinanceThemeContext';
 import FinanceHeader from '@/components/finance/FinanceHeader';
+import FinanceSWRProvider from '@/components/finance/FinanceSWRProvider';
 import { Toaster } from 'react-hot-toast';
 import type { Metadata } from 'next';
 
@@ -24,37 +26,40 @@ export default function FinanceLayout({
   return (
     <AuthProvider>
       <FinanceThemeProvider>
-        <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
-          {/* Persistent Header - stays mounted during navigation */}
-          <FinanceHeader />
+        {/* SWR Provider for data caching */}
+        <FinanceSWRProvider>
+          <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
+            {/* Persistent Header - stays mounted during navigation */}
+            <FinanceHeader />
 
-          {/* Page Content */}
-          {children}
-        </div>
-        <Toaster
-          position="top-right"
-          toastOptions={{
-            duration: 4000,
-            style: {
-              background: '#333',
-              color: '#fff',
-            },
-            success: {
-              duration: 3000,
-              iconTheme: {
-                primary: '#10b981',
-                secondary: '#fff',
+            {/* Page Content */}
+            {children}
+          </div>
+          <Toaster
+            position="top-right"
+            toastOptions={{
+              duration: 4000,
+              style: {
+                background: '#333',
+                color: '#fff',
               },
-            },
-            error: {
-              duration: 5000,
-              iconTheme: {
-                primary: '#ef4444',
-                secondary: '#fff',
+              success: {
+                duration: 3000,
+                iconTheme: {
+                  primary: '#10b981',
+                  secondary: '#fff',
+                },
               },
-            },
-          }}
-        />
+              error: {
+                duration: 5000,
+                iconTheme: {
+                  primary: '#ef4444',
+                  secondary: '#fff',
+                },
+              },
+            }}
+          />
+        </FinanceSWRProvider>
       </FinanceThemeProvider>
     </AuthProvider>
   );

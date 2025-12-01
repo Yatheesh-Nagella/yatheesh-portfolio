@@ -476,3 +476,183 @@ One Recommendation:
 "<Issue 13 (Theme Context): When you fix this, make sure to wrap the value object in useMemo, not just the function.
 const value = useMemo(() => ({ theme, toggleTheme }), [theme]);
 >"
+
+
+
+## Testing: 
+
+Phase 5.1:
+
+🧪 Testing Phase 5.1 Changes
+
+  Test 1: Persistent Header (No Re-render)
+
+  Location: All finance pages
+
+  Steps:
+  1. Open http://localhost:3000/finance/dashboard (or 3001)
+  2. Login to your finance account
+  3. Navigate: Dashboard → Accounts → Transactions → Budgets → Dashboard
+  4. Watch the header area carefully during navigation
+
+  ✅ Expected Results:
+  - Header stays visible during navigation (no unmount/remount)
+  - Navigation buttons don't flicker or disappear
+  - Theme toggle stays in place
+  - No white flash at the top of the page
+  - Smooth, instant transitions
+
+  ❌ Before (What you should NOT see):
+  - Header disappearing and reappearing
+  - White flash at top during navigation
+  - Loading state for the entire page including header
+
+  Performance Gain: 2-3 seconds per navigation
+
+  ---
+  Test 2: Parallel Fetching (Network Waterfall Eliminated)
+
+  Location: Dashboard page
+
+  Steps:
+  1. Open Chrome DevTools (F12)
+  2. Go to Network tab
+  3. Filter by Fetch/XHR
+  4. Refresh the Dashboard page (Ctrl+R)
+  5. Look at the Timing column
+
+  ✅ Expected Results:
+  - You should see TWO requests starting at the same time:
+    - One for accounts
+    - One for transactions
+  - Both requests should have similar start times (within 50ms)
+  - Total load time: 3-4 seconds (instead of 13 seconds)
+
+  How to verify:
+  Before (Serial):
+  ├─ accounts request starts at 0ms, finishes at 2000ms
+  └─ transactions request starts at 2000ms, finishes at 10000ms
+     Total: 10 seconds (waterfall delay)
+
+  After (Parallel):
+  ├─ accounts request starts at 0ms, finishes at 2000ms
+  └─ transactions request starts at 0ms, finishes at 4000ms
+     Total: 4 seconds (no waterfall!)
+
+  Performance Gain: 3-5 seconds
+
+  ---
+  Test 3: Reduced Query Size (Smaller Payload)
+
+  Location: Dashboard page
+
+  Steps:
+  1. In Chrome DevTools Network tab
+  2. Find the getUserTransactions or transaction fetch request
+  3. Click on it
+  4. Check the Response tab
+  5. Count the number of transactions returned
+
+  ✅ Expected Results:
+  - Response should contain 50 transactions (not 500)
+  - Response size should be ~50-100 KB (not 500 KB)
+  - Response time should be 1-2 seconds (not 8-10 seconds)
+
+  How to verify:
+  - Right-click on the request → Copy → Copy as cURL
+  - Look for limit: 50 in the request payload
+
+  Performance Gain: 6-8 seconds
+
+  ---
+  Test 4: SWR Caching (Instant Repeat Visits)
+
+  Location: All finance pages
+
+  Steps:
+  1. Visit Dashboard page (wait for it to load fully)
+  2. Navigate to Accounts page
+  3. Immediately navigate back to Dashboard
+  4. Watch the loading behavior
+
+  ✅ Expected Results:
+  - Dashboard loads instantly from cache (no spinner!)
+  - Data appears in ~0.3 seconds
+  - Network tab shows no new requests (cache hit)
+  - After 1 minute, cache expires and it will refetch
+
+  How to verify caching:
+  - In Chrome DevTools Console, run:
+  // Check if SWR is working
+  window.localStorage.getItem('swr')
+  - You should see cached data
+
+  Performance Gain: 5-10 seconds on repeat visits
+
+  ---
+  Test 5: Visual Comparison (Side-by-Side)
+
+  Setup for comparison:
+  1. Open two browser windows side-by-side
+  2. Left window: Your current app
+  3. Right window: Use Chrome's Performance tab
+
+  Steps:
+  1. Open Performance tab (F12 → Performance)
+  2. Click Record button (circle)
+  3. Navigate Dashboard → Accounts
+  4. Stop recording
+  5. Look at the timeline
+
+  ✅ Expected Metrics:
+  Time to Interactive (TTI): ~3-4 seconds (was 13s)
+  First Contentful Paint: ~0.5 seconds
+  Total Blocking Time: Minimal
+
+  ---
+  📊 Performance Checklist
+
+  Use this checklist while testing:
+
+  Phase 5.1 Performance Tests:
+  □ Test 1: Header stays mounted during navigation ✓
+  □ Test 2: Parallel fetching (check Network tab) ✓
+  □ Test 3: Only 50 transactions fetched (not 500) ✓
+  □ Test 4: Cached data loads instantly ✓
+  □ Test 5: Navigation feels fast (~3-4s, not 13s) ✓
+
+  Overall Results:
+  □ First load: 3-4 seconds (was 13s) ✓
+  □ Cached navigation: 0.5-1 second (was 13s) ✓
+  □ No header flicker ✓
+  □ Smooth transitions ✓
+
+  ---
+  🐛 Troubleshooting
+
+  If dev server won't start:
+  1. Close all terminals
+  2. Open Windows Task Manager (Ctrl+Shift+Esc)
+  3. Find and end all node.exe processes
+  4. Delete .next folder manually in File Explorer
+  5. Try again
+
+  If changes don't appear:
+  1. Hard refresh: Ctrl+Shift+R
+  2. Clear browser cache
+  3. Check you're on the right branch: git branch
+
+  ---
+  ✅ What You Should Notice
+
+  Overall feel:
+  - Navigation should feel snappy and responsive
+  - No more long loading states
+  - App feels more like a single-page application
+  - Data persists between page visits (cache)
+
+  Specific improvements:
+  1. Header: Stays mounted, no flicker
+  2. Loading: Faster initial load (3-4s vs 13s)
+  3. Navigation: Near-instant with cache (0.5s vs 13s)
+  4. Network: Parallel requests, smaller payloads

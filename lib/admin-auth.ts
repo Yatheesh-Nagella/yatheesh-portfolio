@@ -422,14 +422,6 @@ export async function verifyTOTPSetup(
   code: string
 ): Promise<{ success: boolean; error: string | null }> {
   try {
-    /* Debugging logs */
-    /*
-    console.log('=== TOTP Setup Verification Debug ===');
-    console.log('User ID:', userId);
-    console.log('Code:', code);
-    console.log('Code length:', code?.length);
-    */
-
     const supabase = getAdminServiceClient();
 
     // Get user's TOTP secret (should exist but not yet verified)
@@ -439,21 +431,11 @@ export async function verifyTOTPSetup(
       .eq('id', userId)
       .single();
 
-    /*
-    console.log('DB Query error:', error);
-    console.log('Admin user found:', !!adminUser);
-    console.log('TOTP enabled:', adminUser?.totp_enabled);
-    console.log('TOTP verified:', adminUser?.totp_verified);
-    console.log('TOTP secret exists:', !!adminUser?.totp_secret);
-    */
-
     if (error || !adminUser) {
-      console.error('User not found error');
       return { success: false, error: 'User not found' };
     }
 
     if (!adminUser.totp_enabled || !adminUser.totp_secret) {
-      console.error('TOTP not enabled or secret missing');
       return { success: false, error: 'TOTP setup not initiated' };
     }
 
@@ -469,12 +451,10 @@ export async function verifyTOTPSetup(
     } as Parameters<typeof authenticator.verify>[0]);
 
     if (!isValid) {
-      console.error('TOTP code invalid');
       return { success: false, error: 'Invalid code. Please try again.' };
     }
 
     // Mark TOTP as verified
-    console.log('Marking TOTP as verified...');
     await supabase
       .from('admin_users')
       .update({ totp_verified: true })
@@ -482,7 +462,6 @@ export async function verifyTOTPSetup(
 
     await logAdminAction(userId, 'totp_enabled', null, null, null);
 
-    console.log('TOTP setup verification successful!');
     return { success: true, error: null };
   } catch (error) {
     console.error('Error verifying TOTP setup:', error);

@@ -255,8 +255,8 @@ export async function isAdmin(userId: string): Promise<boolean> {
  */
 export async function getUserAccounts(userId: string): Promise<Account[]> {
   try {
-    // Single query with LEFT JOIN to get both Plaid and cash accounts
-    // LEFT JOIN ensures cash accounts (null plaid_item_id) are included
+    // Single query fetching accounts with nested Plaid item relations
+    // Supabase automatically includes accounts with null plaid_item_id (cash accounts)
     const { data, error } = await supabase
       .from('accounts')
       .select(`

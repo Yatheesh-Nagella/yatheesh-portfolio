@@ -10,7 +10,7 @@
  */
 
 import React, { useState, useCallback } from 'react';
-import { usePlaidLink } from 'react-plaid-link';
+import { usePlaidLink, PlaidLinkOnSuccessMetadata, PlaidLinkOnExitMetadata, PlaidLinkError } from 'react-plaid-link';
 import { useAuth } from '@/contexts/AuthContext';
 import { supabase } from '@/lib/supabase';
 import { Loader2, Link as LinkIcon, AlertCircle } from 'lucide-react';
@@ -81,8 +81,7 @@ export default function PlaidLink({
    * Handle successful bank connection
    */
   const onPlaidSuccess = useCallback(
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    async (publicToken: string, metadata: any) => {
+    async (publicToken: string, metadata: PlaidLinkOnSuccessMetadata) => {
       try {
         setLoading(true);
         setError(null);
@@ -133,8 +132,8 @@ export default function PlaidLink({
    * Handle Plaid Link exit
    */
   const onPlaidExit = useCallback(
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/no-unused-vars
-    (err: any, _metadata: any) => {
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    (err: PlaidLinkError | null, _metadata: PlaidLinkOnExitMetadata) => {
       if (err) {
         console.error('Plaid Link error:', err);
         setError('Connection failed. Please try again.');

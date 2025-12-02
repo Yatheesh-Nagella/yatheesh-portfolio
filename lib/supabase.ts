@@ -308,8 +308,9 @@ export async function getTotalBalance(userId: string): Promise<number> {
       return 0;
     }
 
-    // Use Pick utility type for better type safety and maintainability
-    return data.reduce((total: number, account: Pick<Database['public']['Tables']['accounts']['Row'], 'current_balance'>) => {
+    // Simplified type annotation for better readability
+    type AccountBalance = { current_balance: number | null };
+    return data.reduce((total: number, account: AccountBalance) => {
       return total + (account.current_balance ?? 0);
     }, 0);
   } catch (error) {

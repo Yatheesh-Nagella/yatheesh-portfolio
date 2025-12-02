@@ -161,7 +161,11 @@ export async function authenticateAdmin(
     if (!passwordMatch) {
       // Increment failed login attempts
       const newFailedAttempts = (adminUser.failed_login_attempts || 0) + 1;
-      const updates: any = { failed_login_attempts: newFailedAttempts }; // eslint-disable-line @typescript-eslint/no-explicit-any
+      type AdminUserUpdates = {
+        failed_login_attempts: number;
+        locked_until?: string;
+      };
+      const updates: AdminUserUpdates = { failed_login_attempts: newFailedAttempts };
 
       // Lock account after 5 failed attempts for 15 minutes
       if (newFailedAttempts >= 5) {
@@ -457,11 +461,12 @@ export async function verifyTOTPSetup(
     const secret = decrypt(adminUser.totp_secret);
 
     // Verify code (allow for time drift)
+    // Note: otplib types are incomplete - window property exists but not in type definition
     const isValid = authenticator.verify({
       token: code,
       secret,
       window: 2, // Allow 2 time steps (±60 seconds) for clock skew
-    } as any); // eslint-disable-line @typescript-eslint/no-explicit-any
+    } as Parameters<typeof authenticator.verify>[0]);
 
     if (!isValid) {
       console.error('TOTP code invalid');
@@ -493,7 +498,7 @@ export async function logAdminAction(
   action: string,
   resourceType: string | null = null,
   resourceId: string | null = null,
-  details: any = null, // eslint-disable-line @typescript-eslint/no-explicit-any
+  details: Record<string, unknown> | null = null,
   ipAddress?: string,
   userAgent?: string
 ): Promise<void> {

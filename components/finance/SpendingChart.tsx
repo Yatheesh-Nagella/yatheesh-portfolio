@@ -40,10 +40,18 @@ export default function SpendingChart({
   loading = false,
 }: SpendingChartProps) {
   /**
-   * Custom tooltip component
+   * Custom tooltip component with proper types
    */
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const CustomTooltip = ({ active, payload }: any) => {
+  interface CustomTooltipProps {
+    active?: boolean;
+    payload?: {
+      value: number;
+      payload: SpendingDataPoint;
+    }[];
+    label?: string;
+  }
+
+  const CustomTooltip = ({ active, payload }: CustomTooltipProps) => {
     if (active && payload && payload.length) {
       return (
         <div className="bg-white dark:bg-gray-800 px-4 py-2 rounded-lg shadow-lg border border-gray-200 dark:border-gray-700">

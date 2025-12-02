@@ -6,7 +6,7 @@
  * Must be wrapped with AuthProvider
  */
 
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useTransition } from 'react';
 import { useRouter, usePathname } from 'next/navigation';
 import Link from 'next/link';
 import { useAdminAuth } from '@/contexts/AdminAuthContext';
@@ -45,6 +45,17 @@ export default function AdminLayoutInner({
   const { adminUser, loading: authLoading, signOut } = useAdminAuth();
   const { theme, toggleTheme } = useAdminTheme();
   const [sidebarOpen, setSidebarOpen] = useState(false);
+
+  // Track navigation loading state to prevent duplicate clicks
+  const [isPending, startTransition] = useTransition();
+  const [pendingPath, setPendingPath] = useState<string | null>(null);
+
+  /**
+   * Check if a route is currently loading
+   */
+  const isLoading = (path: string) => {
+    return isPending && pendingPath === path;
+  };
 
   // Check if admin is logged in
   useEffect(() => {
@@ -131,21 +142,30 @@ export default function AdminLayoutInner({
         <nav className="p-4 space-y-1">
           {navItems.map((item) => {
             const isActive = pathname === item.href;
+            const loading = isLoading(item.href);
             const Icon = item.icon;
 
             return (
               <Link
                 key={item.href}
                 href={item.href}
-                onClick={() => setSidebarOpen(false)}
+                onClick={(e) => {
+                  e.preventDefault();
+                  setSidebarOpen(false);
+                  if (!isActive && !isPending) {
+                    setPendingPath(item.href);
+                    startTransition(() => router.push(item.href));
+                  }
+                }}
                 className={`flex items-center gap-3 px-4 py-3 rounded-lg transition-colors ${
                   isActive
                     ? 'bg-blue-600 text-white'
                     : 'text-gray-400 hover:bg-gray-800 hover:text-white'
-                }`}
+                } ${loading ? 'opacity-50 cursor-wait' : ''}`}
               >
                 <Icon className="w-5 h-5" />
-                <span>{item.label}</span>
+                <span className="flex-1">{item.label}</span>
+                {loading && <Loader2 className="w-4 h-4 animate-spin" />}
               </Link>
             );
           })}

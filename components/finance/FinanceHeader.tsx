@@ -6,12 +6,13 @@
  * Stays mounted during navigation (no re-render)
  */
 
-import React from 'react';
+import React, { useState, useTransition } from 'react';
+import Link from 'next/link';
 import { useRouter, usePathname } from 'next/navigation';
 import { useAuth } from '@/contexts/AuthContext';
 import { useFinanceTheme } from '@/contexts/FinanceThemeContext';
 import PlaidLink from '@/components/finance/PlaidLink';
-import { Moon, Sun } from 'lucide-react';
+import { Moon, Sun, Loader2 } from 'lucide-react';
 
 interface FinanceHeaderProps {
   onBankConnected?: () => void;
@@ -23,11 +24,22 @@ export default function FinanceHeader({ onBankConnected }: FinanceHeaderProps) {
   const pathname = usePathname();
   const { theme, toggleTheme } = useFinanceTheme();
 
+  // Track navigation loading state
+  const [isPending, startTransition] = useTransition();
+  const [pendingPath, setPendingPath] = useState<string | null>(null);
+
   /**
    * Check if a route is active
    */
   const isActive = (path: string) => {
     return pathname === path;
+  };
+
+  /**
+   * Check if a route is currently loading
+   */
+  const isLoading = (path: string) => {
+    return isPending && pendingPath === path;
   };
 
   /**
@@ -66,51 +78,96 @@ export default function FinanceHeader({ onBankConnected }: FinanceHeaderProps) {
 
           {/* Desktop Navigation */}
           <div className="hidden md:flex items-center space-x-4">
-            <button
-              onClick={() => router.push('/finance/dashboard')}
-              className={`text-sm font-medium ${isActive('/finance/dashboard')
+            <Link
+              href="/finance/dashboard"
+              onClick={(e) => {
+                e.preventDefault();
+                if (!isActive('/finance/dashboard') && !isPending) {
+                  setPendingPath('/finance/dashboard');
+                  startTransition(() => router.push('/finance/dashboard'));
+                }
+              }}
+              className={`inline-flex items-center gap-1 text-sm font-medium ${
+                isActive('/finance/dashboard')
                   ? 'text-blue-600 dark:text-blue-400'
                   : 'text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white'
-                }`}
+              } ${isLoading('/finance/dashboard') ? 'opacity-50 cursor-wait' : ''}`}
             >
               Dashboard
-            </button>
-            <button
-              onClick={() => router.push('/finance/accounts')}
-              className={`text-sm font-medium ${isActive('/finance/accounts')
+              {isLoading('/finance/dashboard') && <Loader2 className="w-3 h-3 animate-spin" />}
+            </Link>
+            <Link
+              href="/finance/accounts"
+              onClick={(e) => {
+                e.preventDefault();
+                if (!isActive('/finance/accounts') && !isPending) {
+                  setPendingPath('/finance/accounts');
+                  startTransition(() => router.push('/finance/accounts'));
+                }
+              }}
+              className={`inline-flex items-center gap-1 text-sm font-medium ${
+                isActive('/finance/accounts')
                   ? 'text-blue-600 dark:text-blue-400'
                   : 'text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white'
-                }`}
+              } ${isLoading('/finance/accounts') ? 'opacity-50 cursor-wait' : ''}`}
             >
               Accounts
-            </button>
-            <button
-              onClick={() => router.push('/finance/transactions')}
-              className={`text-sm font-medium ${isActive('/finance/transactions')
+              {isLoading('/finance/accounts') && <Loader2 className="w-3 h-3 animate-spin" />}
+            </Link>
+            <Link
+              href="/finance/transactions"
+              onClick={(e) => {
+                e.preventDefault();
+                if (!isActive('/finance/transactions') && !isPending) {
+                  setPendingPath('/finance/transactions');
+                  startTransition(() => router.push('/finance/transactions'));
+                }
+              }}
+              className={`inline-flex items-center gap-1 text-sm font-medium ${
+                isActive('/finance/transactions')
                   ? 'text-blue-600 dark:text-blue-400'
                   : 'text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white'
-                }`}
+              } ${isLoading('/finance/transactions') ? 'opacity-50 cursor-wait' : ''}`}
             >
               Transactions
-            </button>
-            <button
-              onClick={() => router.push('/finance/budgets')}
-              className={`text-sm font-medium ${isActive('/finance/budgets')
+              {isLoading('/finance/transactions') && <Loader2 className="w-3 h-3 animate-spin" />}
+            </Link>
+            <Link
+              href="/finance/budgets"
+              onClick={(e) => {
+                e.preventDefault();
+                if (!isActive('/finance/budgets') && !isPending) {
+                  setPendingPath('/finance/budgets');
+                  startTransition(() => router.push('/finance/budgets'));
+                }
+              }}
+              className={`inline-flex items-center gap-1 text-sm font-medium ${
+                isActive('/finance/budgets')
                   ? 'text-blue-600 dark:text-blue-400'
                   : 'text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white'
-                }`}
+              } ${isLoading('/finance/budgets') ? 'opacity-50 cursor-wait' : ''}`}
             >
               Budgets
-            </button>
-            <button
-              onClick={() => router.push('/finance/settings')}
-              className={`text-sm font-medium ${isActive('/finance/settings')
+              {isLoading('/finance/budgets') && <Loader2 className="w-3 h-3 animate-spin" />}
+            </Link>
+            <Link
+              href="/finance/settings"
+              onClick={(e) => {
+                e.preventDefault();
+                if (!isActive('/finance/settings') && !isPending) {
+                  setPendingPath('/finance/settings');
+                  startTransition(() => router.push('/finance/settings'));
+                }
+              }}
+              className={`inline-flex items-center gap-1 text-sm font-medium ${
+                isActive('/finance/settings')
                   ? 'text-blue-600 dark:text-blue-400'
                   : 'text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white'
-                }`}
+              } ${isLoading('/finance/settings') ? 'opacity-50 cursor-wait' : ''}`}
             >
               Settings
-            </button>
+              {isLoading('/finance/settings') && <Loader2 className="w-3 h-3 animate-spin" />}
+            </Link>
 
             {/* Theme Toggle */}
             <button

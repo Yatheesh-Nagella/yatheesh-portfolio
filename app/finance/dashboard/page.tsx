@@ -6,7 +6,7 @@
  * Displays balance, spending, and recent activity
  */
 
-import React, { useState, useEffect, useMemo } from 'react';
+import React, { useMemo } from 'react';
 import { useRouter } from 'next/navigation';
 import { useAuth } from '@/contexts/AuthContext';
 import { useAccounts, useTransactions } from '@/hooks';
@@ -15,11 +15,11 @@ import DashboardCard from '@/components/finance/DashboardCard';
 import SpendingChart from '@/components/finance/SpendingChart';
 import RecentTransactions from '@/components/finance/RecentTransactions';
 import PlaidLink from '@/components/finance/PlaidLink';
+import { DashboardSkeleton } from '@/components/finance/skeletons';
 import {
   DollarSign,
   TrendingDown,
   Building2,
-  Loader2,
   AlertCircle,
   Target,
 } from 'lucide-react';
@@ -58,10 +58,6 @@ export default function FinanceDashboard() {
   const loading = accountsLoading || transactionsLoading;
   const error = accountsError || transactionsError;
 
-  // State for computed data
-  const [monthlySpending, setMonthlySpending] = useState(0);
-  const [chartData, setChartData] = useState<{ date: string; amount: number }[]>([]);
-
   /**
    * Calculate total balance across all accounts (memoized)
    */
@@ -72,23 +68,24 @@ export default function FinanceDashboard() {
   }, [accounts]);
 
   /**
-   * Calculate monthly spending and chart data (client-side only to avoid hydration issues)
+   * Calculate monthly spending (memoized to prevent infinite re-renders)
    */
-  useEffect(() => {
-    // Calculate monthly spending (last 30 days)
+  const monthlySpending = useMemo(() => {
     const thirtyDaysAgo = new Date();
     thirtyDaysAgo.setDate(thirtyDaysAgo.getDate() - 30);
 
-    const spending = transactions
+    return transactions
       .filter((tx) => {
         const txDate = new Date(tx.transaction_date);
         return txDate >= thirtyDaysAgo && tx.amount > 0; // Positive amounts are expenses
       })
       .reduce((sum, tx) => sum + tx.amount, 0);
+  }, [transactions]);
 
-    setMonthlySpending(spending);
-
-    // Generate spending chart data (last 30 days)
+  /**
+   * Generate spending chart data for last 30 days (memoized)
+   */
+  const chartData = useMemo(() => {
     const days = 30;
     const data = [];
 
@@ -116,7 +113,7 @@ export default function FinanceDashboard() {
       });
     }
 
-    setChartData(data);
+    return data;
   }, [transactions]);
 
   /**
@@ -161,12 +158,8 @@ export default function FinanceDashboard() {
             </div>
           )}
 
-          {/* Loading State */}
-          {loading && (
-            <div className="flex items-center justify-center py-12">
-              <Loader2 className="w-8 h-8 text-blue-500 animate-spin" />
-            </div>
-          )}
+          {/* Loading State with Skeleton */}
+          {loading && <DashboardSkeleton />}
 
           {/* Dashboard Content */}
           {!loading && (

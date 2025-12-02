@@ -481,7 +481,7 @@ const value = useMemo(() => ({ theme, toggleTheme }), [theme]);
 
 ## Testing: 
 
-Phase 5.1:
+### Phase 5.1:
 
 🧪 Testing Phase 5.1 Changes
 
@@ -656,3 +656,50 @@ Phase 5.1:
   2. Loading: Faster initial load (3-4s vs 13s)
   3. Navigation: Near-instant with cache (0.5s vs 13s)
   4. Network: Parallel requests, smaller payloads
+
+
+### Phase 5.2:
+Phase 5.2 Complete: Caching Layer
+
+  What We Built:
+
+  Skeleton Components:
+  1. Skeleton.tsx - Base skeleton component with pulse animation
+  2. DashboardSkeleton.tsx - Full dashboard loading skeleton
+  3. AccountCardSkeleton.tsx - Account card skeleton
+  4. TransactionListSkeleton.tsx - Transaction list skeleton
+  5. index.ts - Central exports
+
+  SWR Custom Hooks:
+  1. useAccounts.ts - Fetches and caches user accounts
+  2. useTransactions.ts - Fetches and caches user transactions
+  3. useBudgets.ts - Fetches and caches user budgets
+  4. swr-config.ts - SWR global configuration
+  5. index.ts - Central exports
+  Changes Made:
+  1. Replaced all <Spinner> components with appropriate skeletons
+  2. Updated data fetching to use SWR custom hooks  
+
+  ## Fix navigation latency and prevent duplicate clicks
+
+   FinanceHeader.tsx improvements (components/finance/FinanceHeader.tsx:9-170):
+
+  1. Added React useTransition for loading state tracking:
+  const [isPending, startTransition] = useTransition();
+  const [pendingPath, setPendingPath] = useState<string | null>(null);
+
+  2. Replaced all navigation buttons with Next.js Link components:
+  - Before: <button onClick={() => router.push('/finance/dashboard')}>Dashboard</button>
+  - After: <Link href="/finance/dashboard" onClick={...}>Dashboard</Link>
+
+  3. Added instant visual feedback:
+  - Shows spinner next to clicked navigation item
+  - Changes cursor to "wait" during navigation
+  - Prevents clicks during pending transitions
+  - All handled by the isLoading() helper function
+
+  Benefits:
+  - Instant feedback: Users see a spinner immediately when clicking
+  - No duplicate clicks: Navigation is disabled while pending (!isPending check)
+  - No duplicate API calls: SWR deduplication + transition blocking prevents multiple requests
+  - Better UX: Users know something is happening instead of waiting in silence

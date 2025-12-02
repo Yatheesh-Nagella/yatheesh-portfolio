@@ -5,7 +5,7 @@
  * Manages dark/light mode theme state for finance app
  */
 
-import React, { createContext, useContext, useState, useEffect } from 'react';
+import React, { createContext, useContext, useState, useEffect, useCallback, useMemo } from 'react';
 
 type Theme = 'light' | 'dark';
 
@@ -45,12 +45,20 @@ export function FinanceThemeProvider({ children }: { children: React.ReactNode }
     }
   }, [theme, mounted]);
 
-  const toggleTheme = () => {
+  /**
+   * Memoize toggleTheme function to prevent recreation
+   */
+  const toggleTheme = useCallback(() => {
     setTheme((prev) => (prev === 'light' ? 'dark' : 'light'));
-  };
+  }, []);
+
+  /**
+   * Memoize context value to prevent unnecessary re-renders
+   */
+  const value = useMemo(() => ({ theme, toggleTheme }), [theme, toggleTheme]);
 
   return (
-    <FinanceThemeContext.Provider value={{ theme, toggleTheme }}>
+    <FinanceThemeContext.Provider value={value}>
       {children}
     </FinanceThemeContext.Provider>
   );

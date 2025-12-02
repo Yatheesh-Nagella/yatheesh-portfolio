@@ -8,7 +8,7 @@
 import React from 'react';
 import { AuthProvider } from '@/contexts/AuthContext';
 import { FinanceThemeProvider } from '@/contexts/FinanceThemeContext';
-import FinanceHeader from '@/components/finance/FinanceHeader';
+import FinanceLayoutClient from '@/components/finance/FinanceLayoutClient';
 import FinanceSWRProvider from '@/components/finance/FinanceSWRProvider';
 import { Toaster } from 'react-hot-toast';
 import type { Metadata } from 'next';
@@ -28,13 +28,10 @@ export default function FinanceLayout({
       <FinanceThemeProvider>
         {/* SWR Provider for data caching */}
         <FinanceSWRProvider>
-          <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
-            {/* Persistent Header - stays mounted during navigation */}
-            <FinanceHeader />
-
-            {/* Page Content */}
+          {/* Error Boundary wraps all finance pages */}
+          <FinanceLayoutClient>
             {children}
-          </div>
+          </FinanceLayoutClient>
           <Toaster
             position="top-right"
             toastOptions={{

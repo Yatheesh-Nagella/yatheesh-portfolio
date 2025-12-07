@@ -8,6 +8,8 @@
 
 import { NextRequest, NextResponse } from 'next/server';
 import { getServerUser, createServiceRoleClient } from '@/lib/supabase-server';
+import { plaidClient } from '@/lib/plaid';
+import { decryptAccessToken } from '@/lib/supabase';
 
 export async function POST(request: NextRequest) {
   try {
@@ -85,7 +87,22 @@ export async function POST(request: NextRequest) {
         .in('id', accountIds);
     }
 
-    // Delete Plaid item
+    // SECURITY: Invalidate the access token with Plaid BEFORE deleting from database
+    // This ensures the token can't be used even if our database is compromised
+    try {
+      const decryptedAccessToken = decryptAccessToken(plaidItem.access_token);
+      await plaidClient.itemRemove({
+        access_token: decryptedAccessToken,
+      });
+      console.log(`[Unlink] Successfully invalidated Plaid access token for item ${itemId}`);
+    } catch (plaidError) {
+      // Log error but don't fail the entire operation
+      // Database cleanup should succeed even if Plaid API fails
+      console.error('[Unlink] Failed to invalidate Plaid token:', plaidError);
+      console.warn('[Unlink] Continuing with database cleanup despite Plaid API error');
+    }
+
+    // Delete Plaid item from database
     const { error: deleteError } = await supabase
       .from('plaid_items')
       .delete()
@@ -98,9 +115,6 @@ export async function POST(request: NextRequest) {
         { status: 500 }
       );
     }
-
-    // Note: In production, you should also call Plaid's API to invalidate the access token
-    // plaidClient.itemRemove({ access_token: decryptedAccessToken });
 
     return NextResponse.json({
       success: true,

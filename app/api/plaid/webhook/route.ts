@@ -12,6 +12,8 @@ import { NextResponse } from 'next/server';
 import { createServiceRoleClient } from '@/lib/supabase-server';
 import { plaidClient, syncTransactions } from '@/lib/plaid';
 import { decryptAccessToken, dollarsToCents } from '@/lib/supabase';
+import { jwtVerify, createRemoteJWKSet } from 'jose';
+import { env } from '@/lib/env';
 
 // Plaid webhook types
 type WebhookType =
@@ -49,10 +51,74 @@ interface PlaidWebhookPayload {
   consent_expiration_time?: string;
 }
 
+/**
+ * Verify Plaid webhook signature using JWT
+ * Plaid signs webhooks with their private key; we verify with their public key
+ * See: https://plaid.com/docs/api/webhooks/webhook-verification/
+ */
+async function verifyWebhookSignature(request: Request): Promise<boolean> {
+  const verificationKey = env.plaid.webhookVerificationKey;
+
+  // Skip verification in sandbox/development if key not configured
+  if (!verificationKey && env.plaid.env !== 'production') {
+    console.warn('[Webhook] Skipping signature verification (no key configured for non-production)');
+    return true;
+  }
+
+  // In production, verification key is REQUIRED
+  if (!verificationKey && env.plaid.env === 'production') {
+    console.error('[Webhook] CRITICAL: Webhook verification key missing in production!');
+    return false;
+  }
+
+  try {
+    const signedJwt = request.headers.get('plaid-verification');
+
+    if (!signedJwt) {
+      console.error('[Webhook] Missing Plaid-Verification header');
+      return false;
+    }
+
+    // Verify the JWT using Plaid's JWKS endpoint
+    const JWKS = createRemoteJWKSet(new URL('https://production.plaid.com/.well-known/jwks.json'));
+
+    const { payload } = await jwtVerify(signedJwt, JWKS, {
+      algorithms: ['ES256'],
+    });
+
+    // Verify the webhook body matches the JWT payload
+    const body = await request.text();
+    const bodyHash = Buffer.from(body).toString('base64');
+
+    if (payload.request_body_sha256 !== bodyHash) {
+      console.error('[Webhook] Body hash mismatch');
+      return false;
+    }
+
+    return true;
+  } catch (error) {
+    console.error('[Webhook] Signature verification failed:', error);
+    return false;
+  }
+}
+
 export async function POST(request: Request) {
   const startTime = Date.now();
 
   try {
+    // SECURITY: Verify webhook signature first
+    // Clone request for signature verification (body can only be read once)
+    const requestClone = request.clone();
+    const isValid = await verifyWebhookSignature(requestClone);
+
+    if (!isValid) {
+      console.error('[Webhook] Signature verification failed - rejecting webhook');
+      return NextResponse.json(
+        { error: 'Invalid webhook signature' },
+        { status: 401 }
+      );
+    }
+
     // Parse the webhook payload
     const payload: PlaidWebhookPayload = await request.json();
 
@@ -61,10 +127,6 @@ export async function POST(request: Request) {
       code: payload.webhook_code,
       item_id: payload.item_id,
     });
-
-    // TODO: In production, verify webhook signature using Plaid's verification key
-    // For now, we'll process the webhook without verification (sandbox mode)
-    // See: https://plaid.com/docs/api/webhooks/webhook-verification/
 
     const supabase = createServiceRoleClient();
 

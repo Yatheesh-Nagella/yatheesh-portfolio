@@ -32,8 +32,25 @@ function decryptAccessToken(encryptedToken: string): string {
 
 export async function POST(request: NextRequest) {
   try {
-    // Get current user (optional for this endpoint)
-    const user = await getServerUser();
+    // SECURITY: Require authentication via Bearer token
+    const authHeader = request.headers.get('authorization');
+    if (!authHeader) {
+      return NextResponse.json(
+        { error: 'Missing authorization header' },
+        { status: 401 }
+      );
+    }
+
+    const token = authHeader.replace('Bearer ', '');
+    const user = await getServerUser(token);
+
+    if (!user) {
+      return NextResponse.json(
+        { error: 'Unauthorized - Invalid or expired token' },
+        { status: 401 }
+      );
+    }
+
     // Use service role client for database operations (bypasses RLS)
     const supabase = createServiceRoleClient();
 
@@ -63,10 +80,10 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    // If user is authenticated, verify they own this item
-    if (user && plaidItem.user_id !== user.id) {
+    // SECURITY: Always verify ownership (user must own this Plaid item)
+    if (plaidItem.user_id !== user.id) {
       return NextResponse.json(
-        { error: 'Unauthorized - You don\'t own this connection' },
+        { error: 'Forbidden - You don\'t own this connection' },
         { status: 403 }
       );
     }
@@ -197,9 +214,13 @@ export async function POST(request: NextRequest) {
     // If there are more transactions, recursively sync
     if (hasMore && nextCursor) {
       // Trigger another sync (async, don't wait)
+      // SECURITY: Include authorization header for recursive call
       fetch(`${process.env.NEXT_PUBLIC_APP_URL}/api/plaid/sync-transactions`, {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': authHeader, // Forward the same auth token
+        },
         body: JSON.stringify({ itemId, cursor: nextCursor }),
       }).catch((err) => console.error('Error in recursive sync:', err));
     }

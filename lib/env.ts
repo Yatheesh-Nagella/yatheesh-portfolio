@@ -92,6 +92,9 @@ function getEnvVar(key: string, isOptional = false): string {
       get webhookUrl() {
         return getEnvVar('PLAID_WEBHOOK_URL', true);
       },
+      get webhookVerificationKey() {
+        return getEnvVar('PLAID_WEBHOOK_VERIFICATION_KEY', true);
+      },
     },
 
     // Encryption

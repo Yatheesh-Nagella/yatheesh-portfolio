@@ -2,7 +2,7 @@
 const nextConfig = {
   async rewrites() {
     return [
-      // Admin subdomain
+      // Admin subdomain - Production
       {
         source: '/:path*',
         destination: '/admin/:path*',
@@ -13,7 +13,18 @@ const nextConfig = {
           },
         ],
       },
-      // Finance subdomain
+      // Admin subdomain - Local development
+      {
+        source: '/:path*',
+        destination: '/admin/:path*',
+        has: [
+          {
+            type: 'host',
+            value: 'admin.localhost',
+          },
+        ],
+      },
+      // Finance subdomain - Production
       {
         source: '/:path*',
         destination: '/finance/:path*',
@@ -21,6 +32,17 @@ const nextConfig = {
           {
             type: 'host',
             value: 'finance.yatheeshnagella.com',
+          },
+        ],
+      },
+      // Finance subdomain - Local development
+      {
+        source: '/:path*',
+        destination: '/finance/:path*',
+        has: [
+          {
+            type: 'host',
+            value: 'finance.localhost',
           },
         ],
       },

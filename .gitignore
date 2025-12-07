@@ -41,8 +41,8 @@ yarn-error.log*
 *.tsbuildinfo
 next-env.d.ts
 
-project_development
-
+# project_development
+PROJECT_DEVELOPMENT.md
 
 
 # Scripts

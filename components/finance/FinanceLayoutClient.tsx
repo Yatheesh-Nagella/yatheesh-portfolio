@@ -7,6 +7,7 @@
  */
 
 import React from 'react';
+import { usePathname } from 'next/navigation';
 import ErrorBoundary from './ErrorBoundary';
 import FinanceHeader from './FinanceHeader';
 
@@ -15,6 +16,11 @@ interface FinanceLayoutClientProps {
 }
 
 export default function FinanceLayoutClient({ children }: FinanceLayoutClientProps) {
+  const pathname = usePathname();
+
+  // Don't show FinanceHeader on public pages (landing and login)
+  const isPublicPage = pathname === '/finance' || pathname === '/finance/login';
+
   return (
     <ErrorBoundary
       fallbackTitle="Finance App Error"
@@ -22,7 +28,8 @@ export default function FinanceLayoutClient({ children }: FinanceLayoutClientPro
     >
       <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
         {/* Persistent Header - stays mounted during navigation */}
-        <FinanceHeader />
+        {/* Hide on public pages (landing/login) since they have their own headers */}
+        {!isPublicPage && <FinanceHeader />}
 
         {/* Page Content with Error Boundary Protection */}
         {children}

@@ -61,7 +61,8 @@ export async function getCurrentUser(): Promise<User | null> {
     const { data: { user: authUser }, error: authError } = await supabase.auth.getUser();
 
     if (authError || !authUser) {
-      if (authError) {
+      // Only log if it's a real error, not just missing session (expected on public pages)
+      if (authError && authError.name !== 'AuthSessionMissingError') {
         console.error('Error fetching auth user:', authError);
       }
       return null;

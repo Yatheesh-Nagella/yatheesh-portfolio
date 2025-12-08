@@ -142,9 +142,13 @@ export async function POST(request: NextRequest) {
     }
 
     // Trigger transaction sync (async, don't wait)
+    // Forward the Authorization header from the current request
     fetch(`${process.env.NEXT_PUBLIC_APP_URL}/api/plaid/sync-transactions`, {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': authHeader || '', // Forward auth token
+      },
       body: JSON.stringify({ itemId: plaidItem.id }),
     }).catch((err) => console.error('Error triggering sync:', err));
 

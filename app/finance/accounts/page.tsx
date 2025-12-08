@@ -11,7 +11,7 @@ import { useAuth } from '@/contexts/AuthContext';
 import ProtectedRoute from '@/components/finance/ProtectedRoute';
 import PlaidLink from '@/components/finance/PlaidLink';
 import AccountCard from '@/components/finance/AccountCard';
-import { getUserAccounts, type Account } from '@/lib/supabase';
+import { getUserAccounts, supabase, type Account } from '@/lib/supabase';
 import { Building2, Loader2 } from 'lucide-react';
 import toast from 'react-hot-toast';
 
@@ -74,10 +74,20 @@ export default function AccountsPage() {
         return;
       }
 
-      // Call sync API
+      // Get Supabase session token for authentication
+      const { data: { session } } = await supabase.auth.getSession();
+      if (!session) {
+        toast.error('Authentication required');
+        return;
+      }
+
+      // Call sync API with Bearer token authentication
       const response = await fetch('/api/plaid/sync-transactions', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${session.access_token}`,
+        },
         body: JSON.stringify({ itemId: plaidItemId }),
       });
 

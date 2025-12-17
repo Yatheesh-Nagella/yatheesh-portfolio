@@ -123,45 +123,56 @@ export default function AccountsPage() {
   return (
     <ProtectedRoute>
       {/* Main Content */}
-      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        <div className="mb-6">
-          <h2 className="text-3xl font-bold text-gray-900 dark:text-white">Accounts</h2>
-          <p className="text-gray-600 dark:text-gray-300 mt-2">
+      <main className="min-h-screen bg-[#1a1a1a] px-4 sm:px-6 lg:px-8 py-8">
+        <div className="max-w-7xl mx-auto">
+        <div className="mb-8">
+          <h2 className="text-3xl font-bold text-[#e5e5e5]">Accounts</h2>
+          <p className="text-[#a3a3a3] mt-2">
             Manage your connected bank accounts
           </p>
         </div>
           {/* Loading State */}
           {loading && (
             <div className="flex items-center justify-center py-12">
-              <Loader2 className="w-8 h-8 text-blue-500 animate-spin" />
+              <Loader2 className="w-8 h-8 text-[#10b981] animate-spin" />
             </div>
           )}
 
           {/* Empty State */}
           {!loading && accounts.length === 0 && (
-            <div className="bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-gray-200 dark:border-gray-700 p-12 text-center">
-              <Building2 className="w-16 h-16 text-gray-400 dark:text-gray-500 mx-auto mb-4" />
-              <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-2">
-                No Accounts Connected
-              </h3>
-              <p className="text-gray-600 dark:text-gray-300 mb-6 max-w-md mx-auto">
-                Connect your bank account to start tracking your finances. Your data is secure and encrypted.
-              </p>
-              <PlaidLink
-                onSuccess={handleBankConnected}
-                buttonText="Connect Your First Account"
-                variant="primary"
-              />
+            <div className="relative overflow-hidden">
+              <div className="absolute inset-0 bg-gradient-to-br from-[#10b981]/10 via-transparent to-[#a3a3a3]/5 rounded-xl" />
+              <div className="relative bg-[#e5e5e5]/5 backdrop-blur-sm border border-[#a3a3a3]/10 rounded-xl p-12 text-center">
+                <div className="w-20 h-20 rounded-2xl bg-[#10b981]/15 flex items-center justify-center mx-auto mb-6">
+                  <Building2 className="w-10 h-10 text-[#10b981]" strokeWidth={1.5} />
+                </div>
+                <h3 className="text-2xl font-bold text-[#e5e5e5] mb-3">
+                  No Accounts Connected
+                </h3>
+                <p className="text-[#a3a3a3] mb-8 max-w-md mx-auto leading-relaxed">
+                  Connect your bank account to start tracking your finances. Your data is secure and encrypted.
+                </p>
+                <PlaidLink
+                  onSuccess={handleBankConnected}
+                  buttonText="Connect Your First Account"
+                  variant="primary"
+                />
+              </div>
             </div>
           )}
 
           {/* Accounts Grid */}
           {!loading && accounts.length > 0 && (
             <>
-              <div className="mb-6">
-                <p className="text-gray-600 dark:text-gray-300">
+              <div className="mb-6 flex items-center justify-between">
+                <p className="text-[#a3a3a3]">
                   {accounts.length} account{accounts.length !== 1 ? 's' : ''} connected
                 </p>
+                <PlaidLink
+                  onSuccess={handleBankConnected}
+                  buttonText="Connect Another Account"
+                  variant="secondary"
+                />
               </div>
 
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -176,6 +187,7 @@ export default function AccountsPage() {
               </div>
             </>
           )}
+        </div>
       </main>
     </ProtectedRoute>
   );

@@ -6,6 +6,7 @@
  */
 
 import React, { useState } from 'react';
+import Image from 'next/image';
 import { useAuth } from '@/contexts/AuthContext';
 import { Loader2, Mail, Lock, User, Ticket, LogIn, UserPlus } from 'lucide-react';
 
@@ -109,17 +110,25 @@ export default function AuthPage() {
   }
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-50 to-indigo-100 p-4">
+    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-[#1a1a1a] to-[#0f0f0f] p-4">
       <div className="w-full max-w-md">
         {/* Header */}
         <div className="text-center mb-8">
-          <div className="inline-flex items-center justify-center w-16 h-16 bg-blue-500 text-white rounded-2xl mb-4">
-            <LogIn className="w-8 h-8" />
+          <div className="inline-flex items-center justify-center w-16 h-16 bg-[#10b981] rounded-2xl mb-4 p-3">
+            <div className="relative w-full h-full">
+              <Image
+                src="/oneLibro-logo.png"
+                alt="OneLibro"
+                fill
+                className="object-contain"
+                priority
+              />
+            </div>
           </div>
-          <h1 className="text-3xl font-bold text-gray-900 mb-2">
-            Welcome to OneLedger
+          <h1 className="text-3xl font-bold text-[#e5e5e5] mb-2">
+            Welcome to OneLibro
           </h1>
-          <p className="text-gray-600">
+          <p className="text-[#a3a3a3]">
             {activeTab === 'login'
               ? 'Sign in to your account'
               : 'Create your account with an invite code'}
@@ -127,14 +136,14 @@ export default function AuthPage() {
         </div>
 
         {/* Tabs */}
-        <div className="bg-white rounded-t-2xl shadow-xl">
-          <div className="flex border-b border-gray-200">
+        <div className="bg-[#e5e5e5]/5 backdrop-blur-sm border border-[#a3a3a3]/10 rounded-t-2xl shadow-xl">
+          <div className="flex border-b border-[#a3a3a3]/10">
             <button
               onClick={() => setActiveTab('login')}
               className={`flex-1 py-4 px-6 text-center font-semibold transition-colors ${
                 activeTab === 'login'
-                  ? 'text-blue-600 border-b-2 border-blue-600'
-                  : 'text-gray-500 hover:text-gray-700'
+                  ? 'text-[#10b981] border-b-2 border-[#10b981]'
+                  : 'text-[#737373] hover:text-[#e5e5e5]'
               }`}
             >
               <LogIn className="w-5 h-5 inline mr-2" />
@@ -144,8 +153,8 @@ export default function AuthPage() {
               onClick={() => setActiveTab('signup')}
               className={`flex-1 py-4 px-6 text-center font-semibold transition-colors ${
                 activeTab === 'signup'
-                  ? 'text-blue-600 border-b-2 border-blue-600'
-                  : 'text-gray-500 hover:text-gray-700'
+                  ? 'text-[#10b981] border-b-2 border-[#10b981]'
+                  : 'text-[#737373] hover:text-[#e5e5e5]'
               }`}
             >
               <UserPlus className="w-5 h-5 inline mr-2" />
@@ -159,18 +168,18 @@ export default function AuthPage() {
               <form onSubmit={handleLogin} className="space-y-5">
                 {/* Error Message */}
                 {loginError && (
-                  <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-lg text-sm">
+                  <div className="bg-red-900/20 border border-red-800/50 text-red-300 px-4 py-3 rounded-lg text-sm backdrop-blur-sm">
                     {loginError}
                   </div>
                 )}
 
                 {/* Email Input */}
                 <div>
-                  <label htmlFor="login-email" className="block text-sm font-medium text-gray-700 mb-2">
+                  <label htmlFor="login-email" className="block text-sm font-medium text-[#e5e5e5] mb-2">
                     Email
                   </label>
                   <div className="relative">
-                    <Mail className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
+                    <Mail className="absolute left-3 top-1/2 transform -translate-y-1/2 text-[#737373] w-5 h-5" />
                     <input
                       id="login-email"
                       type="email"
@@ -179,18 +188,18 @@ export default function AuthPage() {
                       placeholder="you@example.com"
                       required
                       disabled={loginLoading}
-                      className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent disabled:bg-gray-100 disabled:cursor-not-allowed"
+                      className="w-full pl-10 pr-4 py-3 bg-[#0f0f0f] border border-[#a3a3a3]/20 text-[#e5e5e5] placeholder-[#737373] rounded-lg focus:ring-2 focus:ring-[#10b981] focus:border-transparent disabled:opacity-50 disabled:cursor-not-allowed"
                     />
                   </div>
                 </div>
 
                 {/* Password Input */}
                 <div>
-                  <label htmlFor="login-password" className="block text-sm font-medium text-gray-700 mb-2">
+                  <label htmlFor="login-password" className="block text-sm font-medium text-[#e5e5e5] mb-2">
                     Password
                   </label>
                   <div className="relative">
-                    <Lock className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
+                    <Lock className="absolute left-3 top-1/2 transform -translate-y-1/2 text-[#737373] w-5 h-5" />
                     <input
                       id="login-password"
                       type="password"
@@ -199,7 +208,7 @@ export default function AuthPage() {
                       placeholder="••••••••"
                       required
                       disabled={loginLoading}
-                      className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent disabled:bg-gray-100 disabled:cursor-not-allowed"
+                      className="w-full pl-10 pr-4 py-3 bg-[#0f0f0f] border border-[#a3a3a3]/20 text-[#e5e5e5] placeholder-[#737373] rounded-lg focus:ring-2 focus:ring-[#10b981] focus:border-transparent disabled:opacity-50 disabled:cursor-not-allowed"
                     />
                   </div>
                 </div>
@@ -208,7 +217,7 @@ export default function AuthPage() {
                 <button
                   type="submit"
                   disabled={loginLoading}
-                  className="w-full bg-blue-500 hover:bg-blue-600 text-white font-semibold py-3 px-4 rounded-lg transition-colors disabled:bg-gray-400 disabled:cursor-not-allowed flex items-center justify-center"
+                  className="w-full bg-[#10b981] hover:bg-[#10b981]/90 text-[#1a1a1a] font-semibold py-3 px-4 rounded-lg transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center"
                 >
                   {loginLoading ? (
                     <>
@@ -232,18 +241,18 @@ export default function AuthPage() {
               <form onSubmit={handleSignup} className="space-y-5">
                 {/* Error Message */}
                 {signupError && (
-                  <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-lg text-sm">
+                  <div className="bg-red-900/20 border border-red-800/50 text-red-300 px-4 py-3 rounded-lg text-sm backdrop-blur-sm">
                     {signupError}
                   </div>
                 )}
 
                 {/* Name Input */}
                 <div>
-                  <label htmlFor="signup-name" className="block text-sm font-medium text-gray-700 mb-2">
+                  <label htmlFor="signup-name" className="block text-sm font-medium text-[#e5e5e5] mb-2">
                     Full Name
                   </label>
                   <div className="relative">
-                    <User className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
+                    <User className="absolute left-3 top-1/2 transform -translate-y-1/2 text-[#737373] w-5 h-5" />
                     <input
                       id="signup-name"
                       type="text"
@@ -252,18 +261,18 @@ export default function AuthPage() {
                       placeholder="John Doe"
                       required
                       disabled={signupLoading}
-                      className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent disabled:bg-gray-100 disabled:cursor-not-allowed"
+                      className="w-full pl-10 pr-4 py-3 bg-[#0f0f0f] border border-[#a3a3a3]/20 text-[#e5e5e5] placeholder-[#737373] rounded-lg focus:ring-2 focus:ring-[#10b981] focus:border-transparent disabled:opacity-50 disabled:cursor-not-allowed"
                     />
                   </div>
                 </div>
 
                 {/* Email Input */}
                 <div>
-                  <label htmlFor="signup-email" className="block text-sm font-medium text-gray-700 mb-2">
+                  <label htmlFor="signup-email" className="block text-sm font-medium text-[#e5e5e5] mb-2">
                     Email
                   </label>
                   <div className="relative">
-                    <Mail className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
+                    <Mail className="absolute left-3 top-1/2 transform -translate-y-1/2 text-[#737373] w-5 h-5" />
                     <input
                       id="signup-email"
                       type="email"
@@ -272,18 +281,18 @@ export default function AuthPage() {
                       placeholder="you@example.com"
                       required
                       disabled={signupLoading}
-                      className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent disabled:bg-gray-100 disabled:cursor-not-allowed"
+                      className="w-full pl-10 pr-4 py-3 bg-[#0f0f0f] border border-[#a3a3a3]/20 text-[#e5e5e5] placeholder-[#737373] rounded-lg focus:ring-2 focus:ring-[#10b981] focus:border-transparent disabled:opacity-50 disabled:cursor-not-allowed"
                     />
                   </div>
                 </div>
 
                 {/* Password Input */}
                 <div>
-                  <label htmlFor="signup-password" className="block text-sm font-medium text-gray-700 mb-2">
+                  <label htmlFor="signup-password" className="block text-sm font-medium text-[#e5e5e5] mb-2">
                     Password
                   </label>
                   <div className="relative">
-                    <Lock className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
+                    <Lock className="absolute left-3 top-1/2 transform -translate-y-1/2 text-[#737373] w-5 h-5" />
                     <input
                       id="signup-password"
                       type="password"
@@ -293,21 +302,21 @@ export default function AuthPage() {
                       required
                       disabled={signupLoading}
                       minLength={6}
-                      className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent disabled:bg-gray-100 disabled:cursor-not-allowed"
+                      className="w-full pl-10 pr-4 py-3 bg-[#0f0f0f] border border-[#a3a3a3]/20 text-[#e5e5e5] placeholder-[#737373] rounded-lg focus:ring-2 focus:ring-[#10b981] focus:border-transparent disabled:opacity-50 disabled:cursor-not-allowed"
                     />
                   </div>
-                  <p className="mt-1 text-xs text-gray-500">
+                  <p className="mt-1 text-xs text-[#737373]">
                     At least 6 characters
                   </p>
                 </div>
 
                 {/* Invite Code Input */}
                 <div>
-                  <label htmlFor="signup-inviteCode" className="block text-sm font-medium text-gray-700 mb-2">
+                  <label htmlFor="signup-inviteCode" className="block text-sm font-medium text-[#e5e5e5] mb-2">
                     Invite Code
                   </label>
                   <div className="relative">
-                    <Ticket className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
+                    <Ticket className="absolute left-3 top-1/2 transform -translate-y-1/2 text-[#737373] w-5 h-5" />
                     <input
                       id="signup-inviteCode"
                       type="text"
@@ -316,11 +325,11 @@ export default function AuthPage() {
                       placeholder="TEST-2025"
                       required
                       disabled={signupLoading}
-                      className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent disabled:bg-gray-100 disabled:cursor-not-allowed uppercase font-mono"
+                      className="w-full pl-10 pr-4 py-3 bg-[#0f0f0f] border border-[#a3a3a3]/20 text-[#e5e5e5] placeholder-[#737373] rounded-lg focus:ring-2 focus:ring-[#10b981] focus:border-transparent disabled:opacity-50 disabled:cursor-not-allowed uppercase font-mono"
                     />
                   </div>
-                  <p className="mt-1 text-xs text-gray-500">
-                    Received from OneLedger admin
+                  <p className="mt-1 text-xs text-[#737373]">
+                    Received from OneLibro admin
                   </p>
                 </div>
 
@@ -328,7 +337,7 @@ export default function AuthPage() {
                 <button
                   type="submit"
                   disabled={signupLoading}
-                  className="w-full bg-blue-500 hover:bg-blue-600 text-white font-semibold py-3 px-4 rounded-lg transition-colors disabled:bg-gray-400 disabled:cursor-not-allowed flex items-center justify-center"
+                  className="w-full bg-[#10b981] hover:bg-[#10b981]/90 text-[#1a1a1a] font-semibold py-3 px-4 rounded-lg transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center"
                 >
                   {signupLoading ? (
                     <>
@@ -345,7 +354,7 @@ export default function AuthPage() {
 
                 {/* Success Message */}
                 {signupSuccess && (
-                  <div className="bg-green-50 border border-green-200 text-green-700 px-4 py-3 rounded-lg text-sm">
+                  <div className="bg-green-900/20 border border-green-800/50 text-green-300 px-4 py-3 rounded-lg text-sm backdrop-blur-sm">
                     <p className="font-semibold">Account created successfully!</p>
                     <p className="text-xs mt-1">
                       Please check your email to confirm your account, then use the Login tab above.
@@ -358,14 +367,14 @@ export default function AuthPage() {
         </div>
 
         {/* Info Box */}
-        <div className="mt-6 bg-blue-50 border border-blue-200 rounded-lg p-4">
-          <p className="text-sm text-blue-800 font-semibold mb-1">
+        <div className="mt-6 bg-[#10b981]/10 border border-[#10b981]/30 rounded-lg p-4 backdrop-blur-sm">
+          <p className="text-sm text-[#10b981] font-semibold mb-1">
             💡 {activeTab === 'login' ? 'First time here?' : 'Need an invite code?'}
           </p>
-          <p className="text-xs text-blue-700">
+          <p className="text-xs text-[#a3a3a3]">
             {activeTab === 'login'
               ? 'Click the "Sign Up" tab above to create an account with an invite code.'
-              : 'Invite codes are provided by OneLedger administrators. Contact support if you need one.'}
+              : 'Invite codes are provided by OneLibro administrators. Contact support if you need one.'}
           </p>
         </div>
       </div>

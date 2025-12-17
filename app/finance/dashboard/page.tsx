@@ -1,8 +1,9 @@
+/* eslint-disable react/no-unescaped-entities */
 'use client';
 
 /**
- * Finance Dashboard Page
- * Main landing page showing financial overview
+ * Finance Dashboard Page - OneLibro
+ * Dark sophisticated theme with premium design
  * Displays balance, spending, and recent activity
  */
 
@@ -22,6 +23,8 @@ import {
   Building2,
   AlertCircle,
   Target,
+  TrendingUp,
+  ArrowRight,
 } from 'lucide-react';
 import { formatCurrency } from '@/lib/supabase';
 
@@ -135,24 +138,35 @@ export default function FinanceDashboard() {
   return (
     <ProtectedRoute>
       {/* Main Content */}
-      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+      <main className="min-h-screen bg-[#1a1a1a] px-4 sm:px-6 lg:px-8 py-8">
+        <div className="max-w-7xl mx-auto">
+          {/* Welcome Header */}
+          <div className="mb-8">
+            <h1 className="text-3xl lg:text-4xl font-bold text-[#e5e5e5] mb-2">
+              Dashboard
+            </h1>
+            <p className="text-[#a3a3a3]">
+              Welcome back, {user?.user_metadata?.name || 'User'}
+            </p>
+          </div>
+
           {/* Error State */}
           {error && (
-            <div className="mb-6 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-lg p-4 flex items-start">
-              <AlertCircle className="w-5 h-5 text-red-500 dark:text-red-400 mr-3 flex-shrink-0 mt-0.5" />
+            <div className="mb-6 bg-red-900/20 backdrop-blur-sm border border-red-800/50 rounded-xl p-5 flex items-start">
+              <AlertCircle className="w-5 h-5 text-red-400 mr-3 flex-shrink-0 mt-0.5" />
               <div>
-                <h3 className="text-sm font-medium text-red-800 dark:text-red-300">Error</h3>
-                <p className="text-sm text-red-700 dark:text-red-400 mt-1">
-                  Failed to load dashboard data. Please refresh the page.
+                <h3 className="text-sm font-semibold text-red-300 mb-1">Error Loading Dashboard</h3>
+                <p className="text-sm text-red-400/90">
+                  Failed to load dashboard data. Please try again.
                 </p>
                 <button
                   onClick={() => {
                     refreshAccounts();
                     refreshTransactions();
                   }}
-                  className="mt-2 text-sm text-red-800 dark:text-red-300 underline hover:no-underline"
+                  className="mt-3 px-4 py-2 bg-red-800/30 hover:bg-red-800/50 text-red-300 text-sm font-medium rounded-lg transition-colors"
                 >
-                  Try again
+                  Retry
                 </button>
               </div>
             </div>
@@ -166,123 +180,205 @@ export default function FinanceDashboard() {
             <>
               {/* Empty State - No Accounts */}
               {accounts.length === 0 && (
-                <div className="bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-gray-200 dark:border-gray-700 p-12 text-center">
-                  <Building2 className="w-16 h-16 text-gray-400 dark:text-gray-500 mx-auto mb-4" />
-                  <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-2">
-                    Welcome to OneLibro!
-                  </h3>
-                  <p className="text-gray-600 dark:text-gray-300 mb-6 max-w-md mx-auto">
-                    Connect your bank account to start tracking your finances.
-                    Your data is secure and encrypted.
-                  </p>
-                  <PlaidLink
-                    onSuccess={handleBankConnected}
-                    buttonText="Connect Your First Bank Account"
-                    variant="primary"
-                  />
+                <div className="relative overflow-hidden">
+                  {/* Background Gradient */}
+                  <div className="absolute inset-0 bg-gradient-to-br from-[#10b981]/10 via-transparent to-[#a3a3a3]/5 rounded-2xl" />
+
+                  {/* Content */}
+                  <div className="relative bg-[#e5e5e5]/5 backdrop-blur-sm border border-[#a3a3a3]/10 rounded-2xl p-12 text-center">
+                    <div class="w-20 h-20 rounded-2xl bg-[#10b981]/15 flex items-center justify-center mx-auto mb-6">
+                      <Building2 className="w-10 h-10 text-[#10b981]" strokeWidth={1.5} />
+                    </div>
+                    <h3 className="text-2xl font-bold text-[#e5e5e5] mb-3">
+                      Welcome to OneLibro!
+                    </h3>
+                    <p className="text-[#a3a3a3] mb-8 max-w-md mx-auto leading-relaxed">
+                      Connect your bank account to start tracking your finances.
+                      Your data is secure and encrypted end-to-end.
+                    </p>
+                    <PlaidLink
+                      onSuccess={handleBankConnected}
+                      buttonText="Connect Your First Bank Account"
+                      variant="primary"
+                    />
+                  </div>
                 </div>
               )}
 
               {/* Dashboard with Data */}
               {accounts.length > 0 && (
-                <div className="space-y-6">
-                  {/* Stats Cards */}
+                <div className="space-y-8">
+                  {/* Stats Cards Row */}
                   <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                    {/* Total Balance */}
-                    <DashboardCard
-                      title="Total Balance"
-                      value={formatCurrency(totalBalance)}
-                      icon={<DollarSign className="w-6 h-6" />}
-                      subtitle="Across all accounts"
-                      variant="default"
-                    />
+                    {/* Total Balance Card */}
+                    <div className="relative overflow-hidden group">
+                      <div className="absolute inset-0 bg-gradient-to-br from-[#10b981]/10 to-transparent rounded-xl" />
+                      <div className="relative bg-[#e5e5e5]/5 backdrop-blur-sm border border-[#a3a3a3]/10 hover:border-[#10b981]/40 rounded-xl p-6 transition-all">
+                        <div className="flex items-start justify-between mb-4">
+                          <div className="w-12 h-12 rounded-xl bg-[#10b981]/15 flex items-center justify-center">
+                            <DollarSign className="w-6 h-6 text-[#10b981]" strokeWidth={2} />
+                          </div>
+                          <div className="text-right">
+                            <div className="text-xs font-medium text-[#a3a3a3] uppercase tracking-wider mb-1">
+                              Total Balance
+                            </div>
+                            <div className="text-2xl lg:text-3xl font-bold text-[#e5e5e5]">
+                              {formatCurrency(totalBalance)}
+                            </div>
+                          </div>
+                        </div>
+                        <div className="flex items-center text-sm text-[#737373]">
+                          <TrendingUp className="w-4 h-4 mr-1.5 text-[#10b981]" strokeWidth={2} />
+                          Across all accounts
+                        </div>
+                      </div>
+                    </div>
 
-                    {/* Monthly Spending */}
-                    <DashboardCard
-                      title="Monthly Spending"
-                      value={formatCurrency(monthlySpending)}
-                      icon={<TrendingDown className="w-6 h-6" />}
-                      subtitle="Last 30 days"
-                      variant="warning"
-                    />
+                    {/* Monthly Spending Card */}
+                    <div className="relative overflow-hidden group">
+                      <div className="absolute inset-0 bg-gradient-to-br from-[#10b981]/10 to-transparent rounded-xl" />
+                      <div className="relative bg-[#e5e5e5]/5 backdrop-blur-sm border border-[#a3a3a3]/10 hover:border-[#10b981]/40 rounded-xl p-6 transition-all">
+                        <div className="flex items-start justify-between mb-4">
+                          <div className="w-12 h-12 rounded-xl bg-[#10b981]/15 flex items-center justify-center">
+                            <TrendingDown className="w-6 h-6 text-[#10b981]" strokeWidth={2} />
+                          </div>
+                          <div className="text-right">
+                            <div className="text-xs font-medium text-[#a3a3a3] uppercase tracking-wider mb-1">
+                              Monthly Spending
+                            </div>
+                            <div className="text-2xl lg:text-3xl font-bold text-[#e5e5e5]">
+                              {formatCurrency(monthlySpending)}
+                            </div>
+                          </div>
+                        </div>
+                        <div className="flex items-center text-sm text-[#737373]">
+                          <TrendingDown className="w-4 h-4 mr-1.5 text-[#10b981]" strokeWidth={2} />
+                          Last 30 days
+                        </div>
+                      </div>
+                    </div>
 
-                    {/* Connected Accounts */}
-                    <DashboardCard
-                      title="Connected Accounts"
-                      value={accounts.length}
-                      icon={<Building2 className="w-6 h-6" />}
-                      subtitle={`${accounts.length} ${
-                        accounts.length === 1 ? 'bank' : 'banks'
-                      } linked`}
-                      variant="success"
-                    />
+                    {/* Connected Accounts Card */}
+                    <div className="relative overflow-hidden group">
+                      <div className="absolute inset-0 bg-gradient-to-br from-[#10b981]/10 to-transparent rounded-xl" />
+                      <div className="relative bg-[#e5e5e5]/5 backdrop-blur-sm border border-[#a3a3a3]/10 hover:border-[#10b981]/40 rounded-xl p-6 transition-all">
+                        <div className="flex items-start justify-between mb-4">
+                          <div className="w-12 h-12 rounded-xl bg-[#10b981]/15 flex items-center justify-center">
+                            <Building2 className="w-6 h-6 text-[#10b981]" strokeWidth={2} />
+                          </div>
+                          <div className="text-right">
+                            <div className="text-xs font-medium text-[#a3a3a3] uppercase tracking-wider mb-1">
+                              Connected Accounts
+                            </div>
+                            <div className="text-2xl lg:text-3xl font-bold text-[#e5e5e5]">
+                              {accounts.length}
+                            </div>
+                          </div>
+                        </div>
+                        <div className="text-sm text-[#737373]">
+                          {accounts.length} {accounts.length === 1 ? 'bank' : 'banks'} linked
+                        </div>
+                      </div>
+                    </div>
                   </div>
 
                   {/* Spending Chart */}
-                  <SpendingChart
-                    data={chartData}
-                    title="Spending Over Time (Last 30 Days)"
-                    loading={false}
-                  />
+                  <div className="relative overflow-hidden">
+                    <div className="absolute inset-0 bg-gradient-to-br from-[#10b981]/5 to-transparent rounded-xl" />
+                    <div className="relative bg-[#e5e5e5]/5 backdrop-blur-sm border border-[#a3a3a3]/10 rounded-xl p-6">
+                      <SpendingChart
+                        data={chartData}
+                        title="Spending Over Time (Last 30 Days)"
+                        loading={false}
+                      />
+                    </div>
+                  </div>
 
                   {/* Recent Transactions */}
-                  <RecentTransactions
-                    transactions={transactions}
-                    loading={false}
-                    onViewAll={handleViewAllTransactions}
-                    limit={10}
-                  />
+                  <div className="relative overflow-hidden">
+                    <div className="absolute inset-0 bg-gradient-to-br from-[#10b981]/5 to-transparent rounded-xl" />
+                    <div className="relative bg-[#e5e5e5]/5 backdrop-blur-sm border border-[#a3a3a3]/10 rounded-xl p-6">
+                      <RecentTransactions
+                        transactions={transactions}
+                        loading={false}
+                        onViewAll={handleViewAllTransactions}
+                        limit={10}
+                      />
+                    </div>
+                  </div>
 
                   {/* Quick Actions */}
-                  <div className="bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-gray-200 dark:border-gray-700 p-6">
-                    <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">
-                      Quick Actions
-                    </h3>
-                    <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                      <button
-                        onClick={() => router.push('/finance/accounts')}
-                        className="p-4 border border-gray-200 dark:border-gray-600 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors text-left"
-                      >
-                        <Building2 className="w-6 h-6 text-blue-600 dark:text-blue-400 mb-2" />
-                        <p className="font-medium text-gray-900 dark:text-white">
-                          View All Accounts
-                        </p>
-                        <p className="text-sm text-gray-600 dark:text-gray-300 mt-1">
-                          Manage your connected banks
-                        </p>
-                      </button>
+                  <div className="relative overflow-hidden">
+                    <div className="absolute inset-0 bg-gradient-to-br from-[#a3a3a3]/5 to-transparent rounded-xl" />
+                    <div className="relative bg-[#e5e5e5]/5 backdrop-blur-sm border border-[#a3a3a3]/10 rounded-xl p-6">
+                      <h3 className="text-xl font-bold text-[#e5e5e5] mb-6">
+                        Quick Actions
+                      </h3>
+                      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                        {/* View Accounts */}
+                        <button
+                          onClick={() => router.push('/finance/accounts')}
+                          className="group relative overflow-hidden p-5 bg-[#e5e5e5]/5 border border-[#a3a3a3]/10 hover:border-[#10b981]/40 rounded-xl transition-all text-left"
+                        >
+                          <div className="flex items-start justify-between mb-3">
+                            <div className="w-10 h-10 rounded-lg bg-[#10b981]/15 flex items-center justify-center">
+                              <Building2 className="w-5 h-5 text-[#10b981]" strokeWidth={2} />
+                            </div>
+                            <ArrowRight className="w-5 h-5 text-[#a3a3a3] group-hover:text-[#10b981] group-hover:translate-x-1 transition-all" strokeWidth={2} />
+                          </div>
+                          <p className="font-semibold text-[#e5e5e5] mb-1">
+                            View All Accounts
+                          </p>
+                          <p className="text-sm text-[#737373]">
+                            Manage your connected banks
+                          </p>
+                        </button>
 
-                      <button
-                        onClick={() => router.push('/finance/transactions')}
-                        className="p-4 border border-gray-200 dark:border-gray-600 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors text-left"
-                      >
-                        <TrendingDown className="w-6 h-6 text-purple-600 dark:text-purple-400 mb-2" />
-                        <p className="font-medium text-gray-900 dark:text-white">
-                          View All Transactions
-                        </p>
-                        <p className="text-sm text-gray-600 dark:text-gray-300 mt-1">
-                          Browse and filter transactions
-                        </p>
-                      </button>
+                        {/* View Transactions */}
+                        <button
+                          onClick={() => router.push('/finance/transactions')}
+                          className="group relative overflow-hidden p-5 bg-[#e5e5e5]/5 border border-[#a3a3a3]/10 hover:border-[#10b981]/40 rounded-xl transition-all text-left"
+                        >
+                          <div className="flex items-start justify-between mb-3">
+                            <div className="w-10 h-10 rounded-lg bg-[#10b981]/15 flex items-center justify-center">
+                              <TrendingDown className="w-5 h-5 text-[#10b981]" strokeWidth={2} />
+                            </div>
+                            <ArrowRight className="w-5 h-5 text-[#a3a3a3] group-hover:text-[#10b981] group-hover:translate-x-1 transition-all" strokeWidth={2} />
+                          </div>
+                          <p className="font-semibold text-[#e5e5e5] mb-1">
+                            View All Transactions
+                          </p>
+                          <p className="text-sm text-[#737373]">
+                            Browse and filter transactions
+                          </p>
+                        </button>
 
-                      <button
-                        onClick={() => router.push('/finance/budgets')}
-                        className="p-4 border border-gray-200 dark:border-gray-600 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors text-left"
-                      >
-                        <Target className="w-6 h-6 text-green-600 dark:text-green-400 mb-2" />
-                        <p className="font-medium text-gray-900 dark:text-white">
-                          Manage Budgets
-                        </p>
-                        <p className="text-sm text-gray-600 dark:text-gray-300 mt-1">
-                          Set and track spending goals
-                        </p>
-                      </button>
+                        {/* Manage Budgets */}
+                        <button
+                          onClick={() => router.push('/finance/budgets')}
+                          className="group relative overflow-hidden p-5 bg-[#e5e5e5]/5 border border-[#a3a3a3]/10 hover:border-[#10b981]/40 rounded-xl transition-all text-left"
+                        >
+                          <div className="flex items-start justify-between mb-3">
+                            <div className="w-10 h-10 rounded-lg bg-[#10b981]/15 flex items-center justify-center">
+                              <Target className="w-5 h-5 text-[#10b981]" strokeWidth={2} />
+                            </div>
+                            <ArrowRight className="w-5 h-5 text-[#a3a3a3] group-hover:text-[#10b981] group-hover:translate-x-1 transition-all" strokeWidth={2} />
+                          </div>
+                          <p className="font-semibold text-[#e5e5e5] mb-1">
+                            Manage Budgets
+                          </p>
+                          <p className="text-sm text-[#737373]">
+                            Set and track spending goals
+                          </p>
+                        </button>
+                      </div>
                     </div>
                   </div>
                 </div>
               )}
             </>
           )}
+        </div>
       </main>
     </ProtectedRoute>
   );

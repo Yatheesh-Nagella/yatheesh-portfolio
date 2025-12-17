@@ -180,8 +180,8 @@ export default function PlaidLink({
   // Button styles based on variant
   const buttonClasses =
     variant === 'primary'
-      ? 'bg-blue-500 hover:bg-blue-600 text-white'
-      : 'bg-white hover:bg-gray-50 text-gray-900 border border-gray-300';
+      ? 'bg-[#10b981] hover:bg-[#10b981]/90 text-[#1a1a1a]'
+      : 'bg-[#e5e5e5]/5 hover:bg-[#e5e5e5]/10 text-[#e5e5e5] border border-[#a3a3a3]/20';
 
   return (
     <div>
@@ -190,21 +190,20 @@ export default function PlaidLink({
         disabled={loading || !user}
         className={`
           ${buttonClasses}
-          px-6 py-3 rounded-lg font-semibold
-          flex items-center justify-center
-          transition-all duration-200
+          px-4 py-2 rounded-lg font-medium text-sm
+          inline-flex items-center gap-2
+          transition-all
           disabled:opacity-50 disabled:cursor-not-allowed
-          shadow-sm hover:shadow-md
         `}
       >
         {loading ? (
           <>
-            <Loader2 className="w-5 h-5 animate-spin mr-2" />
+            <Loader2 className="w-4 h-4 animate-spin" strokeWidth={2} />
             Connecting...
           </>
         ) : (
           <>
-            <LinkIcon className="w-5 h-5 mr-2" />
+            <LinkIcon className="w-4 h-4" strokeWidth={2} />
             {buttonText}
           </>
         )}
@@ -212,9 +211,9 @@ export default function PlaidLink({
 
       {/* Error Message */}
       {error && (
-        <div className="mt-3 bg-red-50 border border-red-200 rounded-lg p-3 flex items-start">
-          <AlertCircle className="w-5 h-5 text-red-500 mr-2 flex-shrink-0 mt-0.5" />
-          <p className="text-sm text-red-700">{error}</p>
+        <div className="mt-3 bg-red-900/20 border border-red-800/50 rounded-lg p-3 flex items-start backdrop-blur-sm">
+          <AlertCircle className="w-5 h-5 text-red-400 mr-2 flex-shrink-0 mt-0.5" strokeWidth={2} />
+          <p className="text-sm text-red-300">{error}</p>
         </div>
       )}
     </div>

@@ -1,8 +1,18 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  /* Dark Theme - OneLibro Color Palette - Soft Charcoal */
+  --background: #1a1a1a;
+  --foreground: #e5e5e5;
+
+  /* Brand Colors */
+  --color-dark-primary: #1a1a1a;
+  --color-charcoal-dark: #0f0f0f;
+  --color-emerald: #10b981;
+  --color-text-primary: #e5e5e5;
+  --color-text-secondary: #a3a3a3;
+  --color-text-tertiary: #737373;
+  --color-light-cream: #E8EBD8;
 }
 
 @theme inline {
@@ -10,43 +20,43 @@
   --color-background: var(--background);
   --color-foreground: var(--foreground);
 
-  /* Primary Brand Colors (Sky Blue) */
-  --color-primary-50: #f0f9ff;
-  --color-primary-100: #e0f2fe;
-  --color-primary-200: #bae6fd;
-  --color-primary-300: #7dd3fc;
-  --color-primary-400: #38bdf8;
-  --color-primary-500: #0ea5e9;
-  --color-primary-600: #0284c7;
-  --color-primary-700: #0369a1;
-  --color-primary-800: #075985;
-  --color-primary-900: #0c4a6e;
+  /* Primary Brand Colors (Sage Green) */
+  --color-primary-50: #f4f6f2;
+  --color-primary-100: #e8ebe4;
+  --color-primary-200: #d1d7c9;
+  --color-primary-300: #a8b89a;
+  --color-primary-400: #7d9a6b;
+  --color-primary-500: #4C6B56;
+  --color-primary-600: #3d5645;
+  --color-primary-700: #2f4236;
+  --color-primary-800: #263527;
+  --color-primary-900: #1a251a;
 
-  /* Accent Colors (Purple) */
-  --color-accent-50: #faf5ff;
-  --color-accent-100: #f3e8ff;
-  --color-accent-200: #e9d5ff;
-  --color-accent-300: #d8b4fe;
-  --color-accent-400: #c084fc;
-  --color-accent-500: #a855f7;
-  --color-accent-600: #9333ea;
-  --color-accent-700: #7e22ce;
-  --color-accent-800: #6b21a8;
-  --color-accent-900: #581c87;
+  /* Accent Colors (Navy Blue) */
+  --color-accent-50: #e6ebf4;
+  --color-accent-100: #ccd6e8;
+  --color-accent-200: #99add1;
+  --color-accent-300: #6684ba;
+  --color-accent-400: #335ba3;
+  --color-accent-500: #02224F;
+  --color-accent-600: #021b3f;
+  --color-accent-700: #01142f;
+  --color-accent-800: #010e20;
+  --color-accent-900: #010710;
 
-  /* Success Colors (Green) */
-  --color-success-50: #f0fdf4;
-  --color-success-100: #dcfce7;
-  --color-success-200: #bbf7d0;
-  --color-success-300: #86efac;
-  --color-success-400: #4ade80;
-  --color-success-500: #22c55e;
-  --color-success-600: #16a34a;
-  --color-success-700: #15803d;
-  --color-success-800: #166534;
-  --color-success-900: #14532d;
+  /* Success Colors (Sage variants) */
+  --color-success-50: #f4f6f2;
+  --color-success-100: #e8ebe4;
+  --color-success-200: #d1d7c9;
+  --color-success-300: #a8b89a;
+  --color-success-400: #7d9a6b;
+  --color-success-500: #4C6B56;
+  --color-success-600: #3d5645;
+  --color-success-700: #2f4236;
+  --color-success-800: #263527;
+  --color-success-900: #1a251a;
 
-  /* Error Colors (Red) */
+  /* Error Colors (Muted Red) */
   --color-error-50: #fef2f2;
   --color-error-100: #fee2e2;
   --color-error-200: #fecaca;
@@ -58,17 +68,17 @@
   --color-error-800: #991b1b;
   --color-error-900: #7f1d1d;
 
-  /* Warning Colors (Amber) */
-  --color-warning-50: #fffbeb;
-  --color-warning-100: #fef3c7;
-  --color-warning-200: #fde68a;
-  --color-warning-300: #fcd34d;
-  --color-warning-400: #fbbf24;
-  --color-warning-500: #f59e0b;
-  --color-warning-600: #d97706;
-  --color-warning-700: #b45309;
-  --color-warning-800: #92400e;
-  --color-warning-900: #78350f;
+  /* Warning Colors (Cream/Beige) */
+  --color-warning-50: #fdfcf8;
+  --color-warning-100: #faf8f1;
+  --color-warning-200: #f5f1e3;
+  --color-warning-300: #E8EBD8;
+  --color-warning-400: #D0D6B5;
+  --color-warning-500: #b8be9c;
+  --color-warning-600: #9fa583;
+  --color-warning-700: #868d6a;
+  --color-warning-800: #6d7451;
+  --color-warning-900: #545b38;
 
   /* Fonts */
   --font-sans: var(--font-geist-sans);
@@ -117,7 +127,10 @@
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-sans), system-ui, -apple-system, sans-serif;
+  font-feature-settings: "kern" 1, "liga" 1;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 /* Resume Modal Animations */

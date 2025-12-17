@@ -1,14 +1,10 @@
+/* eslint-disable react/no-unescaped-entities */
 'use client';
 
 /**
- * SpendingChart Component
+ * SpendingChart Component - OneLibro
+ * Dark sophisticated theme with premium design
  * Displays spending over time using a line chart
- * 
- * Usage:
- * <SpendingChart
- *   data={dailySpending}
- *   title="Last 30 Days"
- * />
  */
 
 import React from 'react';
@@ -54,12 +50,13 @@ export default function SpendingChart({
   const CustomTooltip = ({ active, payload }: CustomTooltipProps) => {
     if (active && payload && payload.length) {
       return (
-        <div className="bg-white dark:bg-gray-800 px-4 py-2 rounded-lg shadow-lg border border-gray-200 dark:border-gray-700">
-          <p className="text-sm font-semibold text-gray-900 dark:text-white">
+        <div className="bg-[#1a1a1a]/95 backdrop-blur-sm px-4 py-3 rounded-xl border border-[#10b981]/40 shadow-xl">
+          <p className="text-sm font-semibold text-[#e5e5e5] mb-1">
             {payload[0].payload.date}
           </p>
-          <p className="text-sm text-gray-600 dark:text-gray-300">
-            Spent: <span className="font-bold text-blue-600 dark:text-blue-400">
+          <p className="text-xs text-[#a3a3a3]">
+            Spent:{' '}
+            <span className="font-bold text-[#10b981]">
               {formatCurrency(payload[0].value)}
             </span>
           </p>
@@ -72,9 +69,9 @@ export default function SpendingChart({
   // Loading state
   if (loading) {
     return (
-      <div className="bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-gray-200 dark:border-gray-700 p-6">
-        <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">{title}</h3>
-        <div className="h-64 bg-gray-100 dark:bg-gray-700 rounded animate-pulse"></div>
+      <div>
+        <h3 className="text-xl font-bold text-[#e5e5e5] mb-6">{title}</h3>
+        <div className="h-72 bg-[#e5e5e5]/5 rounded-xl animate-pulse"></div>
       </div>
     );
   }
@@ -82,12 +79,17 @@ export default function SpendingChart({
   // Empty state
   if (!data || data.length === 0) {
     return (
-      <div className="bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-gray-200 dark:border-gray-700 p-6">
-        <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">{title}</h3>
-        <div className="h-64 flex items-center justify-center text-gray-500 dark:text-gray-400">
+      <div>
+        <h3 className="text-xl font-bold text-[#e5e5e5] mb-6">{title}</h3>
+        <div className="h-72 flex items-center justify-center rounded-xl bg-[#e5e5e5]/5 border border-[#a3a3a3]/10">
           <div className="text-center">
-            <p className="text-sm">No spending data available</p>
-            <p className="text-xs mt-1">Connect a bank account to see your spending</p>
+            <div className="w-16 h-16 rounded-full bg-[#10b981]/15 flex items-center justify-center mx-auto mb-4">
+              <span className="text-3xl">📊</span>
+            </div>
+            <p className="text-sm text-[#737373] mb-1">No spending data available</p>
+            <p className="text-xs text-[#737373]/70">
+              Connect a bank account to see your spending
+            </p>
           </div>
         </div>
       </div>
@@ -95,35 +97,56 @@ export default function SpendingChart({
   }
 
   return (
-    <div className="bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-gray-200 dark:border-gray-700 p-6">
-      <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">{title}</h3>
-      
-      <ResponsiveContainer width="100%" height={300}>
-        <LineChart data={data} margin={{ top: 5, right: 5, left: 5, bottom: 5 }}>
-          <CartesianGrid strokeDasharray="3 3" stroke="#f0f0f0" />
-          <XAxis
-            dataKey="date"
-            stroke="#9ca3af"
-            fontSize={12}
-            tickLine={false}
-          />
-          <YAxis
-            stroke="#9ca3af"
-            fontSize={12}
-            tickLine={false}
-            tickFormatter={(value) => `$${(value / 100).toFixed(0)}`}
-          />
-          <Tooltip content={<CustomTooltip />} />
-          <Line
-            type="monotone"
-            dataKey="amount"
-            stroke="#3b82f6"
-            strokeWidth={2}
-            dot={{ fill: '#3b82f6', r: 4 }}
-            activeDot={{ r: 6 }}
-          />
-        </LineChart>
-      </ResponsiveContainer>
+    <div>
+      <h3 className="text-xl font-bold text-[#e5e5e5] mb-6">{title}</h3>
+
+      <div className="bg-[#0f0f0f] rounded-xl p-4 border border-[#a3a3a3]/10">
+        <ResponsiveContainer width="100%" height={300}>
+          <LineChart data={data} margin={{ top: 10, right: 10, left: 0, bottom: 5 }}>
+            <CartesianGrid
+              strokeDasharray="3 3"
+              stroke="#a3a3a3"
+              strokeOpacity={0.1}
+              vertical={false}
+            />
+            <XAxis
+              dataKey="date"
+              stroke="#a3a3a3"
+              strokeOpacity={0.5}
+              fontSize={11}
+              tickLine={false}
+              tick={{ fill: '#a3a3a3', opacity: 0.6 }}
+            />
+            <YAxis
+              stroke="#a3a3a3"
+              strokeOpacity={0.5}
+              fontSize={11}
+              tickLine={false}
+              tick={{ fill: '#a3a3a3', opacity: 0.6 }}
+              tickFormatter={(value) => `$${(value / 100).toFixed(0)}`}
+            />
+            <Tooltip content={<CustomTooltip />} cursor={{ stroke: '#10b981', strokeWidth: 1, strokeDasharray: '3 3' }} />
+            <Line
+              type="monotone"
+              dataKey="amount"
+              stroke="#10b981"
+              strokeWidth={3}
+              dot={{
+                fill: '#10b981',
+                r: 5,
+                strokeWidth: 2,
+                stroke: '#0f0f0f'
+              }}
+              activeDot={{
+                r: 7,
+                fill: '#10b981',
+                strokeWidth: 2,
+                stroke: '#e5e5e5'
+              }}
+            />
+          </LineChart>
+        </ResponsiveContainer>
+      </div>
     </div>
   );
 }

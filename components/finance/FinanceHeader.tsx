@@ -1,9 +1,10 @@
+/* eslint-disable react/no-unescaped-entities */
 'use client';
 
 /**
- * Finance Header Component
+ * Finance Header Component - OneLibro
+ * Dark sophisticated theme with premium design
  * Persistent header/navigation for all finance pages
- * Stays mounted during navigation (no re-render)
  */
 
 import React, { useState, useTransition } from 'react';
@@ -12,7 +13,7 @@ import Image from 'next/image';
 import { useRouter, usePathname } from 'next/navigation';
 import { useAuth } from '@/contexts/AuthContext';
 import PlaidLink from '@/components/finance/PlaidLink';
-import { Loader2 } from 'lucide-react';
+import { Loader2, LogOut, Menu, X } from 'lucide-react';
 
 interface FinanceHeaderProps {
   onBankConnected?: () => void;
@@ -22,6 +23,7 @@ export default function FinanceHeader({ onBankConnected }: FinanceHeaderProps) {
   const { user, signOut } = useAuth();
   const router = useRouter();
   const pathname = usePathname();
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   // Track navigation loading state
   const [isPending, startTransition] = useTransition();
@@ -61,121 +63,79 @@ export default function FinanceHeader({ onBankConnected }: FinanceHeaderProps) {
     }
   };
 
+  /**
+   * Navigation links
+   */
+  const navLinks = [
+    { href: '/finance/dashboard', label: 'Dashboard' },
+    { href: '/finance/accounts', label: 'Accounts' },
+    { href: '/finance/transactions', label: 'Transactions' },
+    { href: '/finance/budgets', label: 'Budgets' },
+    { href: '/finance/settings', label: 'Settings' },
+  ];
+
+  /**
+   * Handle navigation with loading state
+   */
+  const handleNavigation = (e: React.MouseEvent, path: string) => {
+    e.preventDefault();
+    if (!isActive(path) && !isPending) {
+      setPendingPath(path);
+      startTransition(() => {
+        router.push(path);
+        setMobileMenuOpen(false);
+      });
+    }
+  };
+
   return (
-    <header className="bg-white border-b border-gray-200 sticky top-0 z-10">
+    <header className="bg-[#1a1a1a]/95 backdrop-blur-sm border-b border-[#a3a3a3]/10 sticky top-0 z-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
           {/* Logo / Title */}
           <div className="flex items-center space-x-3">
-            <Image
-              src="/oneLibro-logo.png"
-              alt="OneLibro"
-              width={32}
-              height={32}
-              className="w-8 h-8"
-              priority
-            />
+            <div className="w-8 h-8 relative">
+              <Image
+                src="/oneLibro-logo.png"
+                alt="OneLibro"
+                fill
+                className="object-contain"
+                priority
+              />
+            </div>
             <div>
-              <h1 className="text-xl font-bold text-gray-900">OneLibro</h1>
-              <p className="text-xs text-gray-600">
-                Welcome, {user?.full_name || 'User'}
+              <h1 className="text-lg font-bold text-[#e5e5e5]">OneLibro</h1>
+              <p className="text-xs text-[#a3a3a3]">
+                Welcome, {user?.user_metadata?.name || user?.full_name || 'User'}
               </p>
             </div>
           </div>
 
           {/* Desktop Navigation */}
-          <div className="hidden md:flex items-center space-x-4">
-            <Link
-              href="/finance/dashboard"
-              onClick={(e) => {
-                e.preventDefault();
-                if (!isActive('/finance/dashboard') && !isPending) {
-                  setPendingPath('/finance/dashboard');
-                  startTransition(() => router.push('/finance/dashboard'));
-                }
-              }}
-              className={`inline-flex items-center gap-1 text-sm font-medium ${
-                isActive('/finance/dashboard')
-                  ? 'text-blue-600'
-                  : 'text-gray-600 hover:text-gray-900'
-              } ${isLoading('/finance/dashboard') ? 'opacity-50 cursor-wait' : ''}`}
-            >
-              Dashboard
-              {isLoading('/finance/dashboard') && <Loader2 className="w-3 h-3 animate-spin" />}
-            </Link>
-            <Link
-              href="/finance/accounts"
-              onClick={(e) => {
-                e.preventDefault();
-                if (!isActive('/finance/accounts') && !isPending) {
-                  setPendingPath('/finance/accounts');
-                  startTransition(() => router.push('/finance/accounts'));
-                }
-              }}
-              className={`inline-flex items-center gap-1 text-sm font-medium ${
-                isActive('/finance/accounts')
-                  ? 'text-blue-600'
-                  : 'text-gray-600 hover:text-gray-900'
-              } ${isLoading('/finance/accounts') ? 'opacity-50 cursor-wait' : ''}`}
-            >
-              Accounts
-              {isLoading('/finance/accounts') && <Loader2 className="w-3 h-3 animate-spin" />}
-            </Link>
-            <Link
-              href="/finance/transactions"
-              onClick={(e) => {
-                e.preventDefault();
-                if (!isActive('/finance/transactions') && !isPending) {
-                  setPendingPath('/finance/transactions');
-                  startTransition(() => router.push('/finance/transactions'));
-                }
-              }}
-              className={`inline-flex items-center gap-1 text-sm font-medium ${
-                isActive('/finance/transactions')
-                  ? 'text-blue-600'
-                  : 'text-gray-600 hover:text-gray-900'
-              } ${isLoading('/finance/transactions') ? 'opacity-50 cursor-wait' : ''}`}
-            >
-              Transactions
-              {isLoading('/finance/transactions') && <Loader2 className="w-3 h-3 animate-spin" />}
-            </Link>
-            <Link
-              href="/finance/budgets"
-              onClick={(e) => {
-                e.preventDefault();
-                if (!isActive('/finance/budgets') && !isPending) {
-                  setPendingPath('/finance/budgets');
-                  startTransition(() => router.push('/finance/budgets'));
-                }
-              }}
-              className={`inline-flex items-center gap-1 text-sm font-medium ${
-                isActive('/finance/budgets')
-                  ? 'text-blue-600'
-                  : 'text-gray-600 hover:text-gray-900'
-              } ${isLoading('/finance/budgets') ? 'opacity-50 cursor-wait' : ''}`}
-            >
-              Budgets
-              {isLoading('/finance/budgets') && <Loader2 className="w-3 h-3 animate-spin" />}
-            </Link>
-            <Link
-              href="/finance/settings"
-              onClick={(e) => {
-                e.preventDefault();
-                if (!isActive('/finance/settings') && !isPending) {
-                  setPendingPath('/finance/settings');
-                  startTransition(() => router.push('/finance/settings'));
-                }
-              }}
-              className={`inline-flex items-center gap-1 text-sm font-medium ${
-                isActive('/finance/settings')
-                  ? 'text-blue-600'
-                  : 'text-gray-600 hover:text-gray-900'
-              } ${isLoading('/finance/settings') ? 'opacity-50 cursor-wait' : ''}`}
-            >
-              Settings
-              {isLoading('/finance/settings') && <Loader2 className="w-3 h-3 animate-spin" />}
-            </Link>
+          <nav className="hidden md:flex items-center space-x-1">
+            {navLinks.map((link) => (
+              <Link
+                key={link.href}
+                href={link.href}
+                onClick={(e) => handleNavigation(e, link.href)}
+                className={`
+                  inline-flex items-center gap-1.5 px-4 py-2 rounded-lg text-sm font-medium transition-all
+                  ${
+                    isActive(link.href)
+                      ? 'bg-[#10b981]/20 text-[#10b981] border border-[#10b981]/30'
+                      : 'text-[#737373] hover:text-[#e5e5e5] hover:bg-[#e5e5e5]/5'
+                  }
+                  ${isLoading(link.href) ? 'opacity-50 cursor-wait' : ''}
+                `}
+              >
+                {link.label}
+                {isLoading(link.href) && <Loader2 className="w-3 h-3 animate-spin" />}
+              </Link>
+            ))}
+          </nav>
 
+          {/* Desktop Actions */}
+          <div className="hidden md:flex items-center space-x-3">
             {/* Plaid Link */}
             <PlaidLink
               onSuccess={handleBankConnected}
@@ -186,33 +146,69 @@ export default function FinanceHeader({ onBankConnected }: FinanceHeaderProps) {
             {/* Sign Out */}
             <button
               onClick={handleSignOut}
-              className="text-sm text-red-600 hover:text-red-700 font-medium"
+              className="inline-flex items-center gap-2 px-4 py-2 text-sm font-medium text-[#737373] hover:text-red-400 hover:bg-red-900/10 rounded-lg transition-all"
             >
+              <LogOut className="w-4 h-4" strokeWidth={2} />
               Sign Out
             </button>
           </div>
 
-          {/* Mobile Navigation */}
+          {/* Mobile Menu Button */}
           <div className="flex md:hidden items-center space-x-2">
-            {/* Plaid Link */}
             <PlaidLink
               onSuccess={handleBankConnected}
-              buttonText="+"
+              buttonText="Connect"
               variant="primary"
             />
 
-            {/* Mobile Menu Button */}
             <button
-              onClick={() => router.push('/finance/settings')}
-              className="p-2 text-gray-600 hover:text-gray-900"
+              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+              className="p-2 text-[#e5e5e5] hover:bg-[#e5e5e5]/10 rounded-lg transition-colors"
             >
-              <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
-              </svg>
+              {mobileMenuOpen ? (
+                <X className="w-6 h-6" strokeWidth={2} />
+              ) : (
+                <Menu className="w-6 h-6" strokeWidth={2} />
+              )}
             </button>
           </div>
         </div>
       </div>
+
+      {/* Mobile Navigation Menu */}
+      {mobileMenuOpen && (
+        <div className="md:hidden border-t border-[#a3a3a3]/10 bg-[#1a1a1a]/98 backdrop-blur-sm">
+          <nav className="px-4 py-4 space-y-2">
+            {navLinks.map((link) => (
+              <Link
+                key={link.href}
+                href={link.href}
+                onClick={(e) => handleNavigation(e, link.href)}
+                className={`
+                  flex items-center justify-between px-4 py-3 rounded-lg text-sm font-medium transition-all
+                  ${
+                    isActive(link.href)
+                      ? 'bg-[#10b981]/20 text-[#10b981] border border-[#10b981]/30'
+                      : 'text-[#737373] hover:text-[#e5e5e5] hover:bg-[#e5e5e5]/5'
+                  }
+                  ${isLoading(link.href) ? 'opacity-50 cursor-wait' : ''}
+                `}
+              >
+                {link.label}
+                {isLoading(link.href) && <Loader2 className="w-4 h-4 animate-spin" />}
+              </Link>
+            ))}
+
+            <button
+              onClick={handleSignOut}
+              className="w-full flex items-center gap-2 px-4 py-3 text-sm font-medium text-[#737373] hover:text-red-400 hover:bg-red-900/10 rounded-lg transition-all"
+            >
+              <LogOut className="w-4 h-4" strokeWidth={2} />
+              Sign Out
+            </button>
+          </nav>
+        </div>
+      )}
     </header>
   );
 }

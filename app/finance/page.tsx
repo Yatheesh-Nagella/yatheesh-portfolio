@@ -8,12 +8,12 @@
 
 import React from 'react';
 import { useRouter } from 'next/navigation';
+import Image from 'next/image';
 import {
   DollarSign,
   TrendingUp,
   Shield,
   BarChart3,
-  Wallet,
   Lock,
   Zap,
   ChevronRight,
@@ -28,8 +28,15 @@ export default function OneLibroLanding() {
       <header className="bg-white/80 backdrop-blur-sm border-b border-gray-200 sticky top-0 z-10">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-16">
-            <div className="flex items-center space-x-2">
-              <Wallet className="w-8 h-8 text-blue-600" />
+            <div className="flex items-center space-x-3">
+              <Image
+                src="/oneLibro-logo.png"
+                alt="OneLibro Logo"
+                width={32}
+                height={32}
+                className="w-8 h-8"
+                priority
+              />
               <h1 className="text-2xl font-bold text-gray-900">OneLibro</h1>
             </div>
             <div className="flex items-center space-x-2 sm:space-x-4">
@@ -114,7 +121,7 @@ export default function OneLibroLanding() {
           {/* Feature 1 */}
           <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-8 hover:shadow-md transition-shadow">
             <div className="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center mb-4">
-              <Wallet className="w-6 h-6 text-blue-600" />
+              <DollarSign className="w-6 h-6 text-blue-600" />
             </div>
             <h3 className="text-xl font-semibold text-gray-900 mb-2">
               Connect All Your Banks
@@ -274,7 +281,13 @@ export default function OneLibroLanding() {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             <div>
               <div className="flex items-center space-x-2 mb-4">
-                <Wallet className="w-6 h-6 text-blue-400" />
+                <Image
+                  src="/oneLibro-logo.png"
+                  alt="OneLibro"
+                  width={24}
+                  height={24}
+                  className="w-6 h-6"
+                />
                 <span className="text-white font-bold text-lg">OneLibro</span>
               </div>
               <p className="text-sm">

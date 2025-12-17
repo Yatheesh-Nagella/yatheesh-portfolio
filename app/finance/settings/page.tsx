@@ -370,7 +370,7 @@ export default function SettingsPage() {
                 <div>
                   <p className="font-semibold text-gray-900 dark:text-white">Sign Out</p>
                   <p className="text-sm text-gray-600 dark:text-gray-300 mt-1">
-                    Sign out of your OneLedger account
+                    Sign out of your OneLibro account
                   </p>
                 </div>
                 <button
@@ -394,7 +394,7 @@ export default function SettingsPage() {
 
           {/* Footer */}
           <div className="text-center text-sm text-gray-500 py-4">
-            <p>OneLedger Phase 2 - Financial Management Platform</p>
+            <p>OneLibro Phase 2 - Financial Management Platform</p>
             <p className="mt-1">
               Need help? Contact support or visit the dashboard.
             </p>

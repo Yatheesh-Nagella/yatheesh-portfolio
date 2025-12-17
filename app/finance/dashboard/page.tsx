@@ -169,7 +169,7 @@ export default function FinanceDashboard() {
                 <div className="bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-gray-200 dark:border-gray-700 p-12 text-center">
                   <Building2 className="w-16 h-16 text-gray-400 dark:text-gray-500 mx-auto mb-4" />
                   <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-2">
-                    Welcome to OneLedger!
+                    Welcome to OneLibro!
                   </h3>
                   <p className="text-gray-600 dark:text-gray-300 mb-6 max-w-md mx-auto">
                     Connect your bank account to start tracking your finances.

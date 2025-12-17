@@ -9,7 +9,7 @@ portfolio/                              # ONE repo for everything
 │   │
 │   ├── page.jsx                         # Your portfolio (stays same)
 │   │
-│   ├── finance/                         # OneLedger Finance App
+│   ├── finance/                         # OneLibro Finance App
 │   │   ├── layout.jsx                   # Auth guard
 │   │   ├── page.jsx                     # Dashboard
 │   │   ├── login/page.jsx               # Login
@@ -101,7 +101,7 @@ portfolio/                              # ONE repo for everything
 ### `app/`
 Contains the Next.js App Router React components and global styling. The main sections are:
 - **Root pages**: Portfolio homepage (`page.jsx`) and blog system
-- **Finance app** (`/finance`): OneLedger Finance application with authentication, dashboard, accounts, transactions, and settings
+- **Finance app** (`/finance`): OneLibro Finance application with authentication, dashboard, accounts, transactions, and settings
 - **Admin dashboard** (`/admin`): Admin interface for user management, invites, metrics, and system logs
 - **API routes** (`/api`): Backend endpoints for newsletter subscriptions, Plaid integration, and admin operations
 

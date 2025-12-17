@@ -1,8 +1,8 @@
-# 📱 OneLedger - Mobile Responsiveness Guide
+# 📱 OneLibro - Mobile Responsiveness Guide
 
 ## ✅ Mobile Optimizations Applied
 
-All pages in OneLedger Phase 2 are **fully mobile-responsive** and tested on devices from 320px to 2560px width.
+All pages in OneLibro Phase 2 are **fully mobile-responsive** and tested on devices from 320px to 2560px width.
 
 ---
 
@@ -90,7 +90,7 @@ Desktop (> 1024):
 **Mobile Header:**
 ```
 ┌────────────────────────────┐
-│ OneLedger        [+] [≡]  │  ← Compact
+│ OneLibro        [+] [≡]  │  ← Compact
 │ Welcome back, User         │
 └────────────────────────────┘
 ```
@@ -98,7 +98,7 @@ Desktop (> 1024):
 **Desktop Header:**
 ```
 ┌──────────────────────────────────────────┐
-│ OneLedger                                │
+│ OneLibro                                │
 │ Welcome back, User                       │
 │         Dashboard Accounts Transactions  │
 │         Settings [Connect Bank]          │
@@ -383,6 +383,6 @@ All pages tested and working on:
 
 ---
 
-**All OneLedger pages are mobile-ready!** 📱✨
+**All OneLibro pages are mobile-ready!** 📱✨
 
 Test on your device and let me know if you see any issues!

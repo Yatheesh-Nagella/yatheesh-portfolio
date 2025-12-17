@@ -1,6 +1,6 @@
-# OneLedger Documentation
+# OneLibro Documentation
 
-Welcome to the OneLedger documentation! OneLedger is a personal finance tracking application with Plaid integration, built on Next.js 15.
+Welcome to the OneLibro documentation! OneLibro is a personal finance tracking application with Plaid integration, built on Next.js 15.
 
 ## 📚 Documentation Index
 
@@ -56,7 +56,7 @@ Welcome to the OneLedger documentation! OneLedger is a personal finance tracking
 
 ## 🏗️ Project Overview
 
-**OneLedger** is a Next.js 15 application with three main subdomains:
+**OneLibro** is a Next.js 15 application with three main subdomains:
 
 1. **Main Portfolio** (`yatheeshnagella.com`) - Personal portfolio
 2. **Finance App** (`finance.yatheeshnagella.com`) - Personal finance tracker

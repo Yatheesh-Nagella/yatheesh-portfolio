@@ -1,7 +1,7 @@
 'use client';
 
 /**
- * OneLedger Landing Page
+ * OneLibro Landing Page
  * Public page explaining the app with login button
  * This is the first page users see at /finance
  */
@@ -19,7 +19,7 @@ import {
   ChevronRight,
 } from 'lucide-react';
 
-export default function OneLedgerLanding() {
+export default function OneLibroLanding() {
   const router = useRouter();
 
   return (
@@ -30,7 +30,7 @@ export default function OneLedgerLanding() {
           <div className="flex items-center justify-between h-16">
             <div className="flex items-center space-x-2">
               <Wallet className="w-8 h-8 text-blue-600" />
-              <h1 className="text-2xl font-bold text-gray-900">OneLedger</h1>
+              <h1 className="text-2xl font-bold text-gray-900">OneLibro</h1>
             </div>
             <div className="flex items-center space-x-2 sm:space-x-4">
               <button
@@ -106,7 +106,7 @@ export default function OneLedgerLanding() {
             Everything You Need to Manage Your Money
           </h2>
           <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-            OneLedger brings all your financial accounts together in one secure, easy-to-use platform.
+            OneLibro brings all your financial accounts together in one secure, easy-to-use platform.
           </p>
         </div>
 
@@ -196,7 +196,7 @@ export default function OneLedgerLanding() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
             <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
-              How OneLedger Works
+              How OneLibro Works
             </h2>
             <p className="text-lg text-gray-600">
               Get started in minutes with our simple 3-step process
@@ -253,7 +253,7 @@ export default function OneLedgerLanding() {
             Ready to Take Control of Your Finances?
           </h2>
           <p className="text-xl mb-8 opacity-90">
-            Join OneLedger today and experience financial clarity like never before.
+            Join OneLibro today and experience financial clarity like never before.
           </p>
           <button
             onClick={() => router.push('/finance/login')}
@@ -275,7 +275,7 @@ export default function OneLedgerLanding() {
             <div>
               <div className="flex items-center space-x-2 mb-4">
                 <Wallet className="w-6 h-6 text-blue-400" />
-                <span className="text-white font-bold text-lg">OneLedger</span>
+                <span className="text-white font-bold text-lg">OneLibro</span>
               </div>
               <p className="text-sm">
                 Your personal finance ledger, all in one secure place.
@@ -339,7 +339,7 @@ export default function OneLedgerLanding() {
 
           <div className="border-t border-gray-800 mt-12 pt-8 text-center text-sm">
             <p>
-              © 2025 OneLedger by Yatheesh Nagella. All rights reserved.
+              © 2025 OneLibro by Yatheesh Nagella. All rights reserved.
             </p>
             <p className="mt-2 text-xs">
               Powered by Plaid • Secured by Supabase • Hosted on Vercel

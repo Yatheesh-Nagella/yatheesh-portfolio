@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-This is a Next.js 15 portfolio website with an integrated personal finance application (OneLedger). The project has three main applications served via subdomain routing:
+This is a Next.js 15 portfolio website with an integrated personal finance application (OneLibro). The project has three main applications served via subdomain routing:
 
 1. **Main Portfolio** (`yatheeshnagella.com`) - Personal portfolio with blog posts
 2. **Finance App** (`finance.yatheeshnagella.com`) - Personal finance tracker with Plaid integration

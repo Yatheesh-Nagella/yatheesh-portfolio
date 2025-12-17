@@ -1,6 +1,6 @@
-# OneLedger Phase 2: Authentication & Dashboard
+# OneLibro Phase 2: Authentication & Dashboard
 
-**Branch**: `feature/oneledger-phase2`
+**Branch**: `feature/OneLibro-phase2`
 **Status**: ✅ Complete
 **Completed**: November 2024
 
@@ -8,7 +8,7 @@
 
 ## 📋 Overview
 
-Phase 2 built the core user-facing functionality of OneLedger. This phase implemented authentication flows, dashboard UI, Plaid Link integration, transaction management, and account settings. The focus was on creating a functional personal finance tracker with bank connection capabilities.
+Phase 2 built the core user-facing functionality of OneLibro. This phase implemented authentication flows, dashboard UI, Plaid Link integration, transaction management, and account settings. The focus was on creating a functional personal finance tracker with bank connection capabilities.
 
 ---
 
@@ -37,7 +37,7 @@ Phase 2 built the core user-facing functionality of OneLedger. This phase implem
 
 **Commits:**
 - `4b25713` - feat: Add authentication context and protected routes for finance app
-- `7253382` - feat(phase-2): implement OneLedger authentication, mobile UI, and dashboard
+- `7253382` - feat(phase-2): implement OneLibro authentication, mobile UI, and dashboard
 
 ---
 
@@ -64,7 +64,7 @@ Phase 2 built the core user-facing functionality of OneLedger. This phase implem
 
 **Commits:**
 - `aa2cf48` - feat: Add dashboard components
-- `7253382` - feat(phase-2): implement OneLedger authentication, mobile UI, and dashboard
+- `7253382` - feat(phase-2): implement OneLibro authentication, mobile UI, and dashboard
 
 ---
 
@@ -161,7 +161,7 @@ Phase 2 built the core user-facing functionality of OneLedger. This phase implem
 - Desktop: > 1024px
 
 **Commits:**
-- `7253382` - feat(phase-2): implement OneLedger authentication, mobile UI, and dashboard
+- `7253382` - feat(phase-2): implement OneLibro authentication, mobile UI, and dashboard
 
 ---
 
@@ -187,7 +187,7 @@ Phase 2 built the core user-facing functionality of OneLedger. This phase implem
 1. `4b25713` - feat: Add authentication context and protected routes for finance app
 2. `40c521c` - feat(plaid): implement Plaid integration API routes and Link component
 3. `aa2cf48` - feat: Add dashboard components
-4. `7253382` - feat(phase-2): implement OneLedger authentication, mobile UI, and dashboard
+4. `7253382` - feat(phase-2): implement OneLibro authentication, mobile UI, and dashboard
 5. `841a22e` - feat(phase-2): implement Plaid integration with server-side auth
 6. `2e016b6` - feat(phase-2): complete transactions, settings, and unlink account feature
 7. `0c9228e` - fix(api): update Plaid routes to use service role client for RLS bypass

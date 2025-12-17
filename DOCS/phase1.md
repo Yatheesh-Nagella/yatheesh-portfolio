@@ -1,6 +1,6 @@
-# OneLedger Phase 1: Project Setup & Foundation
+# OneLibro Phase 1: Project Setup & Foundation
 
-**Branch**: `feature/oneledger-phase1`
+**Branch**: `feature/OneLibro-phase1`
 **Status**: ✅ Complete
 **Completed**: November 2024
 
@@ -8,7 +8,7 @@
 
 ## 📋 Overview
 
-Phase 1 established the foundational infrastructure for OneLedger, a personal finance tracking application. This phase focused on setting up TypeScript, integrating Supabase for authentication and database, connecting Plaid API for bank data, and establishing the subdomain routing architecture.
+Phase 1 established the foundational infrastructure for OneLibro, a personal finance tracking application. This phase focused on setting up TypeScript, integrating Supabase for authentication and database, connecting Plaid API for bank data, and establishing the subdomain routing architecture.
 
 ---
 

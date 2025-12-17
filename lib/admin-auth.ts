@@ -393,7 +393,7 @@ export async function setupAdminTOTP(
     }
 
     // Generate otpauth URL
-    const otpauthUrl = authenticator.keyuri(user.email, 'OneLedger Admin', secret);
+    const otpauthUrl = authenticator.keyuri(user.email, 'OneLibro Admin', secret);
 
     // Encrypt and save secret
     const encryptedSecret = encrypt(secret);

@@ -14,8 +14,8 @@ import { Toaster } from 'react-hot-toast';
 import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
-  title: 'OneLedger - Personal Finance',
-  description: 'Manage your finances with OneLedger',
+  title: 'OneLibro - Personal Finance',
+  description: 'Manage your finances with OneLibro',
 };
 
 export default function FinanceLayout({

@@ -1,6 +1,6 @@
 # Performance Diagnostics & Architecture Analysis
 
-This document contains visual diagrams exposing performance bottlenecks, rendering issues, and architectural problems in your OneLedger finance app.
+This document contains visual diagrams exposing performance bottlenecks, rendering issues, and architectural problems in your OneLibro finance app.
 
 ---
 

@@ -1,6 +1,6 @@
-# OneLedger Phase 4: Dark Mode, Code Quality & Security
+# OneLibro Phase 4: Dark Mode, Code Quality & Security
 
-**Branch**: `feature/oneledger-phase4`
+**Branch**: `feature/OneLibro-phase4`
 **Status**: In Progress
 **Started**: November 2024
 

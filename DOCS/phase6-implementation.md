@@ -383,7 +383,7 @@ export const metadata: Metadata = {
   description: 'An inclusive and accessible financial ecosystem for everyone. Track expenses, manage budgets, and achieve your financial goals.',
   keywords: ['finance', 'budgeting', 'expense tracking', 'personal finance', 'money management'],
   authors: [{ name: 'OneLibro Team' }],
-  creator: 'OneLibro',
+  creator: 'Yatheesh Nagella',
   publisher: 'OneLibro',
 
   // Open Graph

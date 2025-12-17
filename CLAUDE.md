@@ -283,11 +283,12 @@ The main portfolio is primarily static with:
 
 ## Project-Specific Notes
 
-### OneLedger Phase 2
-The current branch `feature/oneledger-phase2` is implementing:
-- Account management UI
-- Transaction syncing improvements
-- Dashboard analytics
+### OneLibro Rebranding (Phase 6)
+The current branch `feature/oneledger-phase6` is implementing the rebranding from OneLedger to OneLibro:
+- Global text replacement (OneLedger → OneLibro)
+- Logo and brand assets update
+- Color scheme and typography updates
+- Landing page and dashboard redesign
 
 ### Legacy Code
 - Portfolio uses `.jsx` files (not TypeScript)

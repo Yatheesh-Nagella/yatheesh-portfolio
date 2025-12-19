@@ -8,6 +8,8 @@
 
 import React, { useState, useEffect } from 'react';
 import { useAuth } from '@/contexts/AuthContext';
+import ProtectedRoute from '@/components/finance/ProtectedRoute';
+import DashboardLayout from '@/components/finance/DashboardLayout';
 import { getUserTransactions } from '@/lib/supabase';
 import type { Transaction } from '@/lib/supabase';
 import { formatCurrency, formatDate } from '@/lib/supabase';
@@ -140,104 +142,76 @@ export default function TransactionsPage() {
     }
   }
 
-  /**
-   * Render loading state
-   */
-  if (loading) {
-    return (
-      <div className="min-h-screen bg-[#1a1a1a] flex items-center justify-center px-4 sm:px-6 lg:px-8 py-8">
-        <div className="text-center">
-          <Loader2 className="w-12 h-12 animate-spin text-[#10b981] mx-auto" />
-          <p className="mt-4 text-[#a3a3a3]">Loading transactions...</p>
-        </div>
-      </div>
-    );
-  }
-
-  /**
-   * Render empty state
-   */
-  if (transactions.length === 0) {
-    return (
-      <div className="min-h-screen bg-[#1a1a1a] px-4 sm:px-6 lg:px-8 py-8">
+  return (
+    <ProtectedRoute>
+      <DashboardLayout>
         <div className="max-w-7xl mx-auto">
-          <div className="mb-8">
-            <h2 className="text-3xl font-bold text-[#e5e5e5]">Transactions</h2>
-            <p className="text-[#a3a3a3] mt-2">
-              View and manage your transactions
-            </p>
-          </div>
+          {/* Loading State */}
+          {loading && (
+            <div className="flex items-center justify-center py-12">
+              <div className="text-center">
+                <Loader2 className="w-12 h-12 animate-spin text-[#10b981] mx-auto" />
+                <p className="mt-4 text-[#a3a3a3]">Loading transactions...</p>
+              </div>
+            </div>
+          )}
 
           {/* Empty State */}
-          <div className="relative overflow-hidden">
-            <div className="absolute inset-0 bg-gradient-to-br from-[#10b981]/10 via-transparent to-[#a3a3a3]/5 rounded-xl" />
-            <div className="relative bg-[#e5e5e5]/5 backdrop-blur-sm border border-[#a3a3a3]/10 rounded-xl p-12 text-center">
-              <div className="w-20 h-20 rounded-2xl bg-[#10b981]/15 flex items-center justify-center mx-auto mb-6">
-                <AlertCircle className="w-10 h-10 text-[#10b981]" strokeWidth={1.5} />
+          {!loading && transactions.length === 0 && (
+            <div className="relative overflow-hidden">
+              <div className="absolute inset-0 bg-gradient-to-br from-[#10b981]/10 via-transparent to-[#a3a3a3]/5 rounded-xl" />
+              <div className="relative bg-[#e5e5e5]/5 backdrop-blur-sm border border-[#a3a3a3]/10 rounded-xl p-12 text-center">
+                <div className="w-20 h-20 rounded-2xl bg-[#10b981]/15 flex items-center justify-center mx-auto mb-6">
+                  <AlertCircle className="w-10 h-10 text-[#10b981]" strokeWidth={1.5} />
+                </div>
+                <h2 className="text-2xl font-bold text-[#e5e5e5] mb-3">
+                  No transactions yet
+                </h2>
+                <p className="text-[#a3a3a3] mb-8 max-w-md mx-auto">
+                  Connect a bank account or add transactions manually.
+                </p>
+                <div className="flex flex-col sm:flex-row gap-3 justify-center">
+                  <button
+                    onClick={() => router.push('/finance/transactions/add')}
+                    className="bg-[#10b981] hover:bg-[#10b981]/90 text-[#1a1a1a] px-6 py-3 rounded-lg font-semibold transition-colors flex items-center justify-center gap-2"
+                  >
+                    <PlusCircle className="w-5 h-5" />
+                    Add Transaction
+                  </button>
+                  <button
+                    onClick={() => router.push('/finance/dashboard')}
+                    className="bg-[#e5e5e5]/10 hover:bg-[#e5e5e5]/20 text-[#e5e5e5] border border-[#a3a3a3]/20 px-6 py-3 rounded-lg font-semibold transition-colors"
+                  >
+                    Connect Bank
+                  </button>
+                </div>
               </div>
-              <h2 className="text-2xl font-bold text-[#e5e5e5] mb-3">
-                No transactions yet
-              </h2>
-              <p className="text-[#a3a3a3] mb-8 max-w-md mx-auto">
-                Connect a bank account or add transactions manually.
-              </p>
-              <div className="flex flex-col sm:flex-row gap-3 justify-center">
+            </div>
+          )}
+
+          {/* Transactions List */}
+          {!loading && transactions.length > 0 && (
+            <>
+              {/* Action Buttons */}
+              <div className="mb-6 flex items-center justify-end gap-3">
                 <button
                   onClick={() => router.push('/finance/transactions/add')}
-                  className="bg-[#10b981] hover:bg-[#10b981]/90 text-[#1a1a1a] px-6 py-3 rounded-lg font-semibold transition-colors flex items-center justify-center gap-2"
+                  className="flex items-center gap-2 bg-[#10b981] hover:bg-[#10b981]/90 text-[#1a1a1a] px-4 py-2 rounded-lg font-medium transition-colors"
                 >
-                  <PlusCircle className="w-5 h-5" />
-                  Add Transaction
+                  <PlusCircle className="w-4 h-4" />
+                  <span className="hidden sm:inline">Add</span>
                 </button>
                 <button
-                  onClick={() => router.push('/finance/dashboard')}
-                  className="bg-[#e5e5e5]/10 hover:bg-[#e5e5e5]/20 text-[#e5e5e5] border border-[#a3a3a3]/20 px-6 py-3 rounded-lg font-semibold transition-colors"
+                  onClick={handleExport}
+                  disabled={filteredTransactions.length === 0}
+                  className="flex items-center gap-2 bg-[#e5e5e5]/10 hover:bg-[#e5e5e5]/20 text-[#e5e5e5] border border-[#a3a3a3]/20 px-4 py-2 rounded-lg font-medium transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
                 >
-                  Connect Bank
+                  <Download className="w-4 h-4" />
+                  <span className="hidden sm:inline">Export</span>
                 </button>
               </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    );
-  }
 
-  return (
-    <div className="min-h-screen bg-[#1a1a1a] px-4 sm:px-6 lg:px-8 py-8">
-      <div className="max-w-7xl mx-auto">
-        {/* Page Header */}
-        <div className="mb-8">
-          <div className="flex items-center justify-between">
-            <div>
-              <h2 className="text-3xl font-bold text-[#e5e5e5]">
-                Transactions
-              </h2>
-              <p className="text-[#a3a3a3] mt-2">
-                {filteredTransactions.length} of {transactions.length} transactions
-              </p>
-            </div>
-            <div className="flex items-center gap-3">
-              <button
-                onClick={() => router.push('/finance/transactions/add')}
-                className="flex items-center gap-2 bg-[#10b981] hover:bg-[#10b981]/90 text-[#1a1a1a] px-4 py-2 rounded-lg font-medium transition-colors"
-              >
-                <PlusCircle className="w-4 h-4" />
-                <span className="hidden sm:inline">Add</span>
-              </button>
-              <button
-                onClick={handleExport}
-                disabled={filteredTransactions.length === 0}
-                className="flex items-center gap-2 bg-[#e5e5e5]/10 hover:bg-[#e5e5e5]/20 text-[#e5e5e5] border border-[#a3a3a3]/20 px-4 py-2 rounded-lg font-medium transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
-              >
-                <Download className="w-4 h-4" />
-                <span className="hidden sm:inline">Export</span>
-              </button>
-            </div>
-          </div>
-        </div>
-
-        {/* Filters Section */}
+              {/* Filters Section */}
         <div className="bg-[#e5e5e5]/5 backdrop-blur-sm border border-[#a3a3a3]/10 rounded-xl p-4 mb-6">
           {/* Mobile: Show/Hide Filters Button */}
           <button
@@ -454,7 +428,10 @@ export default function TransactionsPage() {
             ))
           )}
         </div>
-      </div>
-    </div>
+            </>
+          )}
+        </div>
+      </DashboardLayout>
+    </ProtectedRoute>
   );
 }

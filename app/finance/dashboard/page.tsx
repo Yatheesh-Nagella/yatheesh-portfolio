@@ -12,6 +12,7 @@ import { useRouter } from 'next/navigation';
 import { useAuth } from '@/contexts/AuthContext';
 import { useAccounts, useTransactions } from '@/hooks';
 import ProtectedRoute from '@/components/finance/ProtectedRoute';
+import DashboardLayout from '@/components/finance/DashboardLayout';
 import DashboardCard from '@/components/finance/DashboardCard';
 import SpendingChart from '@/components/finance/SpendingChart';
 import RecentTransactions from '@/components/finance/RecentTransactions';
@@ -137,15 +138,8 @@ export default function FinanceDashboard() {
 
   return (
     <ProtectedRoute>
-      {/* Main Content */}
-      <main className="min-h-screen bg-[#1a1a1a] px-4 sm:px-6 lg:px-8 py-8">
+      <DashboardLayout onBankConnected={handleBankConnected}>
         <div className="max-w-7xl mx-auto">
-          {/* Dashboard Header */}
-          <div className="mb-8">
-            <h1 className="text-3xl lg:text-4xl font-bold text-[#e5e5e5]">
-              Dashboard
-            </h1>
-          </div>
 
           {/* Error State */}
           {error && (
@@ -183,7 +177,7 @@ export default function FinanceDashboard() {
 
                   {/* Content */}
                   <div className="relative bg-[#e5e5e5]/5 backdrop-blur-sm border border-[#a3a3a3]/10 rounded-2xl p-12 text-center">
-                    <div class="w-20 h-20 rounded-2xl bg-[#10b981]/15 flex items-center justify-center mx-auto mb-6">
+                    <div className="w-20 h-20 rounded-2xl bg-[#10b981]/15 flex items-center justify-center mx-auto mb-6">
                       <Building2 className="w-10 h-10 text-[#10b981]" strokeWidth={1.5} />
                     </div>
                     <h3 className="text-2xl font-bold text-[#e5e5e5] mb-3">
@@ -390,7 +384,7 @@ export default function FinanceDashboard() {
             </>
           )}
         </div>
-      </main>
+      </DashboardLayout>
     </ProtectedRoute>
   );
 }

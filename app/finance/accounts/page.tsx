@@ -9,6 +9,7 @@
 import React, { useState, useEffect } from 'react';
 import { useAuth } from '@/contexts/AuthContext';
 import ProtectedRoute from '@/components/finance/ProtectedRoute';
+import DashboardLayout from '@/components/finance/DashboardLayout';
 import PlaidLink from '@/components/finance/PlaidLink';
 import AccountCard from '@/components/finance/AccountCard';
 import { getUserAccounts, supabase, type Account } from '@/lib/supabase';
@@ -122,15 +123,8 @@ export default function AccountsPage() {
 
   return (
     <ProtectedRoute>
-      {/* Main Content */}
-      <main className="min-h-screen bg-[#1a1a1a] px-4 sm:px-6 lg:px-8 py-8">
+      <DashboardLayout onBankConnected={handleBankConnected}>
         <div className="max-w-7xl mx-auto">
-        <div className="mb-8">
-          <h2 className="text-3xl font-bold text-[#e5e5e5]">Accounts</h2>
-          <p className="text-[#a3a3a3] mt-2">
-            Manage your connected bank accounts
-          </p>
-        </div>
           {/* Loading State */}
           {loading && (
             <div className="flex items-center justify-center py-12">
@@ -188,7 +182,7 @@ export default function AccountsPage() {
             </>
           )}
         </div>
-      </main>
+      </DashboardLayout>
     </ProtectedRoute>
   );
 }

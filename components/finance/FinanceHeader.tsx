@@ -110,7 +110,7 @@ export default function FinanceHeader({ onBankConnected }: FinanceHeaderProps) {
             <div>
               <h1 className="text-lg font-bold text-[#e5e5e5]">OneLibro</h1>
               <p className="text-xs text-[#a3a3a3]">
-                Welcome, {user?.user_metadata?.name || user?.full_name || 'User'}
+                Welcome, {user?.full_name || 'User'}
               </p>
             </div>
           </Link>

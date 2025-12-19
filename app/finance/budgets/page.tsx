@@ -7,6 +7,8 @@
 
 import React, { useState, useEffect } from 'react';
 import { useAuth } from '@/contexts/AuthContext';
+import ProtectedRoute from '@/components/finance/ProtectedRoute';
+import DashboardLayout from '@/components/finance/DashboardLayout';
 import { useRouter } from 'next/navigation';
 import { getUserBudgets, getUserTransactions, formatCurrency } from '@/lib/supabase';
 import type { Budget, Transaction } from '@/lib/supabase';
@@ -147,42 +149,38 @@ export default function BudgetsPage() {
     }
   }
 
-  // Loading state
-  if (loading) {
-    return (
-      <div className="min-h-screen bg-[#1a1a1a] flex items-center justify-center">
-        <div className="text-center">
-          <Loader2 className="w-12 h-12 animate-spin text-[#10b981] mx-auto" />
-          <p className="mt-4 text-[#a3a3a3]">Loading budgets...</p>
-        </div>
-      </div>
-    );
-  }
-
   return (
-    <div className="min-h-screen bg-[#1a1a1a] p-4 sm:p-6 lg:p-8">
-      <div className="max-w-4xl mx-auto">
-        {/* Header */}
-        <div className="mb-8">
-          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
-            <div>
-              <h1 className="text-3xl sm:text-4xl font-bold text-[#e5e5e5]">Budgets</h1>
-              <p className="text-[#a3a3a3] mt-2">
-                Track your spending against budget goals
-              </p>
+    <ProtectedRoute>
+      <DashboardLayout>
+        <div className="max-w-4xl mx-auto">
+          {/* Loading State */}
+          {loading && (
+            <div className="flex items-center justify-center py-12">
+              <div className="text-center">
+                <Loader2 className="w-12 h-12 animate-spin text-[#10b981] mx-auto" />
+                <p className="mt-4 text-[#a3a3a3]">Loading budgets...</p>
+              </div>
             </div>
-            <button
-              onClick={() => router.push('/finance/budgets/create')}
-              className="flex items-center justify-center gap-2 bg-[#10b981] hover:bg-[#10b981]/90 text-[#1a1a1a] px-4 py-2 rounded-lg font-medium transition-colors whitespace-nowrap"
-            >
-              <PlusCircle className="w-5 h-5" />
-              <span>New Budget</span>
-            </button>
-          </div>
-        </div>
+          )}
 
-        {/* Empty State */}
-        {budgets.length === 0 ? (
+          {/* Budgets Content */}
+          {!loading && (
+            <>
+              {/* Header */}
+              <div className="mb-8">
+                <div className="flex flex-col sm:flex-row sm:items-center sm:justify-end gap-4">
+                  <button
+                    onClick={() => router.push('/finance/budgets/create')}
+                    className="flex items-center justify-center gap-2 bg-[#10b981] hover:bg-[#10b981]/90 text-[#1a1a1a] px-4 py-2 rounded-lg font-medium transition-colors whitespace-nowrap"
+                  >
+                    <PlusCircle className="w-5 h-5" />
+                    <span>New Budget</span>
+                  </button>
+                </div>
+              </div>
+
+              {/* Empty State */}
+              {budgets.length === 0 ? (
           <div className="relative overflow-hidden">
             <div className="absolute inset-0 bg-gradient-to-br from-[#10b981]/10 via-transparent to-[#a3a3a3]/5 rounded-xl" />
             <div className="relative bg-[#e5e5e5]/5 backdrop-blur-sm border border-[#a3a3a3]/10 rounded-xl p-12 text-center">
@@ -317,17 +315,20 @@ export default function BudgetsPage() {
           </div>
         )}
 
-        {/* Help Text */}
-        <div className="mt-8 p-4 bg-[#10b981]/10 rounded-lg border border-[#10b981]/30 backdrop-blur-sm">
-          <h3 className="font-medium text-[#10b981] mb-2">Budget Tips</h3>
-          <ul className="text-sm text-[#a3a3a3] space-y-1">
-            <li>- Set realistic budgets based on your spending history</li>
-            <li>- Start with a few key categories like Food and Shopping</li>
-            <li>- Review and adjust your budgets monthly</li>
-            <li>- The 50/30/20 rule: 50% needs, 30% wants, 20% savings</li>
-          </ul>
+              {/* Help Text */}
+              <div className="mt-8 p-4 bg-[#10b981]/10 rounded-lg border border-[#10b981]/30 backdrop-blur-sm">
+                <h3 className="font-medium text-[#10b981] mb-2">Budget Tips</h3>
+                <ul className="text-sm text-[#a3a3a3] space-y-1">
+                  <li>- Set realistic budgets based on your spending history</li>
+                  <li>- Start with a few key categories like Food and Shopping</li>
+                  <li>- Review and adjust your budgets monthly</li>
+                  <li>- The 50/30/20 rule: 50% needs, 30% wants, 20% savings</li>
+                </ul>
+              </div>
+            </>
+          )}
         </div>
-      </div>
-    </div>
+      </DashboardLayout>
+    </ProtectedRoute>
   );
 }

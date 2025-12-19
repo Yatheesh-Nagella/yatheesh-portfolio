@@ -8,6 +8,8 @@
 
 import React, { useState, useEffect } from 'react';
 import { useAuth } from '@/contexts/AuthContext';
+import ProtectedRoute from '@/components/finance/ProtectedRoute';
+import DashboardLayout from '@/components/finance/DashboardLayout';
 import { useRouter } from 'next/navigation';
 import { getUserPlaidItems, supabase } from '@/lib/supabase';
 import type { PlaidItem } from '@/lib/supabase';
@@ -116,36 +118,27 @@ export default function SettingsPage() {
     }
   };
 
-  /**
-   * Render loading state
-   */
-  if (loading) {
-    return (
-      <div className="min-h-screen bg-[#1a1a1a] flex items-center justify-center">
-        <div className="text-center">
-          <Loader2 className="w-12 h-12 animate-spin text-[#10b981] mx-auto" />
-          <p className="mt-4 text-[#a3a3a3]">Loading settings...</p>
-        </div>
-      </div>
-    );
-  }
-
   if (!user) {
     return null;
   }
 
   return (
-    <div className="min-h-screen bg-[#1a1a1a] p-4 sm:p-6 lg:p-8">
-      <div className="max-w-7xl mx-auto">
-        {/* Header */}
-        <div className="mb-8">
-          <h1 className="text-3xl sm:text-4xl font-bold text-[#e5e5e5]">
-            Settings
-          </h1>
-          <p className="text-[#a3a3a3] mt-2">
-            Manage your account and preferences
-          </p>
-        </div>
+    <ProtectedRoute>
+      <DashboardLayout>
+        <div className="max-w-7xl mx-auto">
+          {/* Loading State */}
+          {loading && (
+            <div className="flex items-center justify-center py-12">
+              <div className="text-center">
+                <Loader2 className="w-12 h-12 animate-spin text-[#10b981] mx-auto" />
+                <p className="mt-4 text-[#a3a3a3]">Loading settings...</p>
+              </div>
+            </div>
+          )}
+
+          {/* Settings Content */}
+          {!loading && (
+            <>
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
           {/* Profile Section */}
@@ -434,7 +427,10 @@ export default function SettingsPage() {
             </p>
           </div>
         </div>
-      </div>
-    </div>
+            </>
+          )}
+        </div>
+      </DashboardLayout>
+    </ProtectedRoute>
   );
 }

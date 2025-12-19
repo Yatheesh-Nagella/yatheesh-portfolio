@@ -979,6 +979,175 @@ UX: Clearer visual hierarchy and call-to-actions
 
 ---
 
+## 6.3.3 - Layout & Navigation Redesign ⏱️ 1.5 hours
+
+📋 Implementation Plan: Collapsible Sidebar with Bottom Nav
+
+  Desktop Layout:
+
+  ┌──────────────┬─────────────────────────────────────┐
+  │              │ ⚡ Dashboard        [Connect] [User▼]│ <- Minimal Top Bar
+  ├──────────────┼─────────────────────────────────────┤
+  │ [≡] OneLibro │                                      │
+  │              │                                      │
+  │ 📊 Dashboard │                                      │
+  │ 🏦 Accounts  │      Main Content Area              │
+  │ 💸 Transact..│                                      │
+  │ 🎯 Budgets   │                                      │
+  │ ⚙️  Settings │                                      │
+  │              │                                      │
+  │ ─────────────│                                      │
+  │ [User Info]  │                                      │
+  │ [Sign Out]   │                                      │
+  └──────────────┴─────────────────────────────────────┘
+
+  Collapsed State (80px):
+  ┌──┬────────────────
+  │≡ │ ⚡ Dashboard
+  ├──┼────────────────
+  │🏠│
+  │📊│ Content
+  │🏦│
+  │💸│
+  │🎯│
+  │⚙️ │
+
+  Mobile Layout:
+
+  ┌─────────────────────────────┐
+  │ ☰  Dashboard    [Connect] [•]│ <- Top Bar
+  ├─────────────────────────────┤
+  │                              │
+  │                              │
+  │     Main Content             │
+  │                              │
+  │                              │
+  ├─────────────────────────────┤
+  │ 📊  🏦  💸  🎯  ⚙️           │ <- Bottom Nav
+  └─────────────────────────────┘
+
+  My Suggestion for Top Bar:
+
+  Keep a minimal top bar that shows:
+  - Left side:
+    - Hamburger menu (mobile only) or collapse toggle (desktop)
+    - Current page title with emoji (e.g., "📊 Dashboard")
+  - Right side:
+    - Connect button (emerald green)
+    - User dropdown menu (name, sign out)
+
+  Why this works:
+  - Provides context (current page)
+  - Quick access to primary actions
+  - Breadcrumbs for sub-pages (e.g., "Settings > Profile")
+  - Doesn't compete with sidebar
+
+  ---
+  🎯 Component Structure:
+
+  components/finance/
+  ├── Sidebar.tsx          (Desktop sidebar)
+  ├── TopBar.tsx           (Minimal top actions bar)
+  ├── BottomNav.tsx        (Mobile navigation)
+  └── DashboardLayout.tsx  (Wrapper component)
+
+  ---
+  🎨 Design Specs:
+
+  Sidebar (Expanded):
+
+  - Width: 260px
+  - Background: bg-[#1a1a1a] with border-r border-[#a3a3a3]/10
+  - Nav items: Emoji (24px) + Label
+  - Hover: bg-[#e5e5e5]/5
+  - Active: bg-[#10b981]/20 border-l-4 border-[#10b981]
+  - Collapse toggle: Top right corner
+
+  Sidebar (Collapsed):
+
+  - Width: 80px
+  - Icons only (centered)
+  - Tooltip on hover showing label
+
+  Bottom Nav (Mobile):
+
+  - Height: 64px
+  - Fixed position
+  - 5 items (Dashboard, Accounts, Transactions, Budgets, Settings)
+  - Icon + small label
+  - Active: Emerald green with indicator
+
+  Top Bar:
+
+  - Height: 60px
+  - Background: bg-[#1a1a1a]/95 backdrop-blur-sm
+  - Border: border-b border-[#a3a3a3]/10
+
+  ---
+  🔧 Technical Implementation:
+
+  State Management:
+
+  // Store collapse state in localStorage
+  const [isCollapsed, setIsCollapsed] = useState(false)
+
+  // Persist user preference
+  useEffect(() => {
+    localStorage.setItem('sidebarCollapsed', isCollapsed)
+  }, [isCollapsed])
+
+  Responsive Breakpoints:
+
+  - < 768px: Hide sidebar, show bottom nav
+  - >= 768px: Show sidebar, hide bottom nav
+
+  ---
+  ✨ Enhanced Features:
+
+  1. Smooth transitions between collapsed/expanded states
+  2. Keyboard shortcuts (e.g., Ctrl+B to toggle sidebar)
+  3. User preference persistence across sessions
+  4. Tooltips when collapsed
+  5. Badge notifications (future: unread transactions count)
+
+  ---
+  📊 Navigation Items:
+
+  const navItems = [
+    {
+      href: '/finance/dashboard',
+      label: 'Dashboard',
+      emoji: '📊',
+      description: 'Overview and insights'
+    },
+    {
+      href: '/finance/accounts',
+      label: 'Accounts',
+      emoji: '🏦',
+      description: 'Connected banks'
+    },
+    {
+      href: '/finance/transactions',
+      label: 'Transactions',
+      emoji: '💸',
+      description: 'View all activity'
+    },
+    {
+      href: '/finance/budgets',
+      label: 'Budgets',
+      emoji: '🎯',
+      description: 'Spending goals'
+    },
+    {
+      href: '/finance/settings',
+      label: 'Settings',
+      emoji: '⚙️',
+      description: 'Account preferences'
+    },
+  ]
+
+
+
 ## Testing & Commit Checklist Template
 
 **For Each Task:**

@@ -14,7 +14,6 @@ import type { PlaidItem } from '@/lib/supabase';
 import { formatDate, formatRelativeTime } from '@/lib/supabase';
 import toast from 'react-hot-toast';
 import {
-  ArrowLeft,
   User,
   Mail,
   Calendar,
@@ -122,10 +121,10 @@ export default function SettingsPage() {
    */
   if (loading) {
     return (
-      <div className="min-h-screen bg-gray-50 dark:bg-gray-900 flex items-center justify-center">
+      <div className="min-h-screen bg-[#1a1a1a] flex items-center justify-center">
         <div className="text-center">
-          <Loader2 className="w-12 h-12 animate-spin text-blue-500 mx-auto" />
-          <p className="mt-4 text-gray-600 dark:text-gray-300">Loading settings...</p>
+          <Loader2 className="w-12 h-12 animate-spin text-[#10b981] mx-auto" />
+          <p className="mt-4 text-[#a3a3a3]">Loading settings...</p>
         </div>
       </div>
     );
@@ -136,267 +135,302 @@ export default function SettingsPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50 dark:bg-gray-900 p-4 sm:p-6 lg:p-8">
-      <div className="max-w-4xl mx-auto">
+    <div className="min-h-screen bg-[#1a1a1a] p-4 sm:p-6 lg:p-8">
+      <div className="max-w-7xl mx-auto">
         {/* Header */}
-        <div className="mb-6">
-          <button
-            onClick={() => router.push('/finance/dashboard')}
-            className="flex items-center text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white mb-4"
-          >
-            <ArrowLeft className="w-5 h-5 mr-2" />
-            Back to Dashboard
-          </button>
-          <h1 className="text-3xl sm:text-4xl font-bold text-gray-900 dark:text-white">
+        <div className="mb-8">
+          <h1 className="text-3xl sm:text-4xl font-bold text-[#e5e5e5]">
             Settings
           </h1>
-          <p className="text-gray-600 dark:text-gray-300 mt-2">
+          <p className="text-[#a3a3a3] mt-2">
             Manage your account and preferences
           </p>
         </div>
 
-        <div className="space-y-6">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
           {/* Profile Section */}
-          <section className="bg-white dark:bg-gray-800 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700 p-6">
-            <h2 className="text-xl font-semibold text-gray-900 dark:text-white mb-6 flex items-center">
-              <User className="w-5 h-5 mr-2" />
-              Profile Information
-            </h2>
+          <section className="relative overflow-hidden lg:col-span-1">
+            <div className="absolute inset-0 bg-gradient-to-br from-[#10b981]/5 to-transparent rounded-lg" />
+            <div className="relative bg-[#e5e5e5]/5 backdrop-blur-sm border border-[#a3a3a3]/10 rounded-lg p-6">
+              <h2 className="text-xl font-semibold text-[#e5e5e5] mb-6 flex items-center">
+                <User className="w-5 h-5 mr-2 text-[#10b981]" />
+                Profile Information
+              </h2>
 
-            <div className="space-y-4">
-              {/* Full Name */}
-              <div className="flex items-start justify-between py-3 border-b border-gray-100 dark:border-gray-700">
-                <div className="flex items-start">
-                  <User className="w-5 h-5 text-gray-400 dark:text-gray-500 mt-0.5 mr-3" />
+              <div className="space-y-4">
+                {/* Full Name */}
+                <div className="flex items-start justify-between py-3 border-b border-[#a3a3a3]/10">
+                  <div className="flex items-start">
+                    <User className="w-5 h-5 text-[#737373] mt-0.5 mr-3" />
+                    <div>
+                      <p className="text-sm font-medium text-[#a3a3a3]">
+                        Full Name
+                      </p>
+                      <p className="text-base text-[#e5e5e5] mt-1">
+                        {user.full_name || 'Not provided'}
+                      </p>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Email */}
+                <div className="flex items-start justify-between py-3 border-b border-[#a3a3a3]/10">
+                  <div className="flex items-start">
+                    <Mail className="w-5 h-5 text-[#737373] mt-0.5 mr-3" />
+                    <div>
+                      <p className="text-sm font-medium text-[#a3a3a3]">Email</p>
+                      <p className="text-base text-[#e5e5e5] mt-1">{user.email}</p>
+                    </div>
+                  </div>
+                  {user.is_admin && (
+                    <span className="px-2 py-1 bg-[#10b981]/20 text-[#10b981] rounded-full text-xs font-medium">
+                      Admin
+                    </span>
+                  )}
+                </div>
+
+                {/* Member Since */}
+                <div className="flex items-start py-3 border-b border-[#a3a3a3]/10">
+                  <Calendar className="w-5 h-5 text-[#737373] mt-0.5 mr-3" />
                   <div>
-                    <p className="text-sm font-medium text-gray-500 dark:text-gray-400">
-                      Full Name
+                    <p className="text-sm font-medium text-[#a3a3a3]">
+                      Member Since
                     </p>
-                    <p className="text-base text-gray-900 dark:text-white mt-1">
-                      {user.full_name || 'Not provided'}
+                    <p className="text-base text-[#e5e5e5] mt-1">
+                      {user.created_at ? formatDate(user.created_at) : 'N/A'}
+                    </p>
+                    <p className="text-sm text-[#737373] mt-0.5">
+                      {user.created_at ? formatRelativeTime(user.created_at) : 'N/A'}
                     </p>
                   </div>
                 </div>
-              </div>
 
-              {/* Email */}
-              <div className="flex items-start justify-between py-3 border-b border-gray-100 dark:border-gray-700">
-                <div className="flex items-start">
-                  <Mail className="w-5 h-5 text-gray-400 dark:text-gray-500 mt-0.5 mr-3" />
-                  <div>
-                    <p className="text-sm font-medium text-gray-500 dark:text-gray-400">Email</p>
-                    <p className="text-base text-gray-900 dark:text-white mt-1">{user.email}</p>
+                {/* Last Login */}
+                {user.last_login_at && (
+                  <div className="flex items-start py-3">
+                    <Calendar className="w-5 h-5 text-[#737373] mt-0.5 mr-3" />
+                    <div>
+                      <p className="text-sm font-medium text-[#a3a3a3]">
+                        Last Login
+                      </p>
+                      <p className="text-base text-[#e5e5e5] mt-1">
+                        {formatDate(user.last_login_at)}
+                      </p>
+                      <p className="text-sm text-[#737373] mt-0.5">
+                        {formatRelativeTime(user.last_login_at)}
+                      </p>
+                    </div>
                   </div>
-                </div>
-                {user.is_admin && (
-                  <span className="px-2 py-1 bg-blue-100 dark:bg-blue-900/20 text-blue-700 dark:text-blue-400 rounded-full text-xs font-medium">
-                    Admin
-                  </span>
                 )}
               </div>
-
-              {/* Member Since */}
-              <div className="flex items-start py-3 border-b border-gray-100 dark:border-gray-700">
-                <Calendar className="w-5 h-5 text-gray-400 dark:text-gray-500 mt-0.5 mr-3" />
-                <div>
-                  <p className="text-sm font-medium text-gray-500 dark:text-gray-400">
-                    Member Since
-                  </p>
-                  <p className="text-base text-gray-900 dark:text-white mt-1">
-                    {user.created_at ? formatDate(user.created_at) : 'N/A'}
-                  </p>
-                  <p className="text-sm text-gray-500 dark:text-gray-400 mt-0.5">
-                    {user.created_at ? formatRelativeTime(user.created_at) : 'N/A'}
-                  </p>
-                </div>
-              </div>
-
-              {/* Last Login */}
-              {user.last_login_at && (
-                <div className="flex items-start py-3">
-                  <Calendar className="w-5 h-5 text-gray-400 dark:text-gray-500 mt-0.5 mr-3" />
-                  <div>
-                    <p className="text-sm font-medium text-gray-500 dark:text-gray-400">
-                      Last Login
-                    </p>
-                    <p className="text-base text-gray-900 dark:text-white mt-1">
-                      {formatDate(user.last_login_at)}
-                    </p>
-                    <p className="text-sm text-gray-500 dark:text-gray-400 mt-0.5">
-                      {formatRelativeTime(user.last_login_at)}
-                    </p>
-                  </div>
-                </div>
-              )}
             </div>
           </section>
 
           {/* Invite Information */}
           {user.invite_code && (
-            <section className="bg-white dark:bg-gray-800 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700 p-6">
-              <h2 className="text-xl font-semibold text-gray-900 dark:text-white mb-6 flex items-center">
-                <Shield className="w-5 h-5 mr-2" />
-                Invite Information
-              </h2>
+            <section className="relative overflow-hidden lg:col-span-1 flex flex-col">
+              <div className="absolute inset-0 bg-gradient-to-br from-[#10b981]/5 to-transparent rounded-lg" />
+              <div className="relative bg-[#e5e5e5]/5 backdrop-blur-sm border border-[#a3a3a3]/10 rounded-lg p-6 flex-grow">
+                <h2 className="text-xl font-semibold text-[#e5e5e5] mb-6 flex items-center">
+                  <Shield className="w-5 h-5 mr-2 text-[#10b981]" />
+                  Invite Information
+                </h2>
 
-              <div className="space-y-4">
-                {/* Invite Code */}
-                <div className="flex items-start py-3 border-b border-gray-100 dark:border-gray-700">
-                  <Shield className="w-5 h-5 text-gray-400 dark:text-gray-500 mt-0.5 mr-3" />
-                  <div>
-                    <p className="text-sm font-medium text-gray-500 dark:text-gray-400">
-                      Invite Code Used
-                    </p>
-                    <p className="text-base text-gray-900 dark:text-white mt-1 font-mono">
-                      {user.invite_code}
-                    </p>
-                  </div>
-                </div>
-
-                {/* Invite Expiration */}
-                {user.invite_expires_at && (
-                  <div className="flex items-start py-3">
-                    <Calendar className="w-5 h-5 text-gray-400 dark:text-gray-500 mt-0.5 mr-3" />
+                <div className="space-y-4">
+                  {/* Invite Code */}
+                  <div className="flex items-start py-3 border-b border-[#a3a3a3]/10">
+                    <Shield className="w-5 h-5 text-[#737373] mt-0.5 mr-3" />
                     <div>
-                      <p className="text-sm font-medium text-gray-500 dark:text-gray-400">
-                        Invite Expiration
+                      <p className="text-sm font-medium text-[#a3a3a3]">
+                        Invite Code Used
                       </p>
-                      <p className="text-base text-gray-900 dark:text-white mt-1">
-                        {formatDate(user.invite_expires_at)}
+                      <p className="text-base text-[#e5e5e5] mt-1 font-mono">
+                        {user.invite_code}
                       </p>
-                      {new Date(user.invite_expires_at) < new Date() ? (
-                        <p className="text-sm text-red-600 dark:text-red-400 mt-0.5">Expired</p>
-                      ) : (
-                        <p className="text-sm text-green-600 dark:text-green-400 mt-0.5">Active</p>
-                      )}
                     </div>
                   </div>
-                )}
+
+                  {/* Invite Expiration */}
+                  {user.invite_expires_at && (
+                    <div className="flex items-start py-3 border-b border-[#a3a3a3]/10">
+                      <Calendar className="w-5 h-5 text-[#737373] mt-0.5 mr-3" />
+                      <div>
+                        <p className="text-sm font-medium text-[#a3a3a3]">
+                          Invite Expiration
+                        </p>
+                        <p className="text-base text-[#e5e5e5] mt-1">
+                          {formatDate(user.invite_expires_at)}
+                        </p>
+                        {new Date(user.invite_expires_at) < new Date() ? (
+                          <p className="text-sm text-red-400 mt-0.5">Expired</p>
+                        ) : (
+                          <p className="text-sm text-[#10b981] mt-0.5">Active</p>
+                        )}
+                      </div>
+                    </div>
+                  )}
+
+                  {/* Account Status */}
+                  <div className="flex items-start py-3 pb-6">
+                    <CheckCircle className="w-5 h-5 text-[#737373] mt-0.5 mr-3" />
+                    <div className="flex-1">
+                      <p className="text-sm font-medium text-[#a3a3a3] mb-3">
+                        Account Status
+                      </p>
+                      <div className="flex flex-wrap items-center gap-2">
+                        <span className="px-3 py-1.5 bg-[#10b981]/20 text-[#10b981] rounded-full text-xs font-medium">
+                          Active
+                        </span>
+                        {user.is_admin && (
+                          <span className="px-3 py-1.5 bg-purple-900/30 text-purple-300 rounded-full text-xs font-medium">
+                            Administrator
+                          </span>
+                        )}
+                      </div>
+                      <p className="text-xs text-[#737373] mt-3 leading-relaxed">
+                        Your account has full access to all OneLibro features and services.
+                      </p>
+                    </div>
+                  </div>
+                </div>
               </div>
             </section>
           )}
 
           {/* Connected Banks */}
-          <section className="bg-white dark:bg-gray-800 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700 p-6">
-            <h2 className="text-xl font-semibold text-gray-900 dark:text-white mb-6 flex items-center">
-              <CreditCard className="w-5 h-5 mr-2" />
-              Connected Banks
-            </h2>
+          <section className={`relative overflow-hidden ${plaidItems.length <= 2 ? 'lg:col-span-1' : 'lg:col-span-2'}`}>
+            <div className="absolute inset-0 bg-gradient-to-br from-[#10b981]/5 to-transparent rounded-lg" />
+            <div className="relative bg-[#e5e5e5]/5 backdrop-blur-sm border border-[#a3a3a3]/10 rounded-lg p-6">
+              <h2 className="text-xl font-semibold text-[#e5e5e5] mb-6 flex items-center">
+                <CreditCard className="w-5 h-5 mr-2 text-[#10b981]" />
+                Connected Banks
+                {plaidItems.length > 0 && (
+                  <span className="ml-auto text-sm font-normal text-[#a3a3a3]">
+                    {plaidItems.length} {plaidItems.length === 1 ? 'Bank' : 'Banks'}
+                  </span>
+                )}
+              </h2>
 
-            {plaidItems.length === 0 ? (
-              <div className="text-center py-8">
-                <AlertCircle className="w-12 h-12 text-gray-400 dark:text-gray-500 mx-auto mb-3" />
-                <p className="text-gray-600 dark:text-gray-300">No bank accounts connected</p>
-                <button
-                  onClick={() => router.push('/finance/dashboard')}
-                  className="mt-4 text-blue-500 dark:text-blue-400 hover:text-blue-600 dark:hover:text-blue-300 font-medium text-sm"
-                >
-                  Connect a bank account
-                </button>
-              </div>
-            ) : (
-              <div className="space-y-3">
-                {plaidItems.map((item) => (
-                  <div
-                    key={item.id}
-                    className="flex items-center justify-between p-4 border border-gray-200 dark:border-gray-700 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors"
+              {plaidItems.length === 0 ? (
+                <div className="text-center py-8">
+                  <AlertCircle className="w-12 h-12 text-[#737373] mx-auto mb-3" />
+                  <p className="text-[#a3a3a3]">No bank accounts connected</p>
+                  <button
+                    onClick={() => router.push('/finance/dashboard')}
+                    className="mt-4 text-[#10b981] hover:text-[#10b981]/80 font-medium text-sm transition-colors"
                   >
-                    <div className="flex items-center flex-1">
-                      <CreditCard className="w-5 h-5 text-gray-400 dark:text-gray-500 mr-3" />
-                      <div className="flex-1">
-                        <p className="font-semibold text-gray-900 dark:text-white">
-                          {item.institution_name}
-                        </p>
-                        <p className="text-sm text-gray-500 dark:text-gray-400">
-                          Connected {item.created_at ? formatRelativeTime(item.created_at) : 'recently'}
-                        </p>
-                        {item.last_synced_at && (
-                          <p className="text-xs text-gray-400 dark:text-gray-500 mt-0.5">
-                            Last synced {formatRelativeTime(item.last_synced_at)}
+                    Connect a bank account
+                  </button>
+                </div>
+              ) : (
+                <div className={`grid gap-4 ${plaidItems.length === 1 ? 'grid-cols-1' : 'grid-cols-1 md:grid-cols-2'}`}>
+                  {plaidItems.map((item) => (
+                    <div
+                      key={item.id}
+                      className="flex flex-col sm:flex-row sm:items-center sm:justify-between p-4 border border-[#a3a3a3]/10 rounded-lg hover:bg-[#e5e5e5]/5 transition-colors gap-3"
+                    >
+                      <div className="flex items-start sm:items-center flex-1 gap-3">
+                        <CreditCard className="w-5 h-5 text-[#10b981] flex-shrink-0 mt-0.5 sm:mt-0" />
+                        <div className="flex-1 min-w-0">
+                          <p className="font-semibold text-[#e5e5e5] truncate">
+                            {item.institution_name}
                           </p>
+                          <p className="text-sm text-[#a3a3a3]">
+                            Connected {item.created_at ? formatRelativeTime(item.created_at) : 'recently'}
+                          </p>
+                          {item.last_synced_at && (
+                            <p className="text-xs text-[#737373] mt-0.5">
+                              Last synced {formatRelativeTime(item.last_synced_at)}
+                            </p>
+                          )}
+                        </div>
+                      </div>
+
+                      {/* Status Badge and Actions */}
+                      <div className="flex items-center gap-3 justify-between sm:justify-end">
+                        {item.status === 'active' ? (
+                          <span className="flex items-center px-3 py-1 bg-green-900/30 text-green-300 rounded-full text-xs font-medium">
+                            <CheckCircle className="w-3 h-3 mr-1" />
+                            Active
+                          </span>
+                        ) : item.status === 'error' ? (
+                          <span className="flex items-center px-3 py-1 bg-red-900/30 text-red-300 rounded-full text-xs font-medium">
+                            <XCircle className="w-3 h-3 mr-1" />
+                            Error
+                          </span>
+                        ) : (
+                          <span className="flex items-center px-3 py-1 bg-yellow-900/30 text-yellow-300 rounded-full text-xs font-medium">
+                            <AlertCircle className="w-3 h-3 mr-1" />
+                            {item.status}
+                          </span>
                         )}
+
+                        {/* Unlink Button */}
+                        <button
+                          onClick={() => handleUnlinkAccount(item.id, item.institution_name || 'this bank')}
+                          disabled={unlinkingItemId === item.id}
+                          className="p-2 text-red-400 hover:bg-red-900/20 rounded-lg transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                          title="Unlink account"
+                        >
+                          {unlinkingItemId === item.id ? (
+                            <Loader2 className="w-4 h-4 animate-spin" />
+                          ) : (
+                            <Trash2 className="w-4 h-4" />
+                          )}
+                        </button>
                       </div>
                     </div>
-
-                    {/* Status Badge and Actions */}
-                    <div className="flex items-center gap-3">
-                      {item.status === 'active' ? (
-                        <span className="flex items-center px-3 py-1 bg-green-100 dark:bg-green-900/20 text-green-700 dark:text-green-400 rounded-full text-xs font-medium">
-                          <CheckCircle className="w-3 h-3 mr-1" />
-                          Active
-                        </span>
-                      ) : item.status === 'error' ? (
-                        <span className="flex items-center px-3 py-1 bg-red-100 dark:bg-red-900/20 text-red-700 dark:text-red-400 rounded-full text-xs font-medium">
-                          <XCircle className="w-3 h-3 mr-1" />
-                          Error
-                        </span>
-                      ) : (
-                        <span className="flex items-center px-3 py-1 bg-yellow-100 dark:bg-yellow-900/20 text-yellow-700 dark:text-yellow-400 rounded-full text-xs font-medium">
-                          <AlertCircle className="w-3 h-3 mr-1" />
-                          {item.status}
-                        </span>
-                      )}
-
-                      {/* Unlink Button */}
-                      <button
-                        onClick={() => handleUnlinkAccount(item.id, item.institution_name || 'this bank')}
-                        disabled={unlinkingItemId === item.id}
-                        className="p-2 text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-900/20 rounded-lg transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
-                        title="Unlink account"
-                      >
-                        {unlinkingItemId === item.id ? (
-                          <Loader2 className="w-4 h-4 animate-spin" />
-                        ) : (
-                          <Trash2 className="w-4 h-4" />
-                        )}
-                      </button>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            )}
+                  ))}
+                </div>
+              )}
+            </div>
           </section>
 
           {/* Danger Zone */}
-          <section className="bg-white dark:bg-gray-800 rounded-lg shadow-sm border border-red-200 dark:border-red-900/50 p-6">
-            <h2 className="text-xl font-semibold text-red-600 dark:text-red-400 mb-6 flex items-center">
-              <LogOut className="w-5 h-5 mr-2" />
-              Account Actions
-            </h2>
+          <section className="relative overflow-hidden lg:col-span-2">
+            <div className="absolute inset-0 bg-gradient-to-br from-red-900/10 to-transparent rounded-lg" />
+            <div className="relative bg-[#e5e5e5]/5 backdrop-blur-sm border border-red-900/50 rounded-lg p-6">
+              <h2 className="text-xl font-semibold text-red-400 mb-6 flex items-center">
+                <LogOut className="w-5 h-5 mr-2" />
+                Account Actions
+              </h2>
 
-            <div className="space-y-4">
-              {/* Sign Out */}
-              <div className="flex items-center justify-between p-4 border border-gray-200 dark:border-gray-700 rounded-lg">
-                <div>
-                  <p className="font-semibold text-gray-900 dark:text-white">Sign Out</p>
-                  <p className="text-sm text-gray-600 dark:text-gray-300 mt-1">
-                    Sign out of your OneLibro account
+              <div className="space-y-4">
+                {/* Sign Out */}
+                <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between p-4 border border-[#a3a3a3]/10 rounded-lg gap-4">
+                  <div>
+                    <p className="font-semibold text-[#e5e5e5]">Sign Out</p>
+                    <p className="text-sm text-[#a3a3a3] mt-1">
+                      Sign out of your OneLibro account
+                    </p>
+                  </div>
+                  <button
+                    onClick={handleSignOut}
+                    className="bg-red-500 hover:bg-red-600 text-white px-6 py-2 rounded-lg font-semibold transition-colors flex items-center justify-center whitespace-nowrap"
+                  >
+                    <LogOut className="w-4 h-4 mr-2" />
+                    Sign Out
+                  </button>
+                </div>
+
+                {/* Account Info */}
+                <div className="p-4 bg-[#0f0f0f] rounded-lg border border-[#a3a3a3]/10">
+                  <p className="text-sm text-[#a3a3a3]">
+                    <strong>Account ID:</strong>{' '}
+                    <span className="font-mono text-xs break-all">{user.id}</span>
                   </p>
                 </div>
-                <button
-                  onClick={handleSignOut}
-                  className="bg-red-500 hover:bg-red-600 text-white px-6 py-2 rounded-lg font-semibold transition-colors flex items-center"
-                >
-                  <LogOut className="w-4 h-4 mr-2" />
-                  Sign Out
-                </button>
-              </div>
-
-              {/* Account Info */}
-              <div className="p-4 bg-gray-50 dark:bg-gray-700 rounded-lg border border-gray-200 dark:border-gray-600">
-                <p className="text-sm text-gray-600 dark:text-gray-300">
-                  <strong>Account ID:</strong>{' '}
-                  <span className="font-mono text-xs">{user.id}</span>
-                </p>
               </div>
             </div>
           </section>
 
           {/* Footer */}
-          <div className="text-center text-sm text-gray-500 py-4">
-            <p>OneLibro Phase 2 - Financial Management Platform</p>
-            <p className="mt-1">
-              Need help? Contact support or visit the dashboard.
+          <div className="lg:col-span-2 text-center py-6 border-t border-[#a3a3a3]/10">
+            <p className="text-sm text-[#a3a3a3] font-medium">
+              OneLibro - Financial Management Platform
+            </p>
+            <p className="text-xs text-[#737373] mt-2">
+              Need assistance? Contact our support team for help.
             </p>
           </div>
         </div>

@@ -93,7 +93,11 @@ export default function FinanceHeader({ onBankConnected }: FinanceHeaderProps) {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
           {/* Logo / Title */}
-          <div className="flex items-center space-x-3">
+          <Link
+            href="/finance/dashboard"
+            onClick={(e) => handleNavigation(e, '/finance/dashboard')}
+            className="flex items-center space-x-3 cursor-pointer hover:opacity-80 transition-opacity"
+          >
             <div className="w-8 h-8 relative">
               <Image
                 src="/oneLibro-logo.png"
@@ -109,7 +113,7 @@ export default function FinanceHeader({ onBankConnected }: FinanceHeaderProps) {
                 Welcome, {user?.user_metadata?.name || user?.full_name || 'User'}
               </p>
             </div>
-          </div>
+          </Link>
 
           {/* Desktop Navigation */}
           <nav className="hidden md:flex items-center space-x-1">

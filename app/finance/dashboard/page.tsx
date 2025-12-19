@@ -140,14 +140,11 @@ export default function FinanceDashboard() {
       {/* Main Content */}
       <main className="min-h-screen bg-[#1a1a1a] px-4 sm:px-6 lg:px-8 py-8">
         <div className="max-w-7xl mx-auto">
-          {/* Welcome Header */}
+          {/* Dashboard Header */}
           <div className="mb-8">
-            <h1 className="text-3xl lg:text-4xl font-bold text-[#e5e5e5] mb-2">
+            <h1 className="text-3xl lg:text-4xl font-bold text-[#e5e5e5]">
               Dashboard
             </h1>
-            <p className="text-[#a3a3a3]">
-              Welcome back, {user?.user_metadata?.name || 'User'}
-            </p>
           </div>
 
           {/* Error State */}
@@ -309,67 +306,81 @@ export default function FinanceDashboard() {
 
                   {/* Quick Actions */}
                   <div className="relative overflow-hidden">
-                    <div className="absolute inset-0 bg-gradient-to-br from-[#a3a3a3]/5 to-transparent rounded-xl" />
-                    <div className="relative bg-[#e5e5e5]/5 backdrop-blur-sm border border-[#a3a3a3]/10 rounded-xl p-6">
-                      <h3 className="text-xl font-bold text-[#e5e5e5] mb-6">
-                        Quick Actions
-                      </h3>
+                    <div className="absolute inset-0 bg-gradient-to-br from-[#10b981]/10 via-[#10b981]/5 to-transparent rounded-xl" />
+                    <div className="relative bg-[#e5e5e5]/5 backdrop-blur-sm border border-[#10b981]/20 rounded-xl p-6">
+                      <div className="flex items-center gap-3 mb-6">
+                        <div className="w-10 h-10 rounded-lg bg-[#10b981]/20 flex items-center justify-center">
+                          <ArrowRight className="w-5 h-5 text-[#10b981]" strokeWidth={2} />
+                        </div>
+                        <h3 className="text-xl font-bold text-[#e5e5e5]">
+                          Quick Actions
+                        </h3>
+                      </div>
                       <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                         {/* View Accounts */}
                         <button
                           onClick={() => router.push('/finance/accounts')}
-                          className="group relative overflow-hidden p-5 bg-[#e5e5e5]/5 border border-[#a3a3a3]/10 hover:border-[#10b981]/40 rounded-xl transition-all text-left"
+                          className="group relative overflow-hidden p-6 bg-[#0f0f0f] border border-[#a3a3a3]/10 hover:border-[#10b981] hover:bg-[#10b981]/5 rounded-xl transition-all text-left"
                         >
-                          <div className="flex items-start justify-between mb-3">
-                            <div className="w-10 h-10 rounded-lg bg-[#10b981]/15 flex items-center justify-center">
-                              <Building2 className="w-5 h-5 text-[#10b981]" strokeWidth={2} />
+                          <div className="absolute inset-0 bg-gradient-to-br from-[#10b981]/0 to-transparent group-hover:from-[#10b981]/10 transition-all" />
+                          <div className="relative">
+                            <div className="flex items-start justify-between mb-4">
+                              <div className="w-12 h-12 rounded-xl bg-[#10b981]/15 group-hover:bg-[#10b981]/25 flex items-center justify-center transition-all">
+                                <Building2 className="w-6 h-6 text-[#10b981]" strokeWidth={2} />
+                              </div>
+                              <ArrowRight className="w-5 h-5 text-[#a3a3a3] group-hover:text-[#10b981] group-hover:translate-x-1 transition-all" strokeWidth={2} />
                             </div>
-                            <ArrowRight className="w-5 h-5 text-[#a3a3a3] group-hover:text-[#10b981] group-hover:translate-x-1 transition-all" strokeWidth={2} />
+                            <p className="font-semibold text-[#e5e5e5] mb-2 text-base">
+                              View All Accounts
+                            </p>
+                            <p className="text-sm text-[#a3a3a3] leading-relaxed">
+                              Manage your connected banks
+                            </p>
                           </div>
-                          <p className="font-semibold text-[#e5e5e5] mb-1">
-                            View All Accounts
-                          </p>
-                          <p className="text-sm text-[#737373]">
-                            Manage your connected banks
-                          </p>
                         </button>
 
                         {/* View Transactions */}
                         <button
                           onClick={() => router.push('/finance/transactions')}
-                          className="group relative overflow-hidden p-5 bg-[#e5e5e5]/5 border border-[#a3a3a3]/10 hover:border-[#10b981]/40 rounded-xl transition-all text-left"
+                          className="group relative overflow-hidden p-6 bg-[#0f0f0f] border border-[#a3a3a3]/10 hover:border-[#10b981] hover:bg-[#10b981]/5 rounded-xl transition-all text-left"
                         >
-                          <div className="flex items-start justify-between mb-3">
-                            <div className="w-10 h-10 rounded-lg bg-[#10b981]/15 flex items-center justify-center">
-                              <TrendingDown className="w-5 h-5 text-[#10b981]" strokeWidth={2} />
+                          <div className="absolute inset-0 bg-gradient-to-br from-[#10b981]/0 to-transparent group-hover:from-[#10b981]/10 transition-all" />
+                          <div className="relative">
+                            <div className="flex items-start justify-between mb-4">
+                              <div className="w-12 h-12 rounded-xl bg-[#10b981]/15 group-hover:bg-[#10b981]/25 flex items-center justify-center transition-all">
+                                <TrendingDown className="w-6 h-6 text-[#10b981]" strokeWidth={2} />
+                              </div>
+                              <ArrowRight className="w-5 h-5 text-[#a3a3a3] group-hover:text-[#10b981] group-hover:translate-x-1 transition-all" strokeWidth={2} />
                             </div>
-                            <ArrowRight className="w-5 h-5 text-[#a3a3a3] group-hover:text-[#10b981] group-hover:translate-x-1 transition-all" strokeWidth={2} />
+                            <p className="font-semibold text-[#e5e5e5] mb-2 text-base">
+                              View All Transactions
+                            </p>
+                            <p className="text-sm text-[#a3a3a3] leading-relaxed">
+                              Browse and filter transactions
+                            </p>
                           </div>
-                          <p className="font-semibold text-[#e5e5e5] mb-1">
-                            View All Transactions
-                          </p>
-                          <p className="text-sm text-[#737373]">
-                            Browse and filter transactions
-                          </p>
                         </button>
 
                         {/* Manage Budgets */}
                         <button
                           onClick={() => router.push('/finance/budgets')}
-                          className="group relative overflow-hidden p-5 bg-[#e5e5e5]/5 border border-[#a3a3a3]/10 hover:border-[#10b981]/40 rounded-xl transition-all text-left"
+                          className="group relative overflow-hidden p-6 bg-[#0f0f0f] border border-[#a3a3a3]/10 hover:border-[#10b981] hover:bg-[#10b981]/5 rounded-xl transition-all text-left"
                         >
-                          <div className="flex items-start justify-between mb-3">
-                            <div className="w-10 h-10 rounded-lg bg-[#10b981]/15 flex items-center justify-center">
-                              <Target className="w-5 h-5 text-[#10b981]" strokeWidth={2} />
+                          <div className="absolute inset-0 bg-gradient-to-br from-[#10b981]/0 to-transparent group-hover:from-[#10b981]/10 transition-all" />
+                          <div className="relative">
+                            <div className="flex items-start justify-between mb-4">
+                              <div className="w-12 h-12 rounded-xl bg-[#10b981]/15 group-hover:bg-[#10b981]/25 flex items-center justify-center transition-all">
+                                <Target className="w-6 h-6 text-[#10b981]" strokeWidth={2} />
+                              </div>
+                              <ArrowRight className="w-5 h-5 text-[#a3a3a3] group-hover:text-[#10b981] group-hover:translate-x-1 transition-all" strokeWidth={2} />
                             </div>
-                            <ArrowRight className="w-5 h-5 text-[#a3a3a3] group-hover:text-[#10b981] group-hover:translate-x-1 transition-all" strokeWidth={2} />
+                            <p className="font-semibold text-[#e5e5e5] mb-2 text-base">
+                              Manage Budgets
+                            </p>
+                            <p className="text-sm text-[#a3a3a3] leading-relaxed">
+                              Set and track spending goals
+                            </p>
                           </div>
-                          <p className="font-semibold text-[#e5e5e5] mb-1">
-                            Manage Budgets
-                          </p>
-                          <p className="text-sm text-[#737373]">
-                            Set and track spending goals
-                          </p>
                         </button>
                       </div>
                     </div>

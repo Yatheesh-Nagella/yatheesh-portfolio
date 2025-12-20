@@ -151,7 +151,7 @@ export default function BudgetForm({
     <form onSubmit={handleSubmit} className="space-y-6">
       {/* Budget Name */}
       <div>
-        <label htmlFor="name" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+        <label htmlFor="name" className="block text-sm font-medium text-[#a3a3a3] mb-2">
           <FileText className="w-4 h-4 inline mr-1" />
           Budget Name *
         </label>
@@ -161,14 +161,14 @@ export default function BudgetForm({
           placeholder="e.g., Monthly Groceries, Entertainment"
           value={name}
           onChange={(e) => setName(e.target.value)}
-          className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-gray-500 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+          className="w-full px-4 py-3 border border-[#a3a3a3]/20 bg-[#0f0f0f] text-[#e5e5e5] placeholder-[#737373] rounded-lg focus:ring-2 focus:ring-[#10b981] focus:border-transparent"
           required
         />
       </div>
 
       {/* Category */}
       <div>
-        <label htmlFor="category" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+        <label htmlFor="category" className="block text-sm font-medium text-[#a3a3a3] mb-2">
           <Tag className="w-4 h-4 inline mr-1" />
           Category *
         </label>
@@ -176,7 +176,7 @@ export default function BudgetForm({
           id="category"
           value={category}
           onChange={(e) => setCategory(e.target.value)}
-          className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-white rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+          className="w-full px-4 py-3 border border-[#a3a3a3]/20 bg-[#0f0f0f] text-[#e5e5e5] rounded-lg focus:ring-2 focus:ring-[#10b981] focus:border-transparent"
           required
         >
           <option value="">Select a category</option>
@@ -186,19 +186,19 @@ export default function BudgetForm({
             </option>
           ))}
         </select>
-        <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">
+        <p className="text-xs text-[#737373] mt-1">
           Transactions with matching categories will be tracked against this budget
         </p>
       </div>
 
       {/* Amount */}
       <div>
-        <label htmlFor="amount" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+        <label htmlFor="amount" className="block text-sm font-medium text-[#a3a3a3] mb-2">
           <DollarSign className="w-4 h-4 inline mr-1" />
           Budget Amount *
         </label>
         <div className="relative">
-          <span className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-500 dark:text-gray-400">$</span>
+          <span className="absolute left-3 top-1/2 -translate-y-1/2 text-[#737373]">$</span>
           <input
             id="amount"
             type="number"
@@ -207,7 +207,7 @@ export default function BudgetForm({
             placeholder="0.00"
             value={amount}
             onChange={(e) => setAmount(e.target.value)}
-            className="w-full pl-8 pr-4 py-3 border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-white rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+            className="w-full pl-8 pr-4 py-3 border border-[#a3a3a3]/20 bg-[#0f0f0f] text-[#e5e5e5] rounded-lg focus:ring-2 focus:ring-[#10b981] focus:border-transparent"
             required
           />
         </div>
@@ -215,7 +215,7 @@ export default function BudgetForm({
 
       {/* Period */}
       <div>
-        <label htmlFor="period" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+        <label htmlFor="period" className="block text-sm font-medium text-[#a3a3a3] mb-2">
           <Calendar className="w-4 h-4 inline mr-1" />
           Budget Period *
         </label>
@@ -227,15 +227,15 @@ export default function BudgetForm({
               onClick={() => setPeriod(p.value)}
               className={`py-3 px-4 rounded-lg border-2 text-sm font-medium transition-all ${
                 period === p.value
-                  ? 'border-blue-500 bg-blue-50 dark:bg-blue-900/20 text-blue-700 dark:text-blue-400'
-                  : 'border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 text-gray-600 dark:text-gray-300 hover:border-gray-300 dark:hover:border-gray-600'
+                  ? 'border-[#10b981] bg-[#10b981]/20 text-[#10b981]'
+                  : 'border-[#a3a3a3]/20 bg-[#0f0f0f] text-[#a3a3a3] hover:border-[#a3a3a3]/40'
               }`}
             >
               {p.label}
             </button>
           ))}
         </div>
-        <p className="text-xs text-gray-500 dark:text-gray-400 mt-2">
+        <p className="text-xs text-[#737373] mt-2">
           {period === 'weekly' && 'Budget resets every Monday'}
           {period === 'monthly' && 'Budget resets on the 1st of each month'}
           {period === 'yearly' && 'Budget resets on January 1st'}
@@ -244,15 +244,15 @@ export default function BudgetForm({
 
       {/* Suggested Amounts */}
       {!isEditing && (
-        <div className="p-4 bg-gray-50 dark:bg-gray-700/50 rounded-lg">
-          <p className="text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Quick amounts:</p>
+        <div className="p-4 bg-[#10b981]/10 rounded-lg">
+          <p className="text-sm font-medium text-[#e5e5e5] mb-2">Quick amounts:</p>
           <div className="flex flex-wrap gap-2">
             {[50, 100, 200, 500, 1000].map((amt) => (
               <button
                 key={amt}
                 type="button"
                 onClick={() => setAmount(amt.toString())}
-                className="px-3 py-1 bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 rounded-full text-sm text-gray-600 dark:text-gray-300 hover:border-blue-500 dark:hover:border-blue-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors"
+                className="px-3 py-1 bg-[#0f0f0f] border border-[#a3a3a3]/20 rounded-full text-sm text-[#a3a3a3] hover:border-[#10b981] hover:text-[#10b981] transition-colors"
               >
                 ${amt}
               </button>
@@ -266,14 +266,14 @@ export default function BudgetForm({
         <button
           type="button"
           onClick={() => router.back()}
-          className="flex-1 py-3 px-4 border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 bg-white dark:bg-gray-700 rounded-lg font-medium hover:bg-gray-50 dark:hover:bg-gray-600 transition-colors"
+          className="flex-1 py-3 px-4 border border-[#a3a3a3]/20 text-[#a3a3a3] bg-[#0f0f0f] rounded-lg font-medium hover:bg-[#e5e5e5]/5 transition-colors"
         >
           Cancel
         </button>
         <button
           type="submit"
           disabled={loading}
-          className="flex-1 py-3 px-4 bg-blue-500 text-white rounded-lg font-medium hover:bg-blue-600 transition-colors disabled:bg-blue-300 dark:disabled:bg-blue-700 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+          className="flex-1 py-3 px-4 bg-[#10b981] text-[#1a1a1a] rounded-lg font-medium hover:bg-[#10b981]/90 transition-colors disabled:bg-[#10b981]/50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
         >
           {loading ? (
             <>

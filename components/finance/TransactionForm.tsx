@@ -165,7 +165,7 @@ export default function TransactionForm({
     <form onSubmit={handleSubmit} className="space-y-6">
       {/* Transaction Type Toggle */}
       <div>
-        <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-3">
+        <label className="block text-sm font-medium text-[#a3a3a3] mb-3">
           Transaction Type
         </label>
         <div className="flex gap-4">
@@ -174,8 +174,8 @@ export default function TransactionForm({
             onClick={() => setIsExpense(true)}
             className={`flex-1 flex items-center justify-center gap-2 py-3 px-4 rounded-lg border-2 transition-all ${
               isExpense
-                ? 'border-red-500 bg-red-50 dark:bg-red-900/20 text-red-700 dark:text-red-400'
-                : 'border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 text-gray-600 dark:text-gray-300 hover:border-gray-300 dark:hover:border-gray-600'
+                ? 'border-red-500 bg-red-500/20 text-red-400'
+                : 'border-[#a3a3a3]/20 bg-[#0f0f0f] text-[#a3a3a3] hover:border-[#a3a3a3]/40'
             }`}
           >
             <ArrowUpCircle className="w-5 h-5" />
@@ -186,8 +186,8 @@ export default function TransactionForm({
             onClick={() => setIsExpense(false)}
             className={`flex-1 flex items-center justify-center gap-2 py-3 px-4 rounded-lg border-2 transition-all ${
               !isExpense
-                ? 'border-green-500 bg-green-50 dark:bg-green-900/20 text-green-700 dark:text-green-400'
-                : 'border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 text-gray-600 dark:text-gray-300 hover:border-gray-300 dark:hover:border-gray-600'
+                ? 'border-[#10b981] bg-[#10b981]/20 text-[#10b981]'
+                : 'border-[#a3a3a3]/20 bg-[#0f0f0f] text-[#a3a3a3] hover:border-[#a3a3a3]/40'
             }`}
           >
             <ArrowDownCircle className="w-5 h-5" />
@@ -198,12 +198,12 @@ export default function TransactionForm({
 
       {/* Amount */}
       <div>
-        <label htmlFor="amount" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+        <label htmlFor="amount" className="block text-sm font-medium text-[#a3a3a3] mb-2">
           <DollarSign className="w-4 h-4 inline mr-1" />
           Amount *
         </label>
         <div className="relative">
-          <span className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-500 dark:text-gray-400">$</span>
+          <span className="absolute left-3 top-1/2 -translate-y-1/2 text-[#737373]">$</span>
           <input
             id="amount"
             type="number"
@@ -212,7 +212,7 @@ export default function TransactionForm({
             placeholder="0.00"
             value={amount}
             onChange={(e) => setAmount(e.target.value)}
-            className="w-full pl-8 pr-4 py-3 border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-white rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+            className="w-full pl-8 pr-4 py-3 border border-[#a3a3a3]/20 bg-[#0f0f0f] text-[#e5e5e5] rounded-lg focus:ring-2 focus:ring-[#10b981] focus:border-transparent"
             required
           />
         </div>
@@ -220,7 +220,7 @@ export default function TransactionForm({
 
       {/* Merchant Name */}
       <div>
-        <label htmlFor="merchantName" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+        <label htmlFor="merchantName" className="block text-sm font-medium text-[#a3a3a3] mb-2">
           <Store className="w-4 h-4 inline mr-1" />
           Merchant Name *
         </label>
@@ -230,14 +230,14 @@ export default function TransactionForm({
           placeholder="e.g., Starbucks, Amazon, Rent Payment"
           value={merchantName}
           onChange={(e) => setMerchantName(e.target.value)}
-          className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-gray-500 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+          className="w-full px-4 py-3 border border-[#a3a3a3]/20 bg-[#0f0f0f] text-[#e5e5e5] placeholder-[#737373] rounded-lg focus:ring-2 focus:ring-[#10b981] focus:border-transparent"
           required
         />
       </div>
 
       {/* Category */}
       <div>
-        <label htmlFor="category" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+        <label htmlFor="category" className="block text-sm font-medium text-[#a3a3a3] mb-2">
           <Tag className="w-4 h-4 inline mr-1" />
           Category
         </label>
@@ -245,7 +245,7 @@ export default function TransactionForm({
           id="category"
           value={category}
           onChange={(e) => setCategory(e.target.value)}
-          className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-white rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+          className="w-full px-4 py-3 border border-[#a3a3a3]/20 bg-[#0f0f0f] text-[#e5e5e5] rounded-lg focus:ring-2 focus:ring-[#10b981] focus:border-transparent"
         >
           <option value="">Select a category</option>
           {CATEGORIES.map((cat) => (
@@ -258,7 +258,7 @@ export default function TransactionForm({
 
       {/* Date */}
       <div>
-        <label htmlFor="transactionDate" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+        <label htmlFor="transactionDate" className="block text-sm font-medium text-[#a3a3a3] mb-2">
           <Calendar className="w-4 h-4 inline mr-1" />
           Date *
         </label>
@@ -268,14 +268,14 @@ export default function TransactionForm({
           value={transactionDate}
           onChange={(e) => setTransactionDate(e.target.value)}
           max={new Date().toISOString().split('T')[0]}
-          className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-white rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+          className="w-full px-4 py-3 border border-[#a3a3a3]/20 bg-[#0f0f0f] text-[#e5e5e5] rounded-lg focus:ring-2 focus:ring-[#10b981] focus:border-transparent"
           required
         />
       </div>
 
       {/* Notes */}
       <div>
-        <label htmlFor="notes" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+        <label htmlFor="notes" className="block text-sm font-medium text-[#a3a3a3] mb-2">
           <FileText className="w-4 h-4 inline mr-1" />
           Notes (optional)
         </label>
@@ -285,7 +285,7 @@ export default function TransactionForm({
           value={notes}
           onChange={(e) => setNotes(e.target.value)}
           rows={3}
-          className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-gray-500 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent resize-none"
+          className="w-full px-4 py-3 border border-[#a3a3a3]/20 bg-[#0f0f0f] text-[#e5e5e5] placeholder-[#737373] rounded-lg focus:ring-2 focus:ring-[#10b981] focus:border-transparent resize-none"
         />
       </div>
 
@@ -294,14 +294,14 @@ export default function TransactionForm({
         <button
           type="button"
           onClick={() => router.back()}
-          className="flex-1 py-3 px-4 border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 bg-white dark:bg-gray-700 rounded-lg font-medium hover:bg-gray-50 dark:hover:bg-gray-600 transition-colors"
+          className="flex-1 py-3 px-4 border border-[#a3a3a3]/20 text-[#a3a3a3] bg-[#0f0f0f] rounded-lg font-medium hover:bg-[#e5e5e5]/5 transition-colors"
         >
           Cancel
         </button>
         <button
           type="submit"
           disabled={loading}
-          className="flex-1 py-3 px-4 bg-blue-500 text-white rounded-lg font-medium hover:bg-blue-600 transition-colors disabled:bg-blue-300 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+          className="flex-1 py-3 px-4 bg-[#10b981] text-[#1a1a1a] rounded-lg font-medium hover:bg-[#10b981]/90 transition-colors disabled:bg-[#10b981]/50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
         >
           {loading ? (
             <>

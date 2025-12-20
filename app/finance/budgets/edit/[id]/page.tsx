@@ -7,10 +7,12 @@
 
 import React, { useState, useEffect } from 'react';
 import { useRouter, useParams } from 'next/navigation';
-import { useRequireAuth } from '@/contexts/AuthContext';
+import { useAuth } from '@/contexts/AuthContext';
+import ProtectedRoute from '@/components/finance/ProtectedRoute';
+import DashboardLayout from '@/components/finance/DashboardLayout';
 import { supabase } from '@/lib/supabase';
 import BudgetForm from '@/components/finance/BudgetForm';
-import { ArrowLeft, Loader2, Target } from 'lucide-react';
+import { ArrowLeft, Loader2 } from 'lucide-react';
 import toast from 'react-hot-toast';
 import type { Budget } from '@/types/database.types';
 
@@ -18,7 +20,7 @@ export default function EditBudgetPage() {
   const router = useRouter();
   const params = useParams();
   const budgetId = params.id as string;
-  const { user, loading: authLoading } = useRequireAuth();
+  const { user } = useAuth();
 
   const [budget, setBudget] = useState<Budget | null>(null);
   const [loading, setLoading] = useState(true);
@@ -59,65 +61,54 @@ export default function EditBudgetPage() {
     }
   }, [user, budgetId, router]);
 
-  // Show loading while checking auth or fetching budget
-  if (authLoading || loading) {
-    return (
-      <div className="min-h-screen bg-[#1a1a1a] flex items-center justify-center">
-        <div className="text-center">
-          <Loader2 className="w-12 h-12 animate-spin text-[#10b981] mx-auto" />
-          <p className="mt-4 text-[#a3a3a3]">Loading budget...</p>
-        </div>
-      </div>
-    );
-  }
-
-  // Redirect handled by useRequireAuth if no user
-  if (!user || !budget) return null;
-
   return (
-    <div className="min-h-screen bg-[#1a1a1a] p-4 sm:p-6 lg:p-8">
-      <div className="max-w-2xl mx-auto">
-        {/* Header */}
-        <div className="mb-8">
-          <button
-            onClick={() => router.push('/finance/budgets')}
-            className="flex items-center text-[#a3a3a3] hover:text-[#e5e5e5] mb-4 transition-colors"
-          >
-            <ArrowLeft className="w-5 h-5 mr-2" />
-            Back to Budgets
-          </button>
-          <div className="flex items-center gap-3">
-            <div className="w-12 h-12 bg-[#10b981]/20 rounded-full flex items-center justify-center">
-              <Target className="w-6 h-6 text-[#10b981]" />
+    <ProtectedRoute>
+      <DashboardLayout>
+        <div className="max-w-2xl mx-auto">
+          {/* Loading State */}
+          {loading && (
+            <div className="flex items-center justify-center py-12">
+              <div className="text-center">
+                <Loader2 className="w-12 h-12 animate-spin text-[#10b981] mx-auto" />
+                <p className="mt-4 text-[#a3a3a3]">Loading budget...</p>
+              </div>
             </div>
-            <div>
-              <h1 className="text-2xl sm:text-3xl font-bold text-[#e5e5e5]">
-                Edit Budget
-              </h1>
-              <p className="text-[#a3a3a3] mt-1">
-                Update your budget settings
-              </p>
-            </div>
-          </div>
-        </div>
+          )}
 
-        {/* Form Card */}
-        <div className="relative overflow-hidden">
-          <div className="absolute inset-0 bg-gradient-to-br from-[#10b981]/5 to-transparent rounded-xl" />
-          <div className="relative bg-[#e5e5e5]/5 backdrop-blur-sm border border-[#a3a3a3]/10 rounded-xl p-6 sm:p-8">
-            <BudgetForm
-              initialData={{
-                id: budget.id,
-                name: budget.name,
-                category: budget.category,
-                amount: budget.amount,
-                period: budget.period || 'monthly',
-              }}
-              isEditing={true}
-            />
-          </div>
+          {/* Budget Form */}
+          {!loading && budget && (
+            <>
+              {/* Back Button */}
+              <div className="mb-6">
+                <button
+                  onClick={() => router.push('/finance/budgets')}
+                  className="flex items-center text-[#a3a3a3] hover:text-[#e5e5e5] transition-colors"
+                >
+                  <ArrowLeft className="w-5 h-5 mr-2" />
+                  Back to Budgets
+                </button>
+              </div>
+
+              {/* Form Card */}
+              <div className="relative overflow-hidden">
+                <div className="absolute inset-0 bg-gradient-to-br from-[#10b981]/5 to-transparent rounded-xl" />
+                <div className="relative bg-[#e5e5e5]/5 backdrop-blur-sm border border-[#a3a3a3]/10 rounded-xl p-6 sm:p-8">
+                  <BudgetForm
+                    initialData={{
+                      id: budget.id,
+                      name: budget.name,
+                      category: budget.category,
+                      amount: budget.amount,
+                      period: budget.period || 'monthly',
+                    }}
+                    isEditing={true}
+                  />
+                </div>
+              </div>
+            </>
+          )}
         </div>
-      </div>
-    </div>
+      </DashboardLayout>
+    </ProtectedRoute>
   );
 }

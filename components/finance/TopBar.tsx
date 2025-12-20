@@ -9,12 +9,9 @@
 import React, { useState } from 'react';
 import { usePathname, useRouter } from 'next/navigation';
 import { useAuth } from '@/contexts/AuthContext';
-import PlaidLink from '@/components/finance/PlaidLink';
 import { LogOut, User, ChevronDown } from 'lucide-react';
 
-interface TopBarProps {
-  onBankConnected?: () => void;
-}
+interface TopBarProps {}
 
 interface PageInfo {
   title: string;
@@ -29,7 +26,7 @@ const pageMap: Record<string, PageInfo> = {
   '/finance/settings': { title: 'Settings', emoji: '⚙️' },
 };
 
-export default function TopBar({ onBankConnected }: TopBarProps) {
+export default function TopBar({}: TopBarProps) {
   const pathname = usePathname();
   const router = useRouter();
   const { user, signOut } = useAuth();
@@ -37,14 +34,6 @@ export default function TopBar({ onBankConnected }: TopBarProps) {
 
   // Get current page info
   const pageInfo = pageMap[pathname] || { title: 'OneLibro', emoji: '💚' };
-
-  // Handle bank connected
-  const handleBankConnected = () => {
-    if (onBankConnected) {
-      onBankConnected();
-    }
-    router.refresh();
-  };
 
   // Handle sign out
   const handleSignOut = () => {
@@ -66,13 +55,6 @@ export default function TopBar({ onBankConnected }: TopBarProps) {
 
         {/* Right: Actions */}
         <div className="flex items-center gap-3">
-          {/* Connect Bank Button */}
-          <PlaidLink
-            onSuccess={handleBankConnected}
-            buttonText="Connect Bank"
-            variant="primary"
-          />
-
           {/* User Dropdown */}
           <div className="relative">
             <button

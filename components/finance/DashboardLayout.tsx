@@ -13,22 +13,20 @@ import BottomNav from './BottomNav';
 
 interface DashboardLayoutProps {
   children: React.ReactNode;
-  onBankConnected?: () => void;
 }
 
 export default function DashboardLayout({
   children,
-  onBankConnected,
 }: DashboardLayoutProps) {
   return (
     <div className="min-h-screen bg-[#0f0f0f] flex">
       {/* Sidebar - Desktop Only */}
-      <Sidebar onBankConnected={onBankConnected} />
+      <Sidebar />
 
       {/* Main Content Area */}
       <div className="flex-1 flex flex-col min-w-0">
         {/* TopBar - Desktop Only */}
-        <TopBar onBankConnected={onBankConnected} />
+        <TopBar />
 
         {/* Page Content */}
         <main className="flex-1 overflow-x-hidden">

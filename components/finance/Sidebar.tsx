@@ -11,7 +11,6 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { usePathname, useRouter } from 'next/navigation';
 import { useAuth } from '@/contexts/AuthContext';
-import PlaidLink from '@/components/finance/PlaidLink';
 import {
   ChevronLeft,
   ChevronRight,
@@ -27,9 +26,7 @@ interface NavItem {
   description: string;
 }
 
-interface SidebarProps {
-  onBankConnected?: () => void;
-}
+interface SidebarProps {}
 
 const navItems: NavItem[] = [
   {
@@ -64,7 +61,7 @@ const navItems: NavItem[] = [
   },
 ];
 
-export default function Sidebar({ onBankConnected }: SidebarProps) {
+export default function Sidebar({}: SidebarProps) {
   const pathname = usePathname();
   const router = useRouter();
   const { user, signOut } = useAuth();
@@ -112,14 +109,6 @@ export default function Sidebar({ onBankConnected }: SidebarProps) {
       signOut();
       router.push('/finance/login');
     }
-  };
-
-  // Handle bank connected
-  const handleBankConnected = () => {
-    if (onBankConnected) {
-      onBankConnected();
-    }
-    router.refresh();
   };
 
   return (
@@ -241,15 +230,6 @@ export default function Sidebar({ onBankConnected }: SidebarProps) {
 
       {/* Bottom Section - User & Actions */}
       <div className="border-t border-[#a3a3a3]/10 p-3 space-y-2">
-        {/* Connect Button */}
-        <div className={isCollapsed ? 'flex justify-center' : ''}>
-          <PlaidLink
-            onSuccess={handleBankConnected}
-            buttonText={isCollapsed ? '🔗' : 'Connect Bank'}
-            variant="primary"
-          />
-        </div>
-
         {/* User Info */}
         {!isCollapsed && user && (
           <div className="px-3 py-2 bg-[#e5e5e5]/5 rounded-lg">

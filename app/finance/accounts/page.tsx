@@ -123,7 +123,7 @@ export default function AccountsPage() {
 
   return (
     <ProtectedRoute>
-      <DashboardLayout onBankConnected={handleBankConnected}>
+      <DashboardLayout>
         <div className="max-w-7xl mx-auto">
           {/* Loading State */}
           {loading && (

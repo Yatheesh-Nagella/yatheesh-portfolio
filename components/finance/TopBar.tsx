@@ -11,8 +11,6 @@ import { usePathname, useRouter } from 'next/navigation';
 import { useAuth } from '@/contexts/AuthContext';
 import { LogOut, User, ChevronDown } from 'lucide-react';
 
-interface TopBarProps {}
-
 interface PageInfo {
   title: string;
   emoji: string;
@@ -26,7 +24,7 @@ const pageMap: Record<string, PageInfo> = {
   '/finance/settings': { title: 'Settings', emoji: '⚙️' },
 };
 
-export default function TopBar({}: TopBarProps) {
+export default function TopBar() {
   const pathname = usePathname();
   const router = useRouter();
   const { user, signOut } = useAuth();

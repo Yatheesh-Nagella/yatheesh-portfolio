@@ -26,8 +26,6 @@ interface NavItem {
   description: string;
 }
 
-interface SidebarProps {}
-
 const navItems: NavItem[] = [
   {
     href: '/finance/dashboard',
@@ -61,7 +59,7 @@ const navItems: NavItem[] = [
   },
 ];
 
-export default function Sidebar({}: SidebarProps) {
+export default function Sidebar() {
   const pathname = usePathname();
   const router = useRouter();
   const { user, signOut } = useAuth();

@@ -275,7 +275,7 @@ export default function OneLibroLanding() {
           <div className="border-t border-[#a3a3a3]/10" />
 
           <div className="flex flex-col md:flex-row items-center justify-between gap-6">
-            <div className="flex gap-8 text-sm font-normal text-[#a3a3a3]">
+            <div className="flex flex-wrap justify-center gap-8 text-sm font-normal text-[#a3a3a3]">
               <button
                 onClick={() => router.push('/finance/privacy')}
                 className="hover:text-[#1a1a1a] hover:bg-[#10b981] px-3 py-1 rounded transition-all"
@@ -294,6 +294,14 @@ export default function OneLibroLanding() {
               >
                 Security
               </button>
+              <a
+                href="https://yatheesh-nagella.github.io/OneLibro-DOCS/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="hover:text-[#1a1a1a] hover:bg-[#10b981] px-3 py-1 rounded transition-all"
+              >
+                Documentation
+              </a>
             </div>
 
             <p className="text-sm font-normal text-[#737373]">

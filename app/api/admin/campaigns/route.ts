@@ -39,7 +39,7 @@ export async function GET(request: NextRequest) {
       .from('email_campaigns')
       .select(`
         *,
-        created_by_admin:admin_users!email_campaigns_created_by_admin_id_fkey(
+        created_by_user:users!email_campaigns_created_by_fkey(
           id,
           email,
           full_name
@@ -152,7 +152,7 @@ export async function POST(request: NextRequest) {
         status: scheduled_at ? 'scheduled' : 'draft',
         scheduled_at: scheduled_at || null,
         total_recipients: targetCount,
-        created_by_admin_id: user.id,
+        created_by: user.id,
       })
       .select()
       .single();

@@ -39,7 +39,7 @@ interface EmailCampaign {
   total_delivered: number | null;
   total_bounced: number | null;
   created_at: string | null;
-  created_by_admin_id: string | null;
+  created_by: string | null;
   creator?: {
     full_name: string | null;
     email: string;
@@ -85,8 +85,8 @@ export default function EmailCampaignsPage() {
           total_delivered,
           total_bounced,
           created_at,
-          created_by_admin_id,
-          creator:admin_users!email_campaigns_created_by_admin_id_fkey(full_name, email),
+          created_by,
+          creator:users!email_campaigns_created_by_fkey(full_name, email),
           email_template:email_templates(template_key, template_name, category)
         `)
         .order('created_at', { ascending: false });

@@ -25,7 +25,7 @@ node -e "console.log(require('./lib/env').env.email)"
 ```
 {
   apiKey: 're_...',
-  fromEmail: 'noreply@yatheeshnagella.com',
+  fromEmail: 'hi@yatheeshnagella.com',
   fromName: 'OneLibro'
 }
 ```

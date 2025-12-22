@@ -50,6 +50,7 @@ PROJECT_DEVELOPMENT.md
 
 # Supabase
 /supabase/.temp/
+/supabase/.temp/cli-latest
 
 # Security reports
 SECURITY_FIX_RLS.md

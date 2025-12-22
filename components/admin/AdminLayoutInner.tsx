@@ -24,6 +24,7 @@ import {
   Loader2,
   Moon,
   Sun,
+  Mail,
 } from 'lucide-react';
 
 // Navigation items
@@ -31,6 +32,7 @@ const navItems = [
   { href: '/admin', label: 'Dashboard', icon: LayoutDashboard },
   { href: '/admin/users', label: 'Users', icon: Users },
   { href: '/admin/invites', label: 'Invite Codes', icon: Ticket },
+  { href: '/admin/emails/campaigns', label: 'Email Campaigns', icon: Mail },
   { href: '/admin/logs', label: 'System Logs', icon: ScrollText },
   { href: '/admin/settings', label: 'Settings', icon: Settings },
 ];

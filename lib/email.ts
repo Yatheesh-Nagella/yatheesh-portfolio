@@ -5,10 +5,32 @@
  * Pattern: Similar to lib/plaid.ts for external service integration
  */
 
+/* eslint-disable @typescript-eslint/no-explicit-any */
+
+import * as React from 'react';
 import { Resend } from 'resend';
 import { render } from '@react-email/render';
 import { env } from '@/lib/env';
 import { createClient } from '@supabase/supabase-js';
+
+// Import all email templates statically to avoid dynamic import issues
+import WelcomeEmail from '@/emails/templates/WelcomeEmail';
+import AccountCreatedEmail from '@/emails/templates/AccountCreatedEmail';
+import PasswordResetEmail from '@/emails/templates/PasswordResetEmail';
+import PlaidItemErrorEmail from '@/emails/templates/PlaidItemErrorEmail';
+import InviteCodeEmail from '@/emails/templates/InviteCodeEmail';
+import BudgetAlertEmail from '@/emails/templates/BudgetAlertEmail';
+
+// Template registry - maps template keys to components
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+const TEMPLATE_REGISTRY: Record<string, React.ComponentType<any>> = {
+  welcome_email: WelcomeEmail,
+  account_created_email: AccountCreatedEmail,
+  password_reset_email: PasswordResetEmail,
+  plaid_item_error: PlaidItemErrorEmail,
+  invite_code_email: InviteCodeEmail,
+  budget_alert_email: BudgetAlertEmail,
+};
 
 // Initialize Resend client
 const resend = new Resend(env.email.apiKey);
@@ -37,6 +59,7 @@ export interface SendEmailOptions {
   to: string | string[];
   subject: string;
   templateKey: string;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   templateProps: Record<string, any>;
   userId?: string;
   category?: EmailCategory;
@@ -144,18 +167,21 @@ async function renderTemplate(
   template: EmailTemplate,
   props: Record<string, any>
 ): Promise<string> {
-  // For React templates, dynamically import and render
-  if (template.template_type === 'react' && template.template_path) {
+  // For React templates, use the static template registry
+  if (template.template_type === 'react') {
     try {
-      // Dynamically import the template component
-      const templateModule = await import(`@/${template.template_path}`);
-      const TemplateComponent = templateModule.default;
+      // Get template component from registry
+      const TemplateComponent = TEMPLATE_REGISTRY[template.template_key];
 
-      // Render React Email component to HTML
-      const html = await render(<TemplateComponent {...props} />);
+      if (!TemplateComponent) {
+        throw new Error(`Template component not found in registry: ${template.template_key}`);
+      }
+
+      // Render React Email component to HTML (without JSX)
+      const html = await render(React.createElement(TemplateComponent, props));
       return html;
     } catch (error) {
-      console.error(`Failed to render React template: ${template.template_path}`, error);
+      console.error(`Failed to render React template: ${template.template_key}`, error);
       throw new Error(`Failed to render email template: ${template.template_key}`);
     }
   }

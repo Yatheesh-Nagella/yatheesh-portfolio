@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+/* eslint-disable @typescript-eslint/no-unused-vars */
 'use client';
 
 /**
@@ -61,7 +63,7 @@ export default function EmailLogsPage() {
     try {
       setLoading(true);
 
-      let query = supabase
+      const query = supabase
         .from('email_logs')
         .select('*')
         .order('created_at', { ascending: false })

@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 /**
  * Individual Campaign API
  * GET /api/admin/campaigns/[id] - Get campaign details

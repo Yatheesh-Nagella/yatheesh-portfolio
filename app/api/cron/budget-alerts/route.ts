@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 /**
  * Budget Alerts Cron Job
  * GET /api/cron/budget-alerts

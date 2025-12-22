@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 /**
  * Email Unsubscribe Handler
  * Handles one-click unsubscribe from marketing and notification emails

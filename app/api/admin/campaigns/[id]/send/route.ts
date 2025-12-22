@@ -17,9 +17,10 @@ const BATCH_DELAY = 1000; // 1 second delay between batches
  */
 export async function POST(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
+    const { id } = await params;
     const body = await request.json();
     const { token, test_mode, test_email } = body;
 
@@ -46,7 +47,7 @@ export async function POST(
     const { data: campaign, error: campaignError } = await supabase
       .from('email_campaigns')
       .select('*')
-      .eq('id', params.id)
+      .eq('id', id)
       .single();
 
     if (campaignError || !campaign) {
@@ -122,7 +123,7 @@ export async function POST(
     await supabase
       .from('email_campaigns')
       .update({ status: 'sending' })
-      .eq('id', params.id);
+      .eq('id', id);
 
     // Get target recipients
     let query = supabase
@@ -152,7 +153,7 @@ export async function POST(
       await supabase
         .from('email_campaigns')
         .update({ status: 'draft' })
-        .eq('id', params.id);
+        .eq('id', id);
 
       return NextResponse.json(
         { error: 'Failed to fetch recipients' },
@@ -165,7 +166,7 @@ export async function POST(
       await supabase
         .from('email_campaigns')
         .update({ status: 'draft' })
-        .eq('id', params.id);
+        .eq('id', id);
 
       return NextResponse.json(
         { error: 'No recipients match the target audience' },
@@ -231,7 +232,7 @@ export async function POST(
         .update({
           total_sent: totalSent,
         })
-        .eq('id', params.id);
+        .eq('id', id);
 
       // Delay between batches to respect rate limits
       if (i + BATCH_SIZE < recipients.length) {
@@ -248,11 +249,11 @@ export async function POST(
         total_sent: totalSent,
         total_recipients: recipients.length,
       })
-      .eq('id', params.id);
+      .eq('id', id);
 
     return NextResponse.json({
       success: true,
-      campaign_id: params.id,
+      campaign_id: id,
       total_recipients: recipients.length,
       total_sent: totalSent,
       total_failed: totalFailed,

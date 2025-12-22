@@ -14,9 +14,10 @@ import { verifyAdminSession, getAdminServiceClient } from '@/lib/admin-auth';
  */
 export async function GET(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
+    const { id } = await params;
     const token = request.headers.get('authorization')?.replace('Bearer ', '');
 
     if (!token) {
@@ -54,7 +55,7 @@ export async function GET(
           category
         )
       `)
-      .eq('id', params.id)
+      .eq('id', id)
       .single();
 
     if (error || !campaign) {
@@ -80,9 +81,10 @@ export async function GET(
  */
 export async function PUT(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
+    const { id } = await params;
     const body = await request.json();
     const { token, name, subject, target_audience, scheduled_at } = body;
 
@@ -109,7 +111,7 @@ export async function PUT(
     const { data: existing, error: fetchError } = await supabase
       .from('email_campaigns')
       .select('*')
-      .eq('id', params.id)
+      .eq('id', id)
       .single();
 
     if (fetchError || !existing) {
@@ -166,7 +168,7 @@ export async function PUT(
     const { data: campaign, error: updateError } = await supabase
       .from('email_campaigns')
       .update(updates)
-      .eq('id', params.id)
+      .eq('id', id)
       .select()
       .single();
 
@@ -194,9 +196,10 @@ export async function PUT(
  */
 export async function DELETE(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
+    const { id } = await params;
     const token = request.headers.get('authorization')?.replace('Bearer ', '');
 
     if (!token) {
@@ -222,7 +225,7 @@ export async function DELETE(
     const { data: existing, error: fetchError } = await supabase
       .from('email_campaigns')
       .select('*')
-      .eq('id', params.id)
+      .eq('id', id)
       .single();
 
     if (fetchError || !existing) {
@@ -244,7 +247,7 @@ export async function DELETE(
     const { error: deleteError } = await supabase
       .from('email_campaigns')
       .delete()
-      .eq('id', params.id);
+      .eq('id', id);
 
     if (deleteError) {
       console.error('Error deleting campaign:', deleteError);

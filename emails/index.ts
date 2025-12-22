@@ -15,6 +15,4 @@ export { default as AccountCreatedEmail } from './templates/AccountCreatedEmail'
 export { default as PasswordResetEmail } from './templates/PasswordResetEmail';
 export { default as PlaidItemErrorEmail } from './templates/PlaidItemErrorEmail';
 export { default as InviteCodeEmail } from './templates/InviteCodeEmail';
-
-// Additional templates to be added:
-// export { default as BudgetAlertEmail } from './templates/BudgetAlertEmail';
+export { default as BudgetAlertEmail } from './templates/BudgetAlertEmail';

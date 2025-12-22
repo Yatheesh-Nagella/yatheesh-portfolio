@@ -12,11 +12,10 @@ export function Header() {
       <Img
         src="https://finance.yatheeshnagella.com/oneLibro-logo.png"
         alt="OneLibro"
-        width="40"
+        width="160"
         height="40"
         style={logo}
       />
-      <Text style={brandName}>OneLibro</Text>
     </Section>
   );
 }
@@ -30,9 +29,8 @@ const header = {
 };
 
 const logo = {
-  display: 'inline-block',
-  verticalAlign: 'middle',
-  marginRight: '12px',
+  display: 'block',
+  margin: '0 auto',
 };
 
 const brandName = {

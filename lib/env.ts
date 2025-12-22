@@ -104,6 +104,26 @@ function getEnvVar(key: string, isOptional = false): string {
       },
     },
 
+    // Email (Resend)
+    email: {
+      get apiKey() {
+        return getEnvVar('RESEND_API_KEY');
+      },
+      get fromEmail() {
+        return getEnvVar('RESEND_FROM_EMAIL', true) || 'noreply@yatheeshnagella.com';
+      },
+      get fromName() {
+        return getEnvVar('RESEND_FROM_NAME', true) || 'OneLibro';
+      },
+    },
+
+    // Cron Jobs
+    cron: {
+      get secret() {
+        return getEnvVar('CRON_SECRET');
+      },
+    },
+
     // App
     app: {
       get url() {

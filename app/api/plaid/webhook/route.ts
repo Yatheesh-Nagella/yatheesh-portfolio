@@ -14,6 +14,7 @@ import { plaidClient, syncTransactions } from '@/lib/plaid';
 import { decryptAccessToken, dollarsToCents } from '@/lib/supabase';
 import { jwtVerify, createRemoteJWKSet } from 'jose';
 import { env } from '@/lib/env';
+import { sendEmail } from '@/lib/email';
 
 // Plaid webhook types
 type WebhookType =
@@ -229,6 +230,23 @@ async function handleItemWebhook(
           error_message: payload.error?.error_message || 'Unknown error',
         })
         .eq('id', plaidItem.id);
+
+      // Send email notification to user
+      sendEmail({
+        to: plaidItem.users.email,
+        subject: `Action needed: Issue with your ${plaidItem.institution_name} account`,
+        templateKey: 'plaid_item_error',
+        templateProps: {
+          institution_name: plaidItem.institution_name,
+          error_message: payload.error?.error_message || 'We encountered an error connecting to your bank account.',
+          reconnect_link: `${env.app.url}/finance/settings`,
+        },
+        userId: plaidItem.user_id,
+        category: 'notification',
+      }).catch((error) => {
+        // Log error but don't fail webhook processing
+        console.error('[Webhook] Failed to send ERROR email:', error);
+      });
       break;
 
     case 'LOGIN_REPAIRED':
@@ -255,7 +273,23 @@ async function handleItemWebhook(
           error_message: `Consent expires: ${payload.consent_expiration_time}`,
         })
         .eq('id', plaidItem.id);
-      // TODO: Send email notification to user
+
+      // Send email notification to user
+      sendEmail({
+        to: plaidItem.users.email,
+        subject: `Action needed: Reconnect your ${plaidItem.institution_name} account`,
+        templateKey: 'plaid_item_error',
+        templateProps: {
+          institution_name: plaidItem.institution_name,
+          error_message: `Your consent to access this account is expiring soon. Please reconnect by ${payload.consent_expiration_time || 'as soon as possible'}.`,
+          reconnect_link: `${env.app.url}/finance/settings`,
+        },
+        userId: plaidItem.user_id,
+        category: 'notification',
+      }).catch((error) => {
+        // Log error but don't fail webhook processing
+        console.error('[Webhook] Failed to send PENDING_EXPIRATION email:', error);
+      });
       break;
 
     case 'USER_PERMISSION_REVOKED':

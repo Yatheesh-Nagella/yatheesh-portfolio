@@ -9,8 +9,12 @@ export { Header } from './components/Header';
 export { Footer } from './components/Footer';
 export { Button } from './components/Button';
 
-// Templates will be exported here as they are created
-// Example:
-// export { default as WelcomeEmail } from './templates/WelcomeEmail';
+// Export email templates
+export { default as WelcomeEmail } from './templates/WelcomeEmail';
+export { default as AccountCreatedEmail } from './templates/AccountCreatedEmail';
+export { default as PasswordResetEmail } from './templates/PasswordResetEmail';
+export { default as PlaidItemErrorEmail } from './templates/PlaidItemErrorEmail';
+
+// Additional templates to be added:
 // export { default as InviteCodeEmail } from './templates/InviteCodeEmail';
 // export { default as BudgetAlertEmail } from './templates/BudgetAlertEmail';

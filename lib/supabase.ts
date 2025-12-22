@@ -197,6 +197,20 @@ export async function signUpWithInvite(
       })
       .eq('id', data.user.id);
 
+    // Send welcome email (async, don't await to avoid blocking)
+    const { sendEmail } = await import('@/lib/email');
+    sendEmail({
+      to: email,
+      subject: `Welcome to OneLibro, ${fullName}!`,
+      templateKey: 'welcome_email',
+      templateProps: { name: fullName },
+      userId: data.user.id,
+      category: 'transactional',
+    }).catch((error) => {
+      // Log error but don't fail signup
+      console.error('Failed to send welcome email:', error);
+    });
+
     const user = await getCurrentUser();
     return { user, error: null };
     

@@ -346,13 +346,15 @@ export async function sendBulkEmails(
  */
 export async function updateEmailStatus(
   resendEmailId: string,
-  status: 'delivered' | 'bounced' | 'complained' | 'opened' | 'clicked',
+  status: 'sent' | 'delivered' | 'bounced' | 'complained' | 'opened' | 'clicked' | 'failed',
   timestamp?: Date
 ): Promise<void> {
   const updates: Record<string, any> = { status };
 
   // Set appropriate timestamp field
-  if (status === 'delivered') {
+  if (status === 'sent') {
+    updates.sent_at = timestamp?.toISOString() || new Date().toISOString();
+  } else if (status === 'delivered') {
     updates.delivered_at = timestamp?.toISOString() || new Date().toISOString();
   } else if (status === 'bounced') {
     updates.bounced_at = timestamp?.toISOString() || new Date().toISOString();

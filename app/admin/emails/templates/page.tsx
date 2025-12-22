@@ -25,6 +25,7 @@ import {
   XCircle,
 } from 'lucide-react';
 import toast from 'react-hot-toast';
+import SendTestEmailModal from '@/components/admin/SendTestEmailModal';
 
 interface EmailTemplate {
   id: string;
@@ -48,7 +49,11 @@ export default function EmailTemplatesPage() {
   const [searchQuery, setSearchQuery] = useState('');
   const [categoryFilter, setCategoryFilter] = useState<'all' | 'transactional' | 'marketing' | 'notification' | 'system'>('all');
   const [togglingId, setTogglingId] = useState<string | null>(null);
-  const [testingId, setTestingId] = useState<string | null>(null);
+  const [testEmailModal, setTestEmailModal] = useState<{
+    isOpen: boolean;
+    templateKey: string;
+    templateName: string;
+  }>({ isOpen: false, templateKey: '', templateName: '' });
 
   useEffect(() => {
     fetchTemplates();
@@ -95,24 +100,16 @@ export default function EmailTemplatesPage() {
     }
   }
 
-  async function sendTestEmail(templateKey: string) {
-    const email = prompt('Enter email address to send test to:');
-    if (!email || !email.includes('@')) {
-      toast.error('Please enter a valid email address');
-      return;
-    }
+  function openTestEmailModal(template: EmailTemplate) {
+    setTestEmailModal({
+      isOpen: true,
+      templateKey: template.template_key,
+      templateName: template.template_name,
+    });
+  }
 
-    try {
-      setTestingId(templateKey);
-
-      // TODO: Call test email API
-      toast.success(`Test email will be sent to ${email}`);
-    } catch (error) {
-      console.error('Error sending test email:', error);
-      toast.error('Failed to send test email');
-    } finally {
-      setTestingId(null);
-    }
+  function closeTestEmailModal() {
+    setTestEmailModal({ isOpen: false, templateKey: '', templateName: '' });
   }
 
   // Filter templates
@@ -345,16 +342,12 @@ export default function EmailTemplatesPage() {
                           <Eye className="w-4 h-4 text-gray-400" />
                         </Link>
                         <button
-                          onClick={() => sendTestEmail(template.template_key)}
-                          disabled={testingId === template.template_key || !template.is_active}
+                          onClick={() => openTestEmailModal(template)}
+                          disabled={!template.is_active}
                           className="p-2 hover:bg-[#2a2a2a] rounded-lg transition-colors disabled:opacity-50"
                           title="Send test email"
                         >
-                          {testingId === template.template_key ? (
-                            <Loader2 className="w-4 h-4 text-[#10b981] animate-spin" />
-                          ) : (
-                            <Send className="w-4 h-4 text-[#10b981]" />
-                          )}
+                          <Send className="w-4 h-4 text-[#10b981]" />
                         </button>
                       </div>
                     </td>
@@ -365,6 +358,14 @@ export default function EmailTemplatesPage() {
           </div>
         )}
       </div>
+
+      {/* Send Test Email Modal */}
+      <SendTestEmailModal
+        isOpen={testEmailModal.isOpen}
+        onClose={closeTestEmailModal}
+        templateKey={testEmailModal.templateKey}
+        templateName={testEmailModal.templateName}
+      />
     </div>
   );
 }

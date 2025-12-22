@@ -29,7 +29,9 @@ const TEMPLATE_REGISTRY: Record<string, React.ComponentType<any>> = {
   password_reset_email: PasswordResetEmail,
   plaid_item_error: PlaidItemErrorEmail,
   invite_code_email: InviteCodeEmail,
+  invite_code: InviteCodeEmail, // Support both naming conventions
   budget_alert_email: BudgetAlertEmail,
+  budget_alert: BudgetAlertEmail, // Support both naming conventions
 };
 
 // Initialize Resend client

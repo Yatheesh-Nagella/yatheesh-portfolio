@@ -25,6 +25,7 @@ import {
   Moon,
   Sun,
   Mail,
+  MailPlus,
   FileText,
 } from 'lucide-react';
 
@@ -33,6 +34,7 @@ const navItems = [
   { href: '/admin', label: 'Dashboard', icon: LayoutDashboard },
   { href: '/admin/users', label: 'Users', icon: Users },
   { href: '/admin/invites', label: 'Invite Codes', icon: Ticket },
+  { href: '/admin/invite-requests', label: 'Invite Requests', icon: MailPlus },
   { href: '/admin/emails/campaigns', label: 'Campaigns', icon: Mail },
   { href: '/admin/emails/templates', label: 'Templates', icon: FileText },
   { href: '/admin/emails/logs', label: 'Email Logs', icon: ScrollText },

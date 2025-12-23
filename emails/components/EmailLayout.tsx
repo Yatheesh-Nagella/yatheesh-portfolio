@@ -37,9 +37,9 @@ export function EmailLayout({ children, preview, userId, category }: EmailLayout
   );
 }
 
-// Styles
+// Styles - Light theme for maximum email client compatibility
 const main = {
-  backgroundColor: '#0f0f0f',
+  backgroundColor: '#f3f4f6',
   fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif',
 };
 
@@ -47,11 +47,13 @@ const container = {
   margin: '0 auto',
   padding: '20px 0',
   maxWidth: '600px',
-  backgroundColor: '#1a1a1a',
+  backgroundColor: '#ffffff',
+  borderRadius: '8px',
+  boxShadow: '0 2px 8px rgba(0, 0, 0, 0.05)',
 };
 
 const content = {
   padding: '40px 30px',
-  backgroundColor: '#1a1a1a',
-  color: '#e5e5e5',
+  backgroundColor: '#ffffff',
+  color: '#1f2937',
 };

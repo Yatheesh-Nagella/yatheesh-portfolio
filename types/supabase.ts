@@ -572,6 +572,60 @@ export type Database = {
           },
         ]
       }
+      invite_code_requests: {
+        Row: {
+          id: string
+          email: string
+          name: string
+          status: string
+          notes: string | null
+          invite_code_id: string | null
+          created_at: string
+          updated_at: string
+          processed_by: string | null
+          processed_at: string | null
+        }
+        Insert: {
+          id?: string
+          email: string
+          name: string
+          status?: string
+          notes?: string | null
+          invite_code_id?: string | null
+          created_at?: string
+          updated_at?: string
+          processed_by?: string | null
+          processed_at?: string | null
+        }
+        Update: {
+          id?: string
+          email?: string
+          name?: string
+          status?: string
+          notes?: string | null
+          invite_code_id?: string | null
+          created_at?: string
+          updated_at?: string
+          processed_by?: string | null
+          processed_at?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "invite_code_requests_invite_code_id_fkey"
+            columns: ["invite_code_id"]
+            isOneToOne: false
+            referencedRelation: "invite_codes"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "invite_code_requests_processed_by_fkey"
+            columns: ["processed_by"]
+            isOneToOne: false
+            referencedRelation: "admin_users"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       notification_preferences: {
         Row: {
           account_security: boolean | null

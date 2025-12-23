@@ -121,11 +121,11 @@ export default function InviteCodeEmail({
   );
 }
 
-// Styles
+// Styles - Light theme with emerald accents
 const h1 = {
   fontSize: '32px',
   fontWeight: '700',
-  color: '#e5e5e5',
+  color: '#1f2937',
   marginBottom: '24px',
   marginTop: '0',
 };
@@ -141,12 +141,12 @@ const h2 = {
 const text = {
   fontSize: '16px',
   lineHeight: '26px',
-  color: '#e5e5e5',
+  color: '#4b5563',
   marginBottom: '16px',
 };
 
 const codeBox = {
-  backgroundColor: '#1a1a1a',
+  backgroundColor: '#ecfdf5',
   border: '2px solid #10b981',
   padding: '32px 24px',
   borderRadius: '12px',
@@ -158,7 +158,7 @@ const codeBox = {
 const codeLabel = {
   fontSize: '14px',
   fontWeight: '600',
-  color: '#a3a3a3',
+  color: '#6b7280',
   marginBottom: '12px',
   marginTop: '0',
   textTransform: 'uppercase' as const,
@@ -177,7 +177,7 @@ const codeText = {
 
 const expirationText = {
   fontSize: '14px',
-  color: '#a3a3a3',
+  color: '#6b7280',
   margin: '0',
 };
 
@@ -189,7 +189,7 @@ const featuresSection = {
 const feature = {
   fontSize: '15px',
   lineHeight: '24px',
-  color: '#e5e5e5',
+  color: '#4b5563',
   marginBottom: '16px',
   paddingLeft: '12px',
   borderLeft: '3px solid #10b981',
@@ -202,9 +202,10 @@ const ctaSection = {
 };
 
 const infoBox = {
-  backgroundColor: '#e5e5e5',
+  backgroundColor: '#f3f4f6',
   padding: '20px',
   borderRadius: '8px',
+  border: '1px solid #e5e7eb',
   marginTop: '24px',
   marginBottom: '24px',
 };
@@ -212,14 +213,14 @@ const infoBox = {
 const infoText = {
   fontSize: '15px',
   lineHeight: '24px',
-  color: '#1a1a1a',
+  color: '#1f2937',
   margin: '0',
 };
 
 const footerText = {
   fontSize: '14px',
   lineHeight: '24px',
-  color: '#a3a3a3',
+  color: '#6b7280',
   marginTop: '16px',
   marginBottom: '8px',
 };

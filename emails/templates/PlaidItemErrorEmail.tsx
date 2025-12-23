@@ -94,11 +94,11 @@ export default function PlaidItemErrorEmail({
   );
 }
 
-// Styles
+// Styles - Light theme
 const h1 = {
   fontSize: '32px',
   fontWeight: '700',
-  color: '#e5e5e5',
+  color: '#1f2937',
   marginBottom: '24px',
   marginTop: '0',
 };
@@ -122,7 +122,7 @@ const h3 = {
 const text = {
   fontSize: '16px',
   lineHeight: '26px',
-  color: '#e5e5e5',
+  color: '#4b5563',
   marginBottom: '16px',
 };
 
@@ -159,7 +159,7 @@ const reasonsSection = {
 const reason = {
   fontSize: '15px',
   lineHeight: '24px',
-  color: '#e5e5e5',
+  color: '#4b5563',
   marginBottom: '12px',
   paddingLeft: '12px',
   borderLeft: '3px solid #10b981',
@@ -172,9 +172,10 @@ const ctaSection = {
 };
 
 const infoBox = {
-  backgroundColor: '#e5e5e5',
+  backgroundColor: '#f3f4f6',
   padding: '20px',
   borderRadius: '8px',
+  border: '1px solid #e5e7eb',
   marginTop: '24px',
   marginBottom: '24px',
 };
@@ -182,14 +183,14 @@ const infoBox = {
 const infoText = {
   fontSize: '15px',
   lineHeight: '24px',
-  color: '#1a1a1a',
+  color: '#1f2937',
   margin: '0',
 };
 
 const footerText = {
   fontSize: '14px',
   lineHeight: '24px',
-  color: '#a3a3a3',
+  color: '#6b7280',
   marginTop: '16px',
   marginBottom: '8px',
 };

@@ -9,6 +9,7 @@ import React, { useState } from 'react';
 import Image from 'next/image';
 import { useAuth } from '@/contexts/AuthContext';
 import { Loader2, Mail, Lock, User, Ticket, LogIn, UserPlus } from 'lucide-react';
+import RequestInviteModal from '@/components/finance/RequestInviteModal';
 
 type TabType = 'login' | 'signup';
 
@@ -30,6 +31,9 @@ export default function AuthPage() {
   const [signupError, setSignupError] = useState('');
   const [signupLoading, setSignupLoading] = useState(false);
   const [signupSuccess, setSignupSuccess] = useState(false);
+
+  // Request invite modal state
+  const [showRequestModal, setShowRequestModal] = useState(false);
 
   /**
    * Handle login form submission
@@ -352,6 +356,20 @@ export default function AuthPage() {
                   )}
                 </button>
 
+                {/* Request Invite Code Link */}
+                <div className="mt-4 text-center">
+                  <p className="text-sm text-gray-400">
+                    Don&apos;t have an invite code?{' '}
+                    <button
+                      type="button"
+                      onClick={() => setShowRequestModal(true)}
+                      className="text-[#10b981] hover:underline font-medium"
+                    >
+                      Request one
+                    </button>
+                  </p>
+                </div>
+
                 {/* Success Message */}
                 {signupSuccess && (
                   <div className="bg-green-900/20 border border-green-800/50 text-green-300 px-4 py-3 rounded-lg text-sm backdrop-blur-sm">
@@ -378,6 +396,12 @@ export default function AuthPage() {
           </p>
         </div>
       </div>
+
+      {/* Request Invite Modal */}
+      <RequestInviteModal
+        isOpen={showRequestModal}
+        onClose={() => setShowRequestModal(false)}
+      />
     </div>
   );
 }

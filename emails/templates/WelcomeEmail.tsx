@@ -88,11 +88,11 @@ export default function WelcomeEmail({ name }: WelcomeEmailProps) {
   );
 }
 
-// Styles
+// Styles - Light theme
 const h1 = {
   fontSize: '32px',
   fontWeight: '700',
-  color: '#e5e5e5',
+  color: '#1f2937',
   marginBottom: '24px',
   marginTop: '0',
 };
@@ -108,7 +108,7 @@ const h2 = {
 const text = {
   fontSize: '16px',
   lineHeight: '26px',
-  color: '#e5e5e5',
+  color: '#4b5563',
   marginBottom: '16px',
 };
 
@@ -120,7 +120,7 @@ const featuresSection = {
 const feature = {
   fontSize: '16px',
   lineHeight: '26px',
-  color: '#e5e5e5',
+  color: '#4b5563',
   marginBottom: '20px',
   paddingLeft: '16px',
   borderLeft: '3px solid #10b981',
@@ -139,23 +139,23 @@ const ctaSection = {
 
 const tipsSection = {
   marginTop: '32px',
-  backgroundColor: '#e5e5e5',
+  backgroundColor: '#f3f4f6',
   padding: '24px',
   borderRadius: '8px',
-  color: '#1a1a1a',
+  border: '1px solid #e5e7eb',
 };
 
 const tipText = {
   fontSize: '15px',
   lineHeight: '24px',
-  color: '#1a1a1a',
+  color: '#1f2937',
   marginBottom: '12px',
 };
 
 const footerText = {
   fontSize: '14px',
   lineHeight: '24px',
-  color: '#a3a3a3',
+  color: '#6b7280',
   marginTop: '32px',
 };
 
@@ -167,7 +167,7 @@ const link = {
 const signatureText = {
   fontSize: '16px',
   lineHeight: '26px',
-  color: '#e5e5e5',
+  color: '#4b5563',
   marginTop: '24px',
   fontStyle: 'italic',
 };

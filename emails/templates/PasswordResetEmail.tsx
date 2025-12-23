@@ -77,11 +77,11 @@ export default function PasswordResetEmail({ name, reset_link }: PasswordResetEm
   );
 }
 
-// Styles
+// Styles - Light theme
 const h1 = {
   fontSize: '32px',
   fontWeight: '700',
-  color: '#e5e5e5',
+  color: '#1f2937',
   marginBottom: '24px',
   marginTop: '0',
 };
@@ -97,7 +97,7 @@ const h2 = {
 const text = {
   fontSize: '16px',
   lineHeight: '26px',
-  color: '#e5e5e5',
+  color: '#4b5563',
   marginBottom: '16px',
 };
 
@@ -127,7 +127,7 @@ const ctaSection = {
 const linkText = {
   fontSize: '14px',
   lineHeight: '22px',
-  color: '#a3a3a3',
+  color: '#6b7280',
   marginBottom: '8px',
 };
 
@@ -140,9 +140,10 @@ const linkUrl = {
 };
 
 const securityBox = {
-  backgroundColor: '#e5e5e5',
+  backgroundColor: '#f3f4f6',
   padding: '24px',
   borderRadius: '8px',
+  border: '1px solid #e5e7eb',
   marginTop: '32px',
   marginBottom: '24px',
 };
@@ -150,14 +151,14 @@ const securityBox = {
 const securityText = {
   fontSize: '15px',
   lineHeight: '24px',
-  color: '#1a1a1a',
+  color: '#1f2937',
   marginBottom: '16px',
 };
 
 const footerText = {
   fontSize: '14px',
   lineHeight: '24px',
-  color: '#a3a3a3',
+  color: '#6b7280',
   marginTop: '32px',
   fontStyle: 'italic',
 };

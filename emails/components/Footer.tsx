@@ -59,24 +59,24 @@ export function Footer({ userId, category }: FooterProps) {
   );
 }
 
-// Styles
+// Styles - Light theme
 const footer = {
   padding: '30px 30px 20px',
-  backgroundColor: '#1a1a1a',
-  borderTop: '1px solid #a3a3a3',
+  backgroundColor: '#ffffff',
+  borderTop: '1px solid #e5e7eb',
   textAlign: 'center' as const,
 };
 
 const hr = {
   border: 'none',
-  borderTop: '1px solid #a3a3a3',
+  borderTop: '1px solid #e5e7eb',
   margin: '20px 0',
 };
 
 const text = {
   fontSize: '14px',
   lineHeight: '24px',
-  color: '#a3a3a3',
+  color: '#6b7280',
   margin: '8px 0',
 };
 
@@ -88,20 +88,20 @@ const link = {
 const unsubscribeText = {
   fontSize: '12px',
   lineHeight: '20px',
-  color: '#737373',
+  color: '#9ca3af',
   margin: '16px 0 8px',
 };
 
 const copyrightText = {
   fontSize: '12px',
   lineHeight: '20px',
-  color: '#737373',
+  color: '#9ca3af',
   margin: '8px 0',
 };
 
 const addressText = {
   fontSize: '11px',
   lineHeight: '18px',
-  color: '#737373',
+  color: '#9ca3af',
   margin: '4px 0',
 };

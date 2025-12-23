@@ -20,12 +20,12 @@ export function Header() {
   );
 }
 
-// Styles
+// Styles - Light theme with emerald accent
 const header = {
   padding: '20px 30px',
-  borderBottom: '1px solid #a3a3a3',
+  borderBottom: '2px solid #10b981',
   textAlign: 'center' as const,
-  backgroundColor: '#1a1a1a',
+  backgroundColor: '#ffffff',
 };
 
 const logo = {
@@ -38,7 +38,7 @@ const brandName = {
   verticalAlign: 'middle',
   fontSize: '20px',
   fontWeight: '700',
-  color: '#e5e5e5',
+  color: '#1f2937',
   letterSpacing: '0.05em',
   margin: 0,
 };

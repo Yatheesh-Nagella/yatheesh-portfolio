@@ -178,3 +178,16 @@ export interface EmailCampaign {
   created_at: string | null;
   updated_at: string | null;
 }
+
+export interface InviteCodeRequest {
+  id: string;
+  email: string;
+  name: string;
+  status: 'pending' | 'sent' | 'rejected';
+  notes: string | null;
+  invite_code_id: string | null;
+  created_at: string;
+  updated_at: string;
+  processed_by: string | null;
+  processed_at: string | null;
+}

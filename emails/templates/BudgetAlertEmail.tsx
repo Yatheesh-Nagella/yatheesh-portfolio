@@ -181,11 +181,11 @@ export default function BudgetAlertEmail({
   );
 }
 
-// Styles
+// Styles - Light theme
 const h1 = {
   fontSize: '32px',
   fontWeight: '700',
-  color: '#e5e5e5',
+  color: '#1f2937',
   marginBottom: '24px',
   marginTop: '0',
 };
@@ -209,13 +209,13 @@ const h3 = {
 const text = {
   fontSize: '16px',
   lineHeight: '26px',
-  color: '#e5e5e5',
+  color: '#4b5563',
   marginBottom: '16px',
 };
 
 const summaryCard = {
-  backgroundColor: '#1a1a1a',
-  border: '2px solid #2a2a2a',
+  backgroundColor: '#f9fafb',
+  border: '2px solid #e5e7eb',
   padding: '24px',
   borderRadius: '12px',
   marginTop: '24px',
@@ -232,7 +232,7 @@ const budgetTitle = {
 
 const budgetCategory = {
   fontSize: '14px',
-  color: '#a3a3a3',
+  color: '#6b7280',
   marginBottom: '20px',
   marginTop: '0',
   textTransform: 'uppercase' as const,
@@ -246,7 +246,7 @@ const progressContainer = {
 const progressBar = {
   width: '100%',
   height: '12px',
-  backgroundColor: '#2a2a2a',
+  backgroundColor: '#e5e7eb',
   borderRadius: '6px',
   overflow: 'hidden',
   marginBottom: '8px',
@@ -260,7 +260,7 @@ const progressFill = {
 
 const percentageText = {
   fontSize: '14px',
-  color: '#a3a3a3',
+  color: '#6b7280',
   margin: '0',
 };
 
@@ -273,7 +273,7 @@ const amountGrid = {
 
 const amountLabel = {
   fontSize: '12px',
-  color: '#a3a3a3',
+  color: '#6b7280',
   marginBottom: '4px',
   marginTop: '0',
   textTransform: 'uppercase' as const,
@@ -283,13 +283,13 @@ const amountLabel = {
 const amountValue = {
   fontSize: '20px',
   fontWeight: '700',
-  color: '#e5e5e5',
+  color: '#1f2937',
   margin: '0',
 };
 
 const daysRemaining = {
   fontSize: '14px',
-  color: '#a3a3a3',
+  color: '#6b7280',
   marginTop: '16px',
   marginBottom: '0',
   textAlign: 'center' as const,
@@ -303,7 +303,7 @@ const actionSection = {
 const actionItem = {
   fontSize: '15px',
   lineHeight: '24px',
-  color: '#e5e5e5',
+  color: '#4b5563',
   marginBottom: '16px',
   paddingLeft: '12px',
   borderLeft: '3px solid #10b981',
@@ -316,9 +316,10 @@ const ctaSection = {
 };
 
 const tipsBox = {
-  backgroundColor: '#e5e5e5',
+  backgroundColor: '#f3f4f6',
   padding: '20px',
   borderRadius: '8px',
+  border: '1px solid #e5e7eb',
   marginTop: '24px',
   marginBottom: '24px',
 };
@@ -326,14 +327,14 @@ const tipsBox = {
 const tipText = {
   fontSize: '14px',
   lineHeight: '22px',
-  color: '#1a1a1a',
+  color: '#1f2937',
   margin: '0',
 };
 
 const footerText = {
   fontSize: '14px',
   lineHeight: '24px',
-  color: '#a3a3a3',
+  color: '#6b7280',
   marginTop: '24px',
   marginBottom: '8px',
 };

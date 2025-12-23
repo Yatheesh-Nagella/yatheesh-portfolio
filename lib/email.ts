@@ -20,6 +20,7 @@ import PasswordResetEmail from '@/emails/templates/PasswordResetEmail';
 import PlaidItemErrorEmail from '@/emails/templates/PlaidItemErrorEmail';
 import InviteCodeEmail from '@/emails/templates/InviteCodeEmail';
 import BudgetAlertEmail from '@/emails/templates/BudgetAlertEmail';
+import InviteRequestConfirmationEmail from '@/emails/templates/InviteRequestConfirmationEmail';
 
 // Template registry - maps template keys to components
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -32,6 +33,7 @@ const TEMPLATE_REGISTRY: Record<string, React.ComponentType<any>> = {
   invite_code: InviteCodeEmail, // Support both naming conventions
   budget_alert_email: BudgetAlertEmail,
   budget_alert: BudgetAlertEmail, // Support both naming conventions
+  invite_request_confirmation: InviteRequestConfirmationEmail,
 };
 
 // Initialize Resend client

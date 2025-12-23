@@ -1,5 +1,5 @@
 /**
- * Middleware to refresh Supabase session
+ * Middleware to handle subdomain routing and refresh Supabase session
  * Required for server-side authentication to work
  */
 
@@ -7,6 +7,29 @@ import { createServerClient } from '@supabase/ssr';
 import { NextResponse, type NextRequest } from 'next/server';
 
 export async function middleware(request: NextRequest) {
+  const hostname = request.headers.get('host') || '';
+  const url = request.nextUrl;
+
+  // Handle subdomain routing
+  // Check for admin subdomain
+  if (hostname.startsWith('admin.')) {
+    // Rewrite to /admin/* path
+    if (!url.pathname.startsWith('/admin')) {
+      url.pathname = `/admin${url.pathname}`;
+      return NextResponse.rewrite(url);
+    }
+  }
+
+  // Check for finance subdomain
+  if (hostname.startsWith('finance.')) {
+    // Rewrite to /finance/* path
+    if (!url.pathname.startsWith('/finance')) {
+      url.pathname = `/finance${url.pathname}`;
+      return NextResponse.rewrite(url);
+    }
+  }
+
+  // Refresh Supabase session for authenticated routes
   let supabaseResponse = NextResponse.next({
     request,
   });
@@ -34,8 +57,10 @@ export async function middleware(request: NextRequest) {
     }
   );
 
-  // Refresh session if expired
-  await supabase.auth.getUser();
+  // Refresh session if expired - only for finance and admin routes
+  if (url.pathname.startsWith('/finance') || url.pathname.startsWith('/admin')) {
+    await supabase.auth.getUser();
+  }
 
   return supabaseResponse;
 }
@@ -43,14 +68,9 @@ export async function middleware(request: NextRequest) {
 export const config = {
   matcher: [
     /*
-     * OPTIMIZED: Only run middleware on authenticated routes
-     * - /finance/* - Finance app (requires Supabase auth)
-     * - /admin/* - Admin app (requires Supabase auth)
-     *
-     * Portfolio and blog pages don't need session refresh middleware
-     * This reduces unnecessary Supabase calls by ~70% on average traffic
+     * Run middleware on all routes to handle subdomain routing
+     * Then refresh Supabase session only on authenticated routes
      */
-    '/finance/:path*',
-    '/admin/:path*',
+    '/((?!_next/static|_next/image|favicon.ico|.*\\.(?:svg|png|jpg|jpeg|gif|webp)$).*)',
   ],
 };

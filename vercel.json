@@ -1,0 +1,10 @@
+{
+  "installCommand": "npm ci --legacy-peer-deps",
+  "crons": [
+    {
+      "path": "/api/cron/budget-alerts",
+      "schedule": "0 9 * * *"
+    }
+  ]
+}
+

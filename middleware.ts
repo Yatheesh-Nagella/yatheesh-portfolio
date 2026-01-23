@@ -13,8 +13,8 @@ export async function middleware(request: NextRequest) {
   // Handle subdomain routing
   // Check for admin subdomain
   if (hostname.startsWith('admin.')) {
-    // Rewrite to /admin/* path
-    if (!url.pathname.startsWith('/admin')) {
+    // Don't rewrite API routes - they're shared across subdomains
+    if (!url.pathname.startsWith('/api') && !url.pathname.startsWith('/admin')) {
       url.pathname = `/admin${url.pathname}`;
       return NextResponse.rewrite(url);
     }
@@ -22,8 +22,8 @@ export async function middleware(request: NextRequest) {
 
   // Check for finance subdomain
   if (hostname.startsWith('finance.')) {
-    // Rewrite to /finance/* path
-    if (!url.pathname.startsWith('/finance')) {
+    // Don't rewrite API routes - they're shared across subdomains
+    if (!url.pathname.startsWith('/api') && !url.pathname.startsWith('/finance')) {
       url.pathname = `/finance${url.pathname}`;
       return NextResponse.rewrite(url);
     }

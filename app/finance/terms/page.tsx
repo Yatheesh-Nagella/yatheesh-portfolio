@@ -641,7 +641,7 @@ export default function TermsOfService() {
             </div>
 
             <p className="text-sm font-normal text-[#D0D6B5]/50">
-              © 2025 OneLibro by Yatheesh Nagella. All rights reserved.
+              © {new Date().getFullYear()} OneLibro by Yatheesh Nagella. All rights reserved.
             </p>
           </div>
         </div>

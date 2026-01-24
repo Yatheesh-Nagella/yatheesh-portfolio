@@ -63,7 +63,7 @@ export default function EvolutionOfTrustPost() {
                 📝 Article in Progress
               </p>
               <p className="text-gray-700">
-                This article is currently being written. Check back in March 2025 for the full story!
+                This article is currently being written. Check back in March 2026 for the full story!
               </p>
             </div>
 

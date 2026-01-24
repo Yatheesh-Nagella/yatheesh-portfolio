@@ -187,7 +187,7 @@ export async function GET(request: NextRequest) {
 
             <div class="footer">
               <p>OneLibro · Personal Finance Management</p>
-              <p>© 2025 Yatheesh Nagella</p>
+              <p>© 2026 Yatheesh Nagella</p>
             </div>
           </div>
         </body>

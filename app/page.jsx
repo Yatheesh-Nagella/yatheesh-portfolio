@@ -314,7 +314,7 @@ const Portfolio = () => {
                   transition={{ duration: 0.6, delay: 0.4 }}
                   className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-normal text-gray-900 mb-6 md:mb-8 leading-[1.15] max-w-5xl"
                 >
-                  I'm Yatheesh Nagella, a Software Engineer & Cloud Solutions Consultant.
+                  I'm Yatheesh Nagella, a Full Stack Software Engineer specializing in Financial Services & AI.
                 </motion.h1>
 
                 <motion.p
@@ -323,7 +323,7 @@ const Portfolio = () => {
                   transition={{ duration: 0.6, delay: 0.6 }}
                   className="text-base sm:text-lg md:text-xl text-gray-600 max-w-4xl leading-relaxed"
                 >
-                  Leveraging expertise in multi-cloud architecture, DevOps automation, and modern web technologies, I help organizations build resilient systems that drive business value.
+                  Building scalable web applications for banking, fintech, and insurance sectors with expertise in React, Next.js, Node.js, PostgreSQL, and AI integration. AWS Certified Solutions Architect with a proven track record in production systems serving millions of users.
                 </motion.p>
               </div>
 
@@ -370,23 +370,23 @@ const Portfolio = () => {
                   </div>
                 </motion.a>
 
-                {/* Jump MD Editor */}
+                {/* OneLibro */}
                 <motion.a
-                  href="https://jump-md-editor-one.vercel.app/"
+                  href="https://finance.yatheeshnagella.com"
                   target="_blank"
                   rel="noopener noreferrer"
                   variants={fadeInUp}
                   whileHover={{ scale: 1.05, y: -5 }}
                   transition={{ type: "spring", stiffness: 300 }}
-                  className="group aspect-square bg-gradient-to-br from-blue-500 via-purple-500 to-indigo-600 backdrop-blur-sm border border-white/60 rounded-lg overflow-hidden hover:shadow-xl hover:shadow-purple-500/30 transition-all cursor-pointer relative"
+                  className="group aspect-square bg-gradient-to-br from-emerald-600 via-green-500 to-teal-500 backdrop-blur-sm border border-white/60 rounded-lg overflow-hidden hover:shadow-xl hover:shadow-green-500/30 transition-all cursor-pointer relative"
                 >
                   <div className="absolute inset-0 flex flex-col items-center justify-center p-4 text-center">
-                    <div className="text-4xl mb-2">📝</div>
-                    <div className="text-white font-bold text-sm mb-1">Jump MD</div>
-                    <div className="text-white/70 text-xs">Markdown Editor</div>
+                    <div className="text-4xl mb-2">💰</div>
+                    <div className="text-white font-bold text-sm mb-1">OneLibro</div>
+                    <div className="text-white/70 text-xs">Finance SaaS</div>
                   </div>
                   <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end p-3">
-                    <span className="text-white text-xs">Try the Editor →</span>
+                    <span className="text-white text-xs">View Platform →</span>
                   </div>
                 </motion.a>
 
@@ -469,7 +469,37 @@ const Portfolio = () => {
             viewport={{ once: true }}
             className="grid md:grid-cols-2 gap-12"
           >
-            {/* Project 1: F1-GPT */}
+            {/* Project 1: OneLibro */}
+            <motion.div variants={fadeInUp} className="group cursor-pointer">
+              <motion.div
+                whileHover={{ y: -10, boxShadow: "0 20px 40px rgba(16, 185, 129, 0.4)" }}
+                transition={{ type: "spring", stiffness: 300 }}
+                className="aspect-[4/3] bg-gradient-to-br from-emerald-600 via-green-500 to-teal-500 rounded-lg mb-6 overflow-hidden relative hover:shadow-2xl transition-shadow"
+              >
+                <div className="absolute inset-0 flex items-center justify-center">
+                  <div className="text-center">
+                    <div className="text-8xl mb-4">💰</div>
+                    <div className="text-white text-2xl font-bold">OneLibro</div>
+                  </div>
+                </div>
+              </motion.div>
+              <h3 className="text-2xl font-semibold text-gray-900 mb-3 group-hover:text-orange-500 transition-colors">
+                OneLibro - Personal Finance SaaS Platform
+              </h3>
+              <p className="text-gray-600 leading-relaxed mb-4">
+                Comprehensive financial management platform with real-time banking data integration via Plaid API. Features transaction syncing, budget tracking, and automated categorization across 12,000+ financial institutions. Built with React, Node.js, PostgreSQL, and AWS.
+              </p>
+              <div className="flex gap-4">
+                <motion.a whileHover={{ x: 5 }} href="https://finance.yatheeshnagella.com" target="_blank" rel="noopener noreferrer" className="text-orange-500 hover:text-orange-600 font-medium">
+                  Live Demo →
+                </motion.a>
+                <motion.a whileHover={{ x: 5 }} href="https://yatheesh-nagella.github.io/OneLibro-DOCS/" target="_blank" rel="noopener noreferrer" className="text-gray-600 hover:text-orange-500 font-medium">
+                  Documentation →
+                </motion.a>
+              </div>
+            </motion.div>
+
+            {/* Project 2: F1-GPT */}
             <motion.div variants={fadeInUp} className="group cursor-pointer">
               <motion.div
                 whileHover={{ y: -10, boxShadow: "0 20px 40px rgba(6, 182, 212, 0.3)" }}
@@ -487,43 +517,13 @@ const Portfolio = () => {
                 F1-GPT - AI-Powered Formula 1 Chatbot
               </h3>
               <p className="text-gray-600 leading-relaxed mb-4">
-                Building a production-ready AI chatbot with Next.js 14, TypeScript, and OpenAI GPT-3.5-turbo with real-time streaming responses and semantic search capabilities using DataStax Astra DB vector database.
+                Production-ready AI chatbot with Hybrid RAG architecture combining real-time F1 data with historical knowledge. Built with Next.js 14, OpenAI GPT-3.5-turbo, and DataStax Astra DB vector database for semantic search across 70+ years of F1 history.
               </p>
               <div className="flex gap-4">
                 <motion.a whileHover={{ x: 5 }} href="https://f1-gpt-eta.vercel.app/" target="_blank" rel="noopener noreferrer" className="text-orange-500 hover:text-orange-600 font-medium">
                   Live Demo →
                 </motion.a>
-                <motion.a whileHover={{ x: 5 }} href="https://github.com/Yatheesh-Nagella" target="_blank" rel="noopener noreferrer" className="text-gray-600 hover:text-orange-500 font-medium">
-                  View Code →
-                </motion.a>
-              </div>
-            </motion.div>
-
-            {/* Project 2: Jump Markdown Editor */}
-            <motion.div variants={fadeInUp} className="group cursor-pointer">
-              <motion.div
-                whileHover={{ y: -10, boxShadow: "0 20px 40px rgba(139, 92, 246, 0.3)" }}
-                transition={{ type: "spring", stiffness: 300 }}
-                className="aspect-[4/3] bg-gradient-to-br from-blue-500 via-purple-500 to-purple-600 rounded-lg mb-6 overflow-hidden relative hover:shadow-2xl transition-shadow"
-              >
-                <div className="absolute inset-0 flex items-center justify-center">
-                  <div className="text-center">
-                    <div className="text-8xl mb-4">📝</div>
-                    <div className="text-white text-2xl font-bold">Jump MD Editor</div>
-                  </div>
-                </div>
-              </motion.div>
-              <h3 className="text-2xl font-semibold text-gray-900 mb-3 group-hover:text-orange-500 transition-colors">
-                Jump Markdown Editor
-              </h3>
-              <p className="text-gray-600 leading-relaxed mb-4">
-                A 2-pane real-time Markdown editor with live preview, PDF export functionality, and clipboard integration. Built with React and Vite featuring markdown parsing and HTML-to-PDF conversion.
-              </p>
-              <div className="flex gap-4">
-                <motion.a whileHover={{ x: 5 }} href="https://jump-md-editor-one.vercel.app/" target="_blank" rel="noopener noreferrer" className="text-orange-500 hover:text-orange-600 font-medium">
-                  Live Demo →
-                </motion.a>
-                <motion.a whileHover={{ x: 5 }} href="https://github.com/Yatheesh-Nagella" target="_blank" rel="noopener noreferrer" className="text-gray-600 hover:text-orange-500 font-medium">
+                <motion.a whileHover={{ x: 5 }} href="https://github.com/Yatheesh-Nagella/f1-gpt" target="_blank" rel="noopener noreferrer" className="text-gray-600 hover:text-orange-500 font-medium">
                   View Code →
                 </motion.a>
               </div>
@@ -636,13 +636,13 @@ const Portfolio = () => {
               className="md:col-span-2 space-y-6 text-gray-700 leading-relaxed text-lg"
             >
               <p>
-                I'm a Software Engineer and Cloud Solutions Consultant with a Master's in Computer Science from the University of Central Oklahoma (GPA 3.78). With over 3 years of experience across DevOps, cloud infrastructure, and full-stack development, I specialize in building scalable, secure systems that drive business value.
+                Full Stack Software Engineer with 4+ years specializing in financial services technology and AI-powered applications. Expert in building scalable web applications for banking, fintech, and insurance sectors using React, Next.js, Node.js, and modern cloud infrastructure.
               </p>
               <p>
-                My expertise spans multi-cloud environments (AWS, GCP, Azure), Kubernetes orchestration, CI/CD automation, and modern web technologies. I've worked with companies like Truist and Swish.ai, where I designed cloud infrastructure, implemented DevOps best practices, and integrated AI-powered solutions.
+                Proven track record developing customer-facing financial platforms, CRM systems for banking operations, and AI-integrated solutions. Strong experience with financial data processing, transaction systems, third-party API integrations (Plaid, payment gateways), and regulatory compliance.
               </p>
               <p>
-                Currently, I'm leveraging my technical skills at UCO's LX Studio while exploring consulting opportunities to help organizations optimize their cloud architecture, automate workflows, and build resilient systems.
+                AWS Certified Solutions Architect with expertise in distributed systems, microservices architecture, and production deployments serving millions of users. Currently building OneLibro, a financial SaaS platform with real-time banking data integration.
               </p>
             </motion.div>
 
@@ -654,7 +654,7 @@ const Portfolio = () => {
               className="space-y-6"
             >
               {[
-                { value: '3+', label: 'Years Experience', color: 'orange' },
+                { value: '4+', label: 'Years Experience', color: 'orange' },
                 { value: '3.78', label: 'M.S. Computer Science GPA', color: 'cyan' },
                 { value: 'AWS Certified', label: 'Solutions Architect - Associate', color: 'indigo' },
                 { value: 'Oklahoma City, OK', label: 'Available for Remote Work', color: 'emerald' }
@@ -699,33 +699,33 @@ const Portfolio = () => {
           >
             {[
               {
-                title: 'Techceptionist',
+                title: 'Technical Web Developer',
                 company: 'LX Studio',
-                period: 'June 2024 - Present',
+                period: 'Aug 2024 - Present',
                 achievements: [
-                  'Implemented Microsoft 365 applications to enhance collaboration and team productivity',
-                  'Developed Power Automate workflows reducing IT support response time',
-                  'Designed Power BI dashboards providing insights into equipment usage and efficiency metrics'
+                  'Developed web applications and digital content solutions for university educational programs',
+                  'Built internal applications using React and TypeScript with Microsoft 365 integration',
+                  'Created Power Automate workflows and Power BI dashboards for analytics and automation'
                 ]
               },
               {
-                title: 'DevOps Engineer',
+                title: 'Full Stack Software Engineer',
                 company: 'Swish.ai',
                 period: 'Nov 2022 - Jun 2023',
                 achievements: [
-                  'Led deployment and lifecycle management of GKE clusters across multi-cloud environments',
-                  'Integrated Istio service mesh for secure microservices communication and observability',
-                  'Configured IAM roles and enforced least privilege access policies for compliance'
+                  'Developed AI-powered analytics platform with AWS Bedrock for natural language data insights',
+                  'Built Angular frontend and Node.js microservices on GKE with Istio service mesh',
+                  'Implemented OAuth 2.0 authentication and RESTful APIs serving 10K+ users'
                 ]
               },
               {
-                title: 'Associate Software Engineer',
+                title: 'Full Stack Software Engineer',
                 company: 'Truist',
                 period: 'Aug 2021 - Sep 2022',
                 achievements: [
-                  'Designed and deployed AWS infrastructure using Terraform for scalability and cost optimization',
-                  'Optimized real-time data pipelines using Apache Kafka and Flink for event-driven architecture',
-                  'Implemented CI/CD pipelines using Jenkins and GitHub Actions for automated deployment'
+                  'Developed banking CRM system for 200+ relationship managers managing loan and mortgage data',
+                  'Built React frontend and Spring Boot APIs with PostgreSQL and Apache Kafka integration',
+                  'Deployed AWS infrastructure using Terraform with CI/CD pipelines for zero-downtime releases'
                 ]
               }
             ].map((job, index) => {
@@ -772,19 +772,19 @@ const Portfolio = () => {
               className="grid md:grid-cols-2 lg:grid-cols-3 gap-8"
             >
               {[
-                { title: 'Cloud & Infrastructure', skills: ['AWS', 'GCP', 'Azure', 'Kubernetes', 'Docker', 'Terraform'], color: 'cyan' },
-                { title: 'Programming Languages', skills: ['JavaScript', 'TypeScript', 'Python', 'Java', 'Go', 'PHP'], color: 'purple' },
-                { title: 'Frontend Technologies', skills: ['React', 'Next.js', 'Angular', 'Flutter', 'Tailwind CSS'], color: 'indigo' },
-                { title: 'Backend & APIs', skills: ['Node.js', 'Express.js', 'Spring Boot', 'GraphQL', 'REST'], color: 'orange' },
-                { title: 'Databases', skills: ['PostgreSQL', 'MongoDB', 'Astra DB', 'Vector DBs'], color: 'emerald' },
-                { title: 'DevOps & Tools', skills: ['Jenkins', 'GitHub Actions', 'CI/CD', 'Istio', 'Kafka'], color: 'blue' }
+                { title: 'Financial Technology', skills: ['Plaid API', 'Payment Processing', 'Transaction Systems', 'Banking CRM'], color: 'green' },
+                { title: 'AI/ML', skills: ['OpenAI API', 'AWS Bedrock', 'LangChain', 'RAG Architecture', 'Vector DBs'], color: 'violet' },
+                { title: 'Frontend Technologies', skills: ['React', 'Next.js', 'Angular', 'Redux', 'Tailwind CSS', 'TypeScript', 'Javascript'], color: 'indigo' },
+                { title: 'Backend & APIs', skills: ['Node.js', 'Python', 'Spring Boot', 'GraphQL', 'REST', 'PostgreSQL'], color: 'orange' },
+                { title: 'Cloud & Infrastructure', skills: ['AWS', 'Docker', 'Kubernetes', 'Terraform', 'CI/CD', 'Microservices'], color: 'cyan' },
+                { title: 'DevOps & Tools', skills: ['GitHub Actions', 'Jenkins', 'Istio', 'Kafka', 'Redis', 'Supabase', 'PostHog', 'Google Analytics'], color: 'blue' }
               ].map((category, index) => {
                 const colorClasses = {
+                  green: 'bg-green-100 text-green-700 hover:bg-green-200',
+                  violet: 'bg-violet-100 text-violet-700 hover:bg-violet-200',
                   cyan: 'bg-cyan-100 text-cyan-700 hover:bg-cyan-200',
-                  purple: 'bg-purple-100 text-purple-700 hover:bg-purple-200',
                   indigo: 'bg-indigo-100 text-indigo-700 hover:bg-indigo-200',
                   orange: 'bg-orange-100 text-orange-700 hover:bg-orange-200',
-                  emerald: 'bg-emerald-100 text-emerald-700 hover:bg-emerald-200',
                   blue: 'bg-blue-100 text-blue-700 hover:bg-blue-200'
                 };
 
@@ -947,7 +947,7 @@ const Portfolio = () => {
           {/* Bottom Bar */}
           <div className="border-t border-gray-800 pt-8 flex flex-col md:flex-row justify-between items-center gap-4">
             <div className="text-gray-500 text-sm">
-              © 2025 Yatheesh Nagella. Built with Next.js & Tailwind CSS
+              © {new Date().getFullYear()} Yatheesh Nagella. Built with Next.js & Tailwind CSS
             </div>
             <div className="flex gap-6 text-sm text-gray-500">
               <a href="/privacy" className="hover:text-orange-500 transition-colors">Privacy Policy</a>
@@ -989,7 +989,7 @@ const Portfolio = () => {
               </h3>
               <div className="flex gap-3 w-full sm:w-auto">
                 <a
-                  href="/YN_Resume.pdf"
+                  href="/YN_Resume.pdf?v=2026"
                   download
                   className="flex-1 sm:flex-none flex items-center justify-center gap-2 px-4 py-2 bg-white text-orange-600 rounded-full font-bold hover:bg-gray-100 transition-all text-sm sm:text-base"
                   onClick={() => {
@@ -1021,7 +1021,7 @@ const Portfolio = () => {
             {/* PDF Viewer */}
             <div className="h-full pt-16 sm:pt-20">
               <iframe
-                src="/YN_Resume.pdf"
+                src="/YN_Resume.pdf?v=2025"
                 className="w-full h-full border-0"
                 title="Resume PDF"
               />
@@ -1030,7 +1030,7 @@ const Portfolio = () => {
             {/* Mobile fallback */}
             <div className="absolute bottom-4 left-4 right-4 sm:hidden">
               <a
-                href="/YN_Resume.pdf"
+                href="/YN_Resume.pdf?v=2025"
                 download
                 className="block w-full text-center px-6 py-3 bg-gradient-to-r from-orange-500 to-pink-500 text-white rounded-full font-bold shadow-lg"
               >

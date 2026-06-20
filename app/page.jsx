@@ -7,7 +7,6 @@ const Portfolio = () => {
   const [activeSection, setActiveSection] = useState('home');
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const [showResumeModal, setShowResumeModal] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -16,27 +15,6 @@ const Portfolio = () => {
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
-
-  useEffect(() => {
-    const handleEscape = (e) => {
-      if (e.key === 'Escape' && showResumeModal) {
-        setShowResumeModal(false);
-      }
-    };
-    window.addEventListener('keydown', handleEscape);
-    return () => window.removeEventListener('keydown', handleEscape);
-  }, [showResumeModal]);
-
-  useEffect(() => {
-    if (showResumeModal) {
-      document.body.style.overflow = 'hidden';
-    } else {
-      document.body.style.overflow = 'unset';
-    }
-    return () => {
-      document.body.style.overflow = 'unset';
-    };
-  }, [showResumeModal]);
 
   const scrollToSection = (sectionId) => {
     const element = document.getElementById(sectionId);
@@ -209,15 +187,6 @@ const Portfolio = () => {
               </button>
             ))}
 
-            <button
-              onClick={() => setShowResumeModal(true)}
-              className="flex items-center gap-2 px-5 py-2.5 bg-gradient-to-r from-orange-500 to-pink-500 text-white rounded-full font-bold shadow-lg hover:shadow-xl transition-all"
-            >
-              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
-              </svg>
-              Resume
-            </button>
           </div>
 
           {/* Mobile Menu Button */}
@@ -262,18 +231,6 @@ const Portfolio = () => {
                   {item}
                 </button>
               ))}
-              <button
-                onClick={() => {
-                  setShowResumeModal(true);
-                  setIsMobileMenuOpen(false);
-                }}
-                className="w-full flex items-center justify-center gap-2 px-5 py-3 bg-gradient-to-r from-orange-500 to-pink-500 text-white rounded-full font-bold shadow-lg"
-              >
-                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
-                </svg>
-                Resume
-              </button>
             </div>
           </motion.div>
         )}
@@ -668,17 +625,6 @@ const Portfolio = () => {
                 </li>
               </ul>
             </div>
-            {/* Contact Info */}
-            <div>
-              <h4 className="font-bold text-white mb-4">Get in Touch</h4>
-              <ul className="space-y-2 text-gray-400">
-                <li>
-                  <button onClick={() => setShowResumeModal(true)} className="text-orange-500 hover:text-orange-400 transition-colors font-semibold">
-                    View Resume →
-                  </button>
-                </li>
-              </ul>
-            </div>
           </div>
           {/* Bottom Bar */}
           <div className="border-t border-gray-800 pt-8 flex flex-col md:flex-row justify-between items-center gap-4">
@@ -696,86 +642,6 @@ const Portfolio = () => {
       
 
 
-      
-      {showResumeModal && (
-        <div
-          className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm"
-          role="dialog"
-          aria-modal="true"
-          aria-labelledby="resume-modal-title"
-          onClick={(e) => {
-            // Close when clicking outside the modal
-            if (e.target === e.currentTarget) {
-              setShowResumeModal(false);
-            }
-          }}
-        >
-          <motion.div
-            initial={{ scale: 0.9, opacity: 0 }}
-            animate={{ scale: 1, opacity: 1 }}
-            exit={{ scale: 0.9, opacity: 0 }}
-            transition={{ duration: 0.2 }}
-            className="relative w-full max-w-6xl h-[90vh] bg-white rounded-3xl shadow-2xl overflow-hidden"
-            onClick={(e) => e.stopPropagation()}
-          >
-            {/* Modal Header */}
-            <div className="absolute top-0 left-0 right-0 z-10 bg-gradient-to-r from-orange-500 to-pink-500 px-4 sm:px-6 py-4 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3">
-              <h3 id="resume-modal-title" className="text-lg sm:text-xl font-black text-white">
-                Yatheesh Nagella - Resume
-              </h3>
-              <div className="flex gap-3 w-full sm:w-auto">
-                <a
-                  href="/YN_Resume.pdf?v=2026"
-                  download
-                  className="flex-1 sm:flex-none flex items-center justify-center gap-2 px-4 py-2 bg-white text-orange-600 rounded-full font-bold hover:bg-gray-100 transition-all text-sm sm:text-base"
-                  onClick={() => {
-                    if (window.gtag) {
-                      window.gtag('event', 'download', {
-                        event_category: 'Resume',
-                        event_label: 'PDF Download',
-                      });
-                    }
-                  }}
-                >
-                  <svg className="w-4 h-4 sm:w-5 sm:h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
-                  </svg>
-                  Download
-                </a>
-                <button
-                  onClick={() => setShowResumeModal(false)}
-                  className="p-2 bg-white/20 hover:bg-white/30 rounded-full transition-all"
-                  aria-label="Close modal"
-                >
-                  <svg className="w-5 h-5 sm:w-6 sm:h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-                  </svg>
-                </button>
-              </div>
-            </div>
-
-            {/* PDF Viewer */}
-            <div className="h-full pt-16 sm:pt-20">
-              <iframe
-                src="/YN_Resume.pdf?v=2025"
-                className="w-full h-full border-0"
-                title="Resume PDF"
-              />
-            </div>
-
-            {/* Mobile fallback */}
-            <div className="absolute bottom-4 left-4 right-4 sm:hidden">
-              <a
-                href="/YN_Resume.pdf?v=2025"
-                download
-                className="block w-full text-center px-6 py-3 bg-gradient-to-r from-orange-500 to-pink-500 text-white rounded-full font-bold shadow-lg"
-              >
-                Can't see the PDF? Download it here
-              </a>
-            </div>
-          </motion.div>
-        </div>
-      )}
     </div>
   );
 };

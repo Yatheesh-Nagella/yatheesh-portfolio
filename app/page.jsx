@@ -193,7 +193,7 @@ const Portfolio = () => {
 
           {/* Desktop Navigation */}
           <div className="hidden md:flex gap-8 items-center">
-            {['Projects', 'Services', 'Blog', 'About', 'Experience', 'Contact'].map((item) => (
+            {['Projects', 'Services', 'Blog', 'Contact'].map((item) => (
               <button
                 key={item}
                 onClick={() => {
@@ -245,7 +245,7 @@ const Portfolio = () => {
             className="md:hidden bg-white border-t border-gray-200"
           >
             <div className="px-6 py-4 space-y-4">
-              {['Projects', 'Services', 'About', 'Blog', 'Experience', 'Contact'].map((item) => (
+              {['Projects', 'Services', 'Blog', 'Contact'].map((item) => (
                 <button
                   key={item}
                   onClick={() => {
@@ -299,13 +299,12 @@ const Portfolio = () => {
                   initial={{ scale: 0 }}
                   animate={{ scale: 1 }}
                   transition={{ type: "spring", stiffness: 200, delay: 0.2 }}
-                  className="w-32 h-32 rounded-full bg-gradient-to-br from-orange-500/20 to-cyan-500/20 backdrop-blur-sm border-2 border-white/50 overflow-hidden mb-8 shadow-lg"
+                  className="w-32 h-32 rounded-full bg-gradient-to-br from-orange-500 via-pink-500 to-purple-600 flex items-center justify-center mb-8 shadow-2xl ring-4 ring-white/50"
                 >
-                  <img
-                    src="/profile.png"
-                    alt="Yatheesh Nagella"
-                    className="w-full h-full object-cover"
-                  />
+                  <div className="text-center">
+                    <div className="text-white text-3xl font-black tracking-wider">YN</div>
+                    <div className="w-8 h-0.5 bg-white/60 mx-auto mt-1"></div>
+                  </div>
                 </motion.div>
 
                 <motion.h1
@@ -314,7 +313,7 @@ const Portfolio = () => {
                   transition={{ duration: 0.6, delay: 0.4 }}
                   className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-normal text-gray-900 mb-6 md:mb-8 leading-[1.15] max-w-5xl"
                 >
-                  I'm Yatheesh Nagella, a Full Stack Software Engineer specializing in Financial Services & AI.
+                  Software Engineering Solutions for Financial Services & Enterprise
                 </motion.h1>
 
                 <motion.p
@@ -323,26 +322,10 @@ const Portfolio = () => {
                   transition={{ duration: 0.6, delay: 0.6 }}
                   className="text-base sm:text-lg md:text-xl text-gray-600 max-w-4xl leading-relaxed"
                 >
-                  Building scalable web applications for banking, fintech, and insurance sectors with expertise in React, Next.js, Node.js, PostgreSQL, and AI integration. AWS Certified Solutions Architect with a proven track record in production systems serving millions of users.
+                  From custom web applications to cloud infrastructure and AI integration — delivering end-to-end engineering solutions for banking, fintech, and high-growth businesses that demand scale and reliability.
                 </motion.p>
               </div>
 
-              <motion.div
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ delay: 0.8 }}
-                className="flex gap-6 mb-16"
-              >
-                <motion.a whileHover={{ scale: 1.1, color: '#06B6D4' }} whileTap={{ scale: 0.95 }} href="https://github.com/Yatheesh-Nagella" target="_blank" rel="noopener noreferrer" className="text-gray-600 hover:text-cyan-500 transition-colors font-medium">
-                  GitHub
-                </motion.a>
-                <motion.a whileHover={{ scale: 1.1, color: '#6366F1' }} whileTap={{ scale: 0.95 }} href="https://linkedin.com/in/Yatheesh-Nagella" target="_blank" rel="noopener noreferrer" className="text-gray-600 hover:text-indigo-500 transition-colors font-medium">
-                  LinkedIn
-                </motion.a>
-                <motion.a whileHover={{ scale: 1.1, color: '#FF5722' }} whileTap={{ scale: 0.95 }} href="mailto:yatheeshnagella17@gmail.com" className="text-gray-600 hover:text-orange-500 transition-colors font-medium">
-                  Email
-                </motion.a>
-              </motion.div>
 
               <motion.div
                 variants={staggerContainer}
@@ -411,26 +394,24 @@ const Portfolio = () => {
                   </div>
                 </motion.a>
 
-                {/* Marathon - Health & Wellness */}
+                {/* Cloud Solutions */}
                 <motion.div
                   variants={fadeInUp}
                   whileHover={{ scale: 1.05, y: -5 }}
                   transition={{ type: "spring", stiffness: 300 }}
-                  className="group aspect-square bg-gradient-to-br from-orange-400 via-amber-500 to-yellow-500 backdrop-blur-sm border border-white/60 rounded-lg overflow-hidden hover:shadow-xl hover:shadow-orange-500/30 transition-all cursor-pointer relative"
+                  onClick={() => scrollToSection('services')}
+                  className="group aspect-square bg-gradient-to-br from-slate-900 via-blue-950 to-slate-800 backdrop-blur-sm border border-white/60 rounded-lg overflow-hidden hover:shadow-xl hover:shadow-blue-500/30 transition-all cursor-pointer relative"
                 >
-                  <div className="absolute inset-0">
-                    <img
-                      src="/marathon.png"
-                      alt="Marathon Achievement"
-                      className="w-full h-full object-cover"
-                    />
-                  </div>
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent flex flex-col items-center justify-end p-4 text-center">
-                    <div className="text-white font-bold text-sm mb-1">Health & Fitness</div>
-                    <div className="text-white/70 text-xs">Marathon Runner</div>
+                  <div className="absolute inset-0 flex flex-col items-center justify-center p-4 text-center">
+                    <div className="text-4xl mb-2">☁️</div>
+                    <div className="text-white font-bold text-sm mb-1">Cloud Solutions</div>
+                    <div className="text-white/70 text-xs">AWS Certified</div>
                   </div>
                   <div className="absolute top-2 right-2">
-                    <span className="bg-emerald-500 text-white text-[10px] px-2 py-1 rounded-full font-semibold">🏃</span>
+                    <span className="bg-orange-500 text-white text-[10px] px-2 py-1 rounded-full font-semibold">AWS</span>
+                  </div>
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end p-3">
+                    <span className="text-white text-xs">View Services →</span>
                   </div>
                 </motion.div>
               </motion.div>
@@ -615,201 +596,6 @@ const Portfolio = () => {
         </div>
       </section>
 
-      {/* About Section */}
-      <section id="about" className="py-20 px-6 bg-gray-50">
-        <div className="max-w-7xl mx-auto">
-          <motion.h2
-            initial={{ opacity: 0, y: -20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            className="text-5xl font-bold text-gray-900 mb-16"
-          >
-            About me
-          </motion.h2>
-
-          <div className="grid md:grid-cols-3 gap-12">
-            <motion.div
-              initial={{ opacity: 0, x: -50 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6 }}
-              className="md:col-span-2 space-y-6 text-gray-700 leading-relaxed text-lg"
-            >
-              <p>
-                Full Stack Software Engineer with 4+ years specializing in financial services technology and AI-powered applications. Expert in building scalable web applications for banking, fintech, and insurance sectors using React, Next.js, Node.js, and modern cloud infrastructure.
-              </p>
-              <p>
-                Proven track record developing customer-facing financial platforms, CRM systems for banking operations, and AI-integrated solutions. Strong experience with financial data processing, transaction systems, third-party API integrations (Plaid, payment gateways), and regulatory compliance.
-              </p>
-              <p>
-                AWS Certified Solutions Architect with expertise in distributed systems, microservices architecture, and production deployments serving millions of users. Currently building OneLibro, a financial SaaS platform with real-time banking data integration.
-              </p>
-            </motion.div>
-
-            <motion.div
-              variants={staggerContainer}
-              initial="hidden"
-              whileInView="visible"
-              viewport={{ once: true }}
-              className="space-y-6"
-            >
-              {[
-                { value: '4+', label: 'Years Experience', color: 'orange' },
-                { value: '3.78', label: 'M.S. Computer Science GPA', color: 'cyan' },
-                { value: 'AWS Certified', label: 'Solutions Architect - Associate', color: 'indigo' },
-                { value: 'Oklahoma City, OK', label: 'Available for Remote Work', color: 'emerald' }
-              ].map((stat, index) => {
-                const colorClasses = {
-                  orange: 'border-orange-500',
-                  cyan: 'border-cyan-500',
-                  indigo: 'border-indigo-500',
-                  emerald: 'border-emerald-500'
-                };
-
-                return (
-                  <motion.div key={index} variants={fadeInUp} className={`border-l-4 ${colorClasses[stat.color]} pl-6`}>
-                    <div className="text-3xl font-bold text-gray-900">{stat.value}</div>
-                    <div className="text-gray-600">{stat.label}</div>
-                  </motion.div>
-                );
-              })}
-            </motion.div>
-          </div>
-        </div>
-      </section>
-
-      {/* Experience Section */}
-      <section id="experience" className="py-20 px-6 bg-white">
-        <div className="max-w-7xl mx-auto">
-          <motion.h2
-            initial={{ opacity: 0, y: -20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            className="text-5xl font-bold text-gray-900 mb-16"
-          >
-            Experience
-          </motion.h2>
-
-          <motion.div
-            variants={staggerContainer}
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true }}
-            className="space-y-12"
-          >
-            {[
-              {
-                title: 'Technical Web Developer',
-                company: 'LX Studio',
-                period: 'Aug 2024 - Present',
-                achievements: [
-                  'Developed web applications and digital content solutions for university educational programs',
-                  'Built internal applications using React and TypeScript with Microsoft 365 integration',
-                  'Created Power Automate workflows and Power BI dashboards for analytics and automation'
-                ]
-              },
-              {
-                title: 'Full Stack Software Engineer',
-                company: 'Swish.ai',
-                period: 'Nov 2022 - Jun 2023',
-                achievements: [
-                  'Developed AI-powered analytics platform with AWS Bedrock for natural language data insights',
-                  'Built Angular frontend and Node.js microservices on GKE with Istio service mesh',
-                  'Implemented OAuth 2.0 authentication and RESTful APIs serving 10K+ users'
-                ]
-              },
-              {
-                title: 'Full Stack Software Engineer',
-                company: 'Truist',
-                period: 'Aug 2021 - Sep 2022',
-                achievements: [
-                  'Developed banking CRM system for 200+ relationship managers managing loan and mortgage data',
-                  'Built React frontend and Spring Boot APIs with PostgreSQL and Apache Kafka integration',
-                  'Deployed AWS infrastructure using Terraform with CI/CD pipelines for zero-downtime releases'
-                ]
-              }
-            ].map((job, index) => {
-              const colors = ['orange', 'cyan', 'indigo'];
-              const colorClasses = {
-                orange: 'bg-orange-500',
-                cyan: 'bg-cyan-500',
-                indigo: 'bg-indigo-500'
-              };
-
-              return (
-                <motion.div key={index} variants={fadeInUp} className="border-l-2 border-gray-200 pl-8 relative">
-                  <div className={`absolute w-4 h-4 ${colorClasses[colors[index]]} rounded-full`} style={{ left: '-9px', top: 0 }}></div>
-                  <div className="flex justify-between items-start mb-2">
-                    <div>
-                      <h3 className="text-2xl font-semibold text-gray-900">{job.title}</h3>
-                      <div className="text-orange-500 font-medium">{job.company}</div>
-                    </div>
-                    <div className="text-gray-500">{job.period}</div>
-                  </div>
-                  <ul className="mt-4 space-y-2 text-gray-600">
-                    {job.achievements.map((achievement, i) => (
-                      <li key={i}>• {achievement}</li>
-                    ))}
-                  </ul>
-                </motion.div>
-              );
-            })}
-          </motion.div>
-
-          <motion.div
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-            viewport={{ once: true }}
-            transition={{ delay: 0.4 }}
-            className="mt-20"
-          >
-            <h3 className="text-3xl font-bold text-gray-900 mb-8">Technical Skills</h3>
-            <motion.div
-              variants={staggerContainer}
-              initial="hidden"
-              whileInView="visible"
-              viewport={{ once: true }}
-              className="grid md:grid-cols-2 lg:grid-cols-3 gap-8"
-            >
-              {[
-                { title: 'Financial Technology', skills: ['Plaid API', 'Payment Processing', 'Transaction Systems', 'Banking CRM'], color: 'green' },
-                { title: 'AI/ML', skills: ['OpenAI API', 'AWS Bedrock', 'LangChain', 'RAG Architecture', 'Vector DBs'], color: 'violet' },
-                { title: 'Frontend Technologies', skills: ['React', 'Next.js', 'Angular', 'Redux', 'Tailwind CSS', 'TypeScript', 'Javascript'], color: 'indigo' },
-                { title: 'Backend & APIs', skills: ['Node.js', 'Python', 'Spring Boot', 'GraphQL', 'REST', 'PostgreSQL'], color: 'orange' },
-                { title: 'Cloud & Infrastructure', skills: ['AWS', 'Docker', 'Kubernetes', 'Terraform', 'CI/CD', 'Microservices'], color: 'cyan' },
-                { title: 'DevOps & Tools', skills: ['GitHub Actions', 'Jenkins', 'Istio', 'Kafka', 'Redis', 'Supabase', 'PostHog', 'Google Analytics'], color: 'blue' }
-              ].map((category, index) => {
-                const colorClasses = {
-                  green: 'bg-green-100 text-green-700 hover:bg-green-200',
-                  violet: 'bg-violet-100 text-violet-700 hover:bg-violet-200',
-                  cyan: 'bg-cyan-100 text-cyan-700 hover:bg-cyan-200',
-                  indigo: 'bg-indigo-100 text-indigo-700 hover:bg-indigo-200',
-                  orange: 'bg-orange-100 text-orange-700 hover:bg-orange-200',
-                  blue: 'bg-blue-100 text-blue-700 hover:bg-blue-200'
-                };
-
-                return (
-                  <motion.div key={index} variants={fadeInUp}>
-                    <h4 className="font-semibold text-gray-900 mb-3">{category.title}</h4>
-                    <div className="flex flex-wrap gap-2">
-                      {category.skills.map(skill => (
-                        <motion.span
-                          whileHover={{ scale: 1.05 }}
-                          key={skill}
-                          className={`px-3 py-1 ${colorClasses[category.color]} rounded-full text-sm cursor-default transition-colors`}
-                        >
-                          {skill}
-                        </motion.span>
-                      ))}
-                    </div>
-                  </motion.div>
-                );
-              })}
-            </motion.div>
-          </motion.div>
-        </div>
-      </section>
-
       {/* Contact Section */}
       <motion.section
         initial={{ opacity: 0 }}
@@ -860,39 +646,6 @@ const Portfolio = () => {
               <p className="text-gray-400 mb-4 max-w-md">
                 Software Engineer & Cloud Solutions Consultant specializing in scalable cloud architecture and modern web development.
               </p>
-              <div className="flex gap-4">
-                <a
-                  href="https://github.com/Yatheesh-Nagella"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  aria-label="GitHub profile"
-                  className="w-10 h-10 bg-gray-800 hover:bg-orange-500 rounded-lg flex items-center justify-center transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-orange-500 focus-visible:ring-offset-2 focus-visible:ring-offset-gray-900"
-                >
-                  <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
-                    <path fillRule="evenodd" d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z" clipRule="evenodd" />
-                  </svg>
-                </a>
-                <a
-                  href="https://linkedin.com/in/Yatheesh-Nagella"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  aria-label="LinkedIn profile"
-                  className="w-10 h-10 bg-gray-800 hover:bg-orange-500 rounded-lg flex items-center justify-center transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-orange-500 focus-visible:ring-offset-2 focus-visible:ring-offset-gray-900"
-                >
-                  <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
-                    <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z" />
-                  </svg>
-                </a>
-                <a
-                  href="mailto:yatheeshnagella17@gmail.com"
-                  aria-label="Send email to Yatheesh"
-                  className="w-10 h-10 bg-gray-800 hover:bg-orange-500 rounded-lg flex items-center justify-center transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-orange-500 focus-visible:ring-offset-2 focus-visible:ring-offset-gray-900"
-                >
-                  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a 2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
-                  </svg>
-                </a>
-              </div>
             </div>
             {/* Quick Links */}
             <div>
@@ -913,29 +666,12 @@ const Portfolio = () => {
                     Blog
                   </a>
                 </li>
-                <li>
-                  <button onClick={() => scrollToSection('about')} className="text-gray-400 hover:text-orange-500 transition-colors">
-                    About
-                  </button>
-                </li>
-                <li>
-                  <button onClick={() => scrollToSection('experience')} className="text-gray-400 hover:text-orange-500 transition-colors">
-                    Experience
-                  </button>
-                </li>
               </ul>
             </div>
             {/* Contact Info */}
             <div>
               <h4 className="font-bold text-white mb-4">Get in Touch</h4>
               <ul className="space-y-2 text-gray-400">
-                <li>
-                  <a href="mailto:yatheeshnagella17@gmail.com" className="hover:text-orange-500 transition-colors">
-                    yatheeshnagella17@gmail.com
-                  </a>
-                </li>
-                <li>Oklahoma City, OK</li>
-                <li>Available for Remote Work</li>
                 <li>
                   <button onClick={() => setShowResumeModal(true)} className="text-orange-500 hover:text-orange-400 transition-colors font-semibold">
                     View Resume →

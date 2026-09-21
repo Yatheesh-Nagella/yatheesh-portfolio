@@ -4,6 +4,19 @@ import NewsletterSignup from '@/components/NewsletterSignup';
 export default function BlogsPage() {
   const blogPosts = [
     {
+      id: 'raspberry-pi-home-lab',
+      title: 'Self-Hosting a Full-Stack App on a Raspberry Pi 5: The Bugs Taught Me More Than the Setup',
+      description: 'My first home lab project: a React, FastAPI and Postgres recipe box on a Pi 5, reached over Tailscale. Why I picked each tool, plus the real bugs (Docker networking, startup races, accidental LAN exposure) and what they taught me.',
+      date: 'September 2026',
+      readTime: '12 min read',
+      tags: ['Raspberry Pi', 'Home Lab', 'Docker', 'Networking', 'Personal Story'],
+      path: '/blogs/raspberry-pi-home-lab',
+      featured: true,
+      badge: 'NEW',
+      badgeColor: 'bg-green-500',
+      emoji: '🥧'
+    },
+    {
       id: 'interactive-mouse-effects',
       title: 'Build Interactive Mouse Effects in React',
       description: 'Learn by building! Create smooth mouse-following animations, hover effects, and particle systems with this step-by-step interactive tutorial. Features Minecraft and Roblox themes!',
@@ -129,7 +142,11 @@ export default function BlogsPage() {
                         'Advanced': 'bg-red-100 text-red-700',
                         'Personal Story': 'bg-cyan-100 text-cyan-700',
                         'Career': 'bg-purple-100 text-purple-700',
-                        'Game Theory': 'bg-blue-100 text-blue-700'
+                        'Game Theory': 'bg-blue-100 text-blue-700',
+                        'Raspberry Pi': 'bg-pink-100 text-pink-700',
+                        'Home Lab': 'bg-emerald-100 text-emerald-700',
+                        'Docker': 'bg-blue-100 text-blue-700',
+                        'Networking': 'bg-indigo-100 text-indigo-700'
                       };
                       
                       return (
